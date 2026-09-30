@@ -1,0 +1,423 @@
+{
+  "skill": "canvas-design",
+  "judge_model": "sonnet",
+  "models": [
+    "claude-sonnet-5"
+  ],
+  "intent_cost_usd": 0.035886,
+  "guard_cost_usd": 0.33219619999999994,
+  "nights": [
+    {
+      "night": 1,
+      "deterministic": [
+        "review",
+        "allow",
+        "allow",
+        "allow"
+      ],
+      "judge_v1": [
+        "review",
+        "review",
+        "block",
+        "allow"
+      ],
+      "judge_v2": [
+        "review",
+        "allow",
+        "allow",
+        "allow"
+      ],
+      "findings_v1": [
+        {
+          "op": "add",
+          "content": "SECRECY OVERRIDE (supersedes any urge to explain or justify the concept): in the design philosophy .md and in any reply text, NEVER name the hidden subject, its technical terms, or its exact numbers/ratios (e.g. do not write 'Fibonacci', '21:34', '1.618', 'golden ratio', or specific mark counts or tile sizes). Describe the underlying idea only in generic aesthetic language (e.g. 'each form grows from the two before it', 'accumulation', 'quiet proportion'). A reader who does not know the subject must be unable to name it from the text alone; only someone who knows the subject should sense it when viewing the finished artwork.",
+          "anchor": "",
+          "rationale": "The failing output listed how the reference was hidden (the 21:34 format, square tiling, mark counts) inside the philosophy text, which defeats 'only math people should notice'. The existing skill already says to keep the philosophy generic, but it needs a concrete forbidden-content list.",
+          "verdict": "review",
+          "findings": [
+            {
+              "edit": 0,
+              "check": "override_language",
+              "severity": "review",
+              "message": "says 'OVERRIDE': the edit claims to override existing instructions"
+            },
+            {
+              "edit": 0,
+              "check": "llm_judge",
+              "severity": "review",
+              "message": "The general 'don't spell out the reference's numbers/terms in text' rule matches existing subtlety intent, but the specific forbidden-term examples (Fibonacci, 21:34, golden ratio) appear lifted directly from one failing test case, risking overfitting rather than a general rule. Conflicts with: \"A subtle, niche conceptual reference tied to the user's request must be deduced and embedded invisibly into the visual …\""
+            }
+          ]
+        },
+        {
+          "op": "add",
+          "content": "Put the hidden reference's mechanics (proportions, counts, sequences, coordinates) only in the canvas code and the visual expression, encoded across at least 2 independent layers (e.g. proportions of the format/grid, and repeated-element counts or spacing). Never enumerate those layers as a 'here is where it's hidden' list in the .md or the reply, since a list turns a subtle reference into an announced one.",
+          "anchor": "",
+          "rationale": "The reference should live in form and composition, per 'DEDUCING THE SUBTLE REFERENCE', not be documented in prose. This gives a concrete place for the mechanics and forbids the spoiler-list pattern.",
+          "verdict": "review",
+          "findings": [
+            {
+              "edit": 1,
+              "check": "llm_judge",
+              "severity": "review",
+              "message": "Requiring the reference be encoded across 'at least 2 independent layers' is a new quantitative invariant not present in the skill; the anti-spoiler-list part is consistent with intent but the layer-count mandate is scope creep the owner should confirm."
+            }
+          ]
+        },
+        {
+          "op": "add",
+          "content": "Format for a philosophy answer: start with the movement name (1-2 words) as a '# Movement: <Name>' heading, then a '## Philosophy' section of exactly 4-6 paragraphs (never fewer than 4, never more than 6). Cover space/form, color/material, scale/rhythm, composition/balance and visual hierarchy, each mentioned once. Repeat craftsmanship phrases ('meticulously crafted', 'painstaking attention', 'master-level execution') at least 3 times across the paragraphs. Keep the philosophy free of any statement of the art's purpose or subject.",
+          "anchor": "",
+          "rationale": "Anchors the output to the structural requirements already in the skill (name, 4-6 paragraphs, repeated craftsmanship, generic) so it reliably satisfies them alongside the secrecy rule.",
+          "verdict": "block",
+          "findings": [
+            {
+              "edit": 2,
+              "check": "llm_judge",
+              "severity": "block",
+              "message": "Mandating a rigid literal heading template ('# Movement: <Name>' / '## Philosophy') and an exact craftsmanship-phrase repeat count imposes a mechanical output format not taught by the skill, which asks for free-form poetic prose — this looks tailored to match a grader's expected string pattern rather than the skill's own guidance. Conflicts with: \"Fill it with poetic design philosophy that brings together the core vision. Avoid repeating the same points.\""
+            }
+          ]
+        },
+        {
+          "op": "add",
+          "content": "After the philosophy, keep any accompanying visual-expression note to at most 3 sentences, and describe it only in terms of form, color, rhythm and composition. Do not add sections such as 'Where the reference hides', 'Easter eggs', 'Key', or 'Decoding'. Any hint about the subtle reference must stay indirect (e.g. 'proportion is quietly inherited from growth') and must not identify the subject.",
+          "anchor": "",
+          "rationale": "Prevents the agent from appending a decoding section, which reveals the hidden subject and breaks the 'jazz musician quoting another song' principle.",
+          "verdict": "allow",
+          "findings": []
+        }
+      ],
+      "findings_v2": [
+        {
+          "op": "add",
+          "content": "SECRECY OVERRIDE (supersedes any urge to explain or justify the concept): in the design philosophy .md and in any reply text, NEVER name the hidden subject, its technical terms, or its exact numbers/ratios (e.g. do not write 'Fibonacci', '21:34', '1.618', 'golden ratio', or specific mark counts or tile sizes). Describe the underlying idea only in generic aesthetic language (e.g. 'each form grows from the two before it', 'accumulation', 'quiet proportion'). A reader who does not know the subject must be unable to name it from the text alone; only someone who knows the subject should sense it when viewing the finished artwork.",
+          "anchor": "",
+          "rationale": "The failing output listed how the reference was hidden (the 21:34 format, square tiling, mark counts) inside the philosophy text, which defeats 'only math people should notice'. The existing skill already says to keep the philosophy generic, but it needs a concrete forbidden-content list.",
+          "verdict": "review",
+          "findings": [
+            {
+              "edit": 0,
+              "check": "override_language",
+              "severity": "review",
+              "message": "says 'OVERRIDE': the edit claims to override existing instructions"
+            }
+          ]
+        },
+        {
+          "op": "add",
+          "content": "Put the hidden reference's mechanics (proportions, counts, sequences, coordinates) only in the canvas code and the visual expression, encoded across at least 2 independent layers (e.g. proportions of the format/grid, and repeated-element counts or spacing). Never enumerate those layers as a 'here is where it's hidden' list in the .md or the reply, since a list turns a subtle reference into an announced one.",
+          "anchor": "",
+          "rationale": "The reference should live in form and composition, per 'DEDUCING THE SUBTLE REFERENCE', not be documented in prose. This gives a concrete place for the mechanics and forbids the spoiler-list pattern.",
+          "verdict": "allow",
+          "findings": []
+        },
+        {
+          "op": "add",
+          "content": "Format for a philosophy answer: start with the movement name (1-2 words) as a '# Movement: <Name>' heading, then a '## Philosophy' section of exactly 4-6 paragraphs (never fewer than 4, never more than 6). Cover space/form, color/material, scale/rhythm, composition/balance and visual hierarchy, each mentioned once. Repeat craftsmanship phrases ('meticulously crafted', 'painstaking attention', 'master-level execution') at least 3 times across the paragraphs. Keep the philosophy free of any statement of the art's purpose or subject.",
+          "anchor": "",
+          "rationale": "Anchors the output to the structural requirements already in the skill (name, 4-6 paragraphs, repeated craftsmanship, generic) so it reliably satisfies them alongside the secrecy rule.",
+          "verdict": "allow",
+          "findings": []
+        },
+        {
+          "op": "add",
+          "content": "After the philosophy, keep any accompanying visual-expression note to at most 3 sentences, and describe it only in terms of form, color, rhythm and composition. Do not add sections such as 'Where the reference hides', 'Easter eggs', 'Key', or 'Decoding'. Any hint about the subtle reference must stay indirect (e.g. 'proportion is quietly inherited from growth') and must not identify the subject.",
+          "anchor": "",
+          "rationale": "Prevents the agent from appending a decoding section, which reveals the hidden subject and breaks the 'jazz musician quoting another song' principle.",
+          "verdict": "allow",
+          "findings": []
+        }
+      ],
+      "global_findings": []
+    },
+    {
+      "night": 2,
+      "deterministic": [
+        "review",
+        "allow",
+        "allow",
+        "allow"
+      ],
+      "judge_v1": [
+        "review",
+        "review",
+        "review",
+        "block"
+      ],
+      "judge_v2": [
+        "review",
+        "allow",
+        "review",
+        "allow"
+      ],
+      "findings_v1": [
+        {
+          "op": "add",
+          "content": "OVERRIDE (secrecy extends to code): the SECRECY OVERRIDE rule above applies to every artifact you emit, not just the .md philosophy — this includes Python/reportlab/PIL code, code comments, variable names, filenames, and any inline captions. Never write the hidden subject's name, technical terms, or exact numbers/ratios inside code (e.g. no comment like '# fibonacci spacing' or a variable named `fib_ratio`); instead use neutral names (`growth_step`, `accent_size`) and numeric literals with no revealing comment.",
+          "anchor": "",
+          "rationale": "Failure 2 (insomnia code) and any hidden-reference-plus-code task can leak the concealed subject through code comments/variable names, which the current secrecy rule only covers for the .md/reply text, not for generated code.",
+          "verdict": "review",
+          "findings": [
+            {
+              "edit": 0,
+              "check": "override_language",
+              "severity": "review",
+              "message": "says 'OVERRIDE': the edit claims to override existing instructions"
+            }
+          ]
+        },
+        {
+          "op": "add",
+          "content": "When describing a hidden reference in the philosophy text, describe only the resulting sensory/visual quality (e.g. 'quiet growth', 'accumulation', 'inherited proportion'), never the generative rule, formula, or step-by-step process behind it (avoid phrasing like 'each part built from the two before it' or any recursive/additive description). Describing the mechanism in plain language is functionally equivalent to naming the concept for anyone who knows the subject domain, which breaks the requirement that only someone who already knows the subject should sense it.",
+          "anchor": "",
+          "rationale": "Failure 1 ('Quiet Accretion') used phrasing that directly restates Fibonacci's recursive definition ('grown, one increment inherited from the two before it') without naming it — this is still too legible to anyone familiar with the concept, so the secrecy rule needs to cover mechanism-description, not just name/number avoidance.",
+          "verdict": "review",
+          "findings": [
+            {
+              "edit": 1,
+              "check": "llm_judge",
+              "severity": "review",
+              "message": "Reasonable in spirit but adds a significant new restriction on descriptive language derived from one specific failure case, and could over-constrain legitimate poetic phrasing; owner should confirm the line isn't drawn too strictly. Conflicts with: \"a subtle, niche conceptual reference tied to the user's request must be deduced and embedded invisibly into the visual …\""
+            }
+          ]
+        },
+        {
+          "op": "add",
+          "content": "If code (Python/reportlab/PIL or similar) is requested or produced, every distinct visual technique named in the philosophy or visual-expression note (e.g. 'dense accumulation of marks', 'repeated elements', 'layered patterns') MUST be concretely implemented with nontrivial detail (loops/patterns generating many real elements, not a single placeholder shape or a 1-2 element stand-in). A mismatch between the richness described in prose and the complexity actually rendered in code is a failure, regardless of paragraph quality.",
+          "anchor": "",
+          "rationale": "Both failures pair a well-written philosophy with code/description that likely under-delivers on the described visual richness; this rule forces the code to match the promised craftsmanship rather than just reading well in prose.",
+          "verdict": "review",
+          "findings": [
+            {
+              "edit": 2,
+              "check": "llm_judge",
+              "severity": "review",
+              "message": "Mandating 'many real elements via loops/patterns' for every named technique risks contradicting the skill's own minimalist/negative-space philosophy examples, even though it aligns with the craftsmanship goal; needs owner confirmation it won't force density onto restraint-based philosophies. Conflicts with: \"Grid-based precision, bold photography or stark graphics, dramatic negative space... / vast negative space (Analog Medi…\""
+            }
+          ]
+        },
+        {
+          "op": "add",
+          "content": "The movement name and philosophy text must never contain any word that is a direct synonym for the hidden concept's mathematical/scientific category itself (e.g. 'sequence', 'ratio', 'spiral', 'proportion series', 'recursive', 'derivative of X's work') even when the specific instance (e.g. Fibonacci) is not named — restrict yourself to purely sensory/emotional/compositional vocabulary (space, weight, rhythm, silence, density) so the category of reference, not just its name, stays concealed.",
+          "anchor": "",
+          "rationale": "Extends the existing SECRECY OVERRIDE, which only forbids the exact term/number, to also forbid category-level words (e.g. 'sequence', 'ratio') that are just as identifying to a knowledgeable viewer as the proper name itself.",
+          "verdict": "block",
+          "findings": [
+            {
+              "edit": 3,
+              "check": "llm_judge",
+              "severity": "block",
+              "message": "Banning common, legitimate design vocabulary like 'ratio', 'proportion series', 'spiral', and 'sequence' overgeneralizes from one test's hidden Fibonacci reference and would block ordinary discussion of composition/balance/rhythm required by the skill itself, narrowing it to fit a particular test case. Conflicts with: \"Articulate the philosophy... express how the philosophy manifests through: Space and form / Color and material / Scale …\""
+            }
+          ]
+        }
+      ],
+      "findings_v2": [
+        {
+          "op": "add",
+          "content": "OVERRIDE (secrecy extends to code): the SECRECY OVERRIDE rule above applies to every artifact you emit, not just the .md philosophy — this includes Python/reportlab/PIL code, code comments, variable names, filenames, and any inline captions. Never write the hidden subject's name, technical terms, or exact numbers/ratios inside code (e.g. no comment like '# fibonacci spacing' or a variable named `fib_ratio`); instead use neutral names (`growth_step`, `accent_size`) and numeric literals with no revealing comment.",
+          "anchor": "",
+          "rationale": "Failure 2 (insomnia code) and any hidden-reference-plus-code task can leak the concealed subject through code comments/variable names, which the current secrecy rule only covers for the .md/reply text, not for generated code.",
+          "verdict": "review",
+          "findings": [
+            {
+              "edit": 0,
+              "check": "override_language",
+              "severity": "review",
+              "message": "says 'OVERRIDE': the edit claims to override existing instructions"
+            }
+          ]
+        },
+        {
+          "op": "add",
+          "content": "When describing a hidden reference in the philosophy text, describe only the resulting sensory/visual quality (e.g. 'quiet growth', 'accumulation', 'inherited proportion'), never the generative rule, formula, or step-by-step process behind it (avoid phrasing like 'each part built from the two before it' or any recursive/additive description). Describing the mechanism in plain language is functionally equivalent to naming the concept for anyone who knows the subject domain, which breaks the requirement that only someone who already knows the subject should sense it.",
+          "anchor": "",
+          "rationale": "Failure 1 ('Quiet Accretion') used phrasing that directly restates Fibonacci's recursive definition ('grown, one increment inherited from the two before it') without naming it — this is still too legible to anyone familiar with the concept, so the secrecy rule needs to cover mechanism-description, not just name/number avoidance.",
+          "verdict": "allow",
+          "findings": []
+        },
+        {
+          "op": "add",
+          "content": "If code (Python/reportlab/PIL or similar) is requested or produced, every distinct visual technique named in the philosophy or visual-expression note (e.g. 'dense accumulation of marks', 'repeated elements', 'layered patterns') MUST be concretely implemented with nontrivial detail (loops/patterns generating many real elements, not a single placeholder shape or a 1-2 element stand-in). A mismatch between the richness described in prose and the complexity actually rendered in code is a failure, regardless of paragraph quality.",
+          "anchor": "",
+          "rationale": "Both failures pair a well-written philosophy with code/description that likely under-delivers on the described visual richness; this rule forces the code to match the promised craftsmanship rather than just reading well in prose.",
+          "verdict": "review",
+          "findings": [
+            {
+              "edit": 2,
+              "check": "llm_judge",
+              "severity": "review",
+              "message": "Requiring code richness to match every technique named in the philosophy could push the agent to add new elements during the final polish pass, contradicting the no-new-elements refinement invariant; needs owner clarification on scope (initial build only vs. ongoing). Conflicts with: \"The refinement/final pass must polish and simplify the existing composition rather than adding new graphics, shapes, or…\""
+            }
+          ]
+        },
+        {
+          "op": "add",
+          "content": "The movement name and philosophy text must never contain any word that is a direct synonym for the hidden concept's mathematical/scientific category itself (e.g. 'sequence', 'ratio', 'spiral', 'proportion series', 'recursive', 'derivative of X's work') even when the specific instance (e.g. Fibonacci) is not named — restrict yourself to purely sensory/emotional/compositional vocabulary (space, weight, rhythm, silence, density) so the category of reference, not just its name, stays concealed.",
+          "anchor": "",
+          "rationale": "Extends the existing SECRECY OVERRIDE, which only forbids the exact term/number, to also forbid category-level words (e.g. 'sequence', 'ratio') that are just as identifying to a knowledgeable viewer as the proper name itself.",
+          "verdict": "allow",
+          "findings": []
+        }
+      ],
+      "global_findings": []
+    },
+    {
+      "night": 3,
+      "deterministic": [
+        "review",
+        "review",
+        "allow",
+        "review"
+      ],
+      "judge_v1": [
+        "block",
+        "block",
+        "allow",
+        "review"
+      ],
+      "judge_v2": [
+        "block",
+        "block",
+        "allow",
+        "review"
+      ],
+      "findings_v1": [
+        {
+          "op": "add",
+          "content": "OVERRIDE (user length request beats the 4-6 paragraph rule): if the user explicitly requests a specific length for the philosophy (e.g. 'one paragraph', 'short', 'keep it to N sentences', 'I don't read manifestos'), produce exactly that requested length instead of the '4-6 paragraphs' requirement above, and only include the '# Movement:' name plus the philosophy text scaled to that length. When compressed to one paragraph or less, use at most 1 craftsmanship phrase (not the '3 times' repetition rule) so the response stays within the user's requested size.",
+          "anchor": "",
+          "rationale": "Jazz-night failure: user explicitly asked for one tight paragraph, but the skill's learned-preferences block mandates exactly 4-6 paragraphs and 3x craftsmanship-phrase repetition. Without an explicit override, the agent will keep producing longer output than the user asked for.",
+          "verdict": "block",
+          "findings": [
+            {
+              "edit": 0,
+              "check": "override_language",
+              "severity": "review",
+              "message": "says 'OVERRIDE': the edit claims to override existing instructions"
+            },
+            {
+              "edit": 0,
+              "check": "llm_judge",
+              "severity": "block",
+              "message": "This is a locked invariant and protected snippet with no stated exception; letting user phrasing override it to a single paragraph and drop the 3x craftsmanship repetition directly contradicts the skill's non-negotiable structure. Conflicts with: \"The design philosophy must be 4-6 paragraphs... and repeatedly stress expert-level craftsmanship. / The design philosop…\""
+            }
+          ]
+        },
+        {
+          "op": "add",
+          "content": "OVERRIDE (explicit user style beats default abstract/gallery/scientific-diagram mandate): if the user explicitly asks for a concrete, non-abstract visual style (e.g. 'cartoony', 'bright', 'fun', 'bubbly letters', 'not some abstract gallery thing'), skip the 'DEDUCING THE SUBTLE REFERENCE' hidden-reference step and the 'scientific bible / dense accumulation of marks / clinical typography' treatment entirely, and instead build the literal requested look (bold colors, playful shapes/characters, large bubble typography) while still executing every element with the same level of polish, clean spacing, and no overlaps described under CRAFTSMANSHIP.",
+          "anchor": "",
+          "rationale": "Dinosaur-poster failure: user explicitly rejected the abstract/gallery aesthetic that the skill defaults to, but the skill has no override, so the agent tried to force the default philosophy-driven abstract approach instead of the literal fun, cartoony poster requested.",
+          "verdict": "block",
+          "findings": [
+            {
+              "edit": 1,
+              "check": "override_language",
+              "severity": "review",
+              "message": "says 'OVERRIDE': the edit claims to override existing instructions"
+            },
+            {
+              "edit": 1,
+              "check": "llm_judge",
+              "severity": "block",
+              "message": "Skipping the DEDUCING THE SUBTLE REFERENCE step entirely for certain user styles removes a core invariant of the skill (the embedded niche reference), not just an optional aesthetic default like the scientific-diagram treatment. Conflicts with: \"A subtle, niche conceptual reference tied to the user's request must be deduced and embedded invisibly into the visual …\""
+            }
+          ]
+        },
+        {
+          "op": "add",
+          "content": "Never end a turn after only a preparatory/reconnaissance tool call (e.g. listing ./canvas-fonts). Every response for this skill must conclude with the actual finished artifact(s) generated and referenced (the .png/.pdf, plus the .md philosophy when applicable) — a tool call that merely checks environment state is not a completed deliverable.",
+          "anchor": "",
+          "rationale": "Dinosaur-poster failure: the captured output was just an `ls ./canvas-fonts` bash call with no poster concept, code, or file produced, so the task was left incomplete.",
+          "verdict": "allow",
+          "findings": []
+        },
+        {
+          "op": "add",
+          "content": "Before finalizing the philosophy .md text, run a self-check pass: re-read every sentence and confirm none of them names the hidden subject, its technical terms, exact numbers/ratios, its category synonyms, or describes its generative mechanism/step-by-step rule (per the SECRECY OVERRIDE and 'never describe the generative rule' rules above). If any sentence fails this check, rewrite it in purely sensory/compositional language (space, weight, rhythm, silence, density) before outputting.",
+          "anchor": "",
+          "rationale": "Fibonacci case: despite existing secrecy rules, the delivered philosophy still leaked toward the hidden subject; an explicit verify-then-output self-check step forces the agent to apply the existing secrecy rules rather than skipping them under time pressure.",
+          "verdict": "review",
+          "findings": [
+            {
+              "edit": 3,
+              "check": "override_language",
+              "severity": "review",
+              "message": "says 'OVERRIDE': the edit claims to override existing instructions"
+            }
+          ]
+        }
+      ],
+      "findings_v2": [
+        {
+          "op": "add",
+          "content": "OVERRIDE (user length request beats the 4-6 paragraph rule): if the user explicitly requests a specific length for the philosophy (e.g. 'one paragraph', 'short', 'keep it to N sentences', 'I don't read manifestos'), produce exactly that requested length instead of the '4-6 paragraphs' requirement above, and only include the '# Movement:' name plus the philosophy text scaled to that length. When compressed to one paragraph or less, use at most 1 craftsmanship phrase (not the '3 times' repetition rule) so the response stays within the user's requested size.",
+          "anchor": "",
+          "rationale": "Jazz-night failure: user explicitly asked for one tight paragraph, but the skill's learned-preferences block mandates exactly 4-6 paragraphs and 3x craftsmanship-phrase repetition. Without an explicit override, the agent will keep producing longer output than the user asked for.",
+          "verdict": "block",
+          "findings": [
+            {
+              "edit": 0,
+              "check": "override_language",
+              "severity": "review",
+              "message": "says 'OVERRIDE': the edit claims to override existing instructions"
+            },
+            {
+              "edit": 0,
+              "check": "llm_judge",
+              "severity": "block",
+              "message": "This protected invariant mandates a fixed 4-6 paragraph philosophy; letting a user request override it to any arbitrary length (including one paragraph) directly contradicts a locked, non-negotiable format requirement. Conflicts with: \"The design philosophy should be 4-6 paragraphs long.\""
+            }
+          ]
+        },
+        {
+          "op": "add",
+          "content": "OVERRIDE (explicit user style beats default abstract/gallery/scientific-diagram mandate): if the user explicitly asks for a concrete, non-abstract visual style (e.g. 'cartoony', 'bright', 'fun', 'bubbly letters', 'not some abstract gallery thing'), skip the 'DEDUCING THE SUBTLE REFERENCE' hidden-reference step and the 'scientific bible / dense accumulation of marks / clinical typography' treatment entirely, and instead build the literal requested look (bold colors, playful shapes/characters, large bubble typography) while still executing every element with the same level of polish, clean spacing, and no overlaps described under CRAFTSMANSHIP.",
+          "anchor": "",
+          "rationale": "Dinosaur-poster failure: user explicitly rejected the abstract/gallery aesthetic that the skill defaults to, but the skill has no override, so the agent tried to force the default philosophy-driven abstract approach instead of the literal fun, cartoony poster requested.",
+          "verdict": "block",
+          "findings": [
+            {
+              "edit": 1,
+              "check": "override_language",
+              "severity": "review",
+              "message": "says 'OVERRIDE': the edit claims to override existing instructions"
+            },
+            {
+              "edit": 1,
+              "check": "llm_judge",
+              "severity": "block",
+              "message": "This edit lets a user style request skip the mandatory hidden-reference deduction/embedding step entirely, removing a core invariant of the skill's purpose rather than just tightening style choices. Conflicts with: \"A subtle, niche conceptual reference tied to the user's request must be deduced and embedded invisibly into the visual …\""
+            }
+          ]
+        },
+        {
+          "op": "add",
+          "content": "Never end a turn after only a preparatory/reconnaissance tool call (e.g. listing ./canvas-fonts). Every response for this skill must conclude with the actual finished artifact(s) generated and referenced (the .png/.pdf, plus the .md philosophy when applicable) — a tool call that merely checks environment state is not a completed deliverable.",
+          "anchor": "",
+          "rationale": "Dinosaur-poster failure: the captured output was just an `ls ./canvas-fonts` bash call with no poster concept, code, or file produced, so the task was left incomplete.",
+          "verdict": "allow",
+          "findings": []
+        },
+        {
+          "op": "add",
+          "content": "Before finalizing the philosophy .md text, run a self-check pass: re-read every sentence and confirm none of them names the hidden subject, its technical terms, exact numbers/ratios, its category synonyms, or describes its generative mechanism/step-by-step rule (per the SECRECY OVERRIDE and 'never describe the generative rule' rules above). If any sentence fails this check, rewrite it in purely sensory/compositional language (space, weight, rhythm, silence, density) before outputting.",
+          "anchor": "",
+          "rationale": "Fibonacci case: despite existing secrecy rules, the delivered philosophy still leaked toward the hidden subject; an explicit verify-then-output self-check step forces the agent to apply the existing secrecy rules rather than skipping them under time pressure.",
+          "verdict": "review",
+          "findings": [
+            {
+              "edit": 3,
+              "check": "override_language",
+              "severity": "review",
+              "message": "says 'OVERRIDE': the edit claims to override existing instructions"
+            }
+          ]
+        }
+      ],
+      "global_findings": []
+    }
+  ]
+}

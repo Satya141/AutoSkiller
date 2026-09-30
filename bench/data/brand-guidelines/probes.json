@@ -1,0 +1,6 @@
+[
+  "How should I style a two-column comparison table in a Word-style report so it matches Anthropic's brand (header row, alternating rows, borders, fonts)?",
+  "Can you give me a python-pptx snippet that adds a branded title slide: heading, subheading, and a small colored accent rectangle?",
+  "We're making a poster for an Anthropic meetup. What background, heading font, body font, and highlight colors should we use?",
+  "write a React component for a branded callout/alert box (info, success, warning variants) using Anthropic's palette and typography"
+]

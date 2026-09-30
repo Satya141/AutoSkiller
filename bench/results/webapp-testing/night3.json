@@ -1,0 +1,148 @@
+{
+  "skill": "webapp-testing",
+  "night": 3,
+  "start_skill": "---\r\nname: webapp-testing\r\ndescription: Toolkit for interacting with and testing local web applications using Playwright. Supports verifying frontend functionality, debugging UI behavior, capturing browser screenshots, and viewing browser logs.\r\nlicense: Complete terms in LICENSE.txt\r\n---\r\n\r\n# Web Application Testing\r\n\r\nTo test local web applications, write native Python Playwright scripts.\r\n\r\n**Helper Scripts Available**:\r\n- `scripts/with_server.py` - Manages server lifecycle (supports multiple servers)\r\n\r\n**Always run scripts with `--help` first** to see usage. DO NOT read the source until you try running the script first and find that a customized solution is abslutely necessary. These scripts can be very large and thus pollute your context window. They exist to be called directly as black-box scripts rather than ingested into your context window.\r\n\r\n## Decision Tree: Choosing Your Approach\r\n\r\n```\r\nUser task → Is it static HTML?\r\n    ├─ Yes → Read HTML file directly to identify selectors\r\n    │         ├─ Success → Write Playwright script using selectors\r\n    │         └─ Fails/Incomplete → Treat as dynamic (below)\r\n    │\r\n    └─ No (dynamic webapp) → Is the server already running?\r\n        ├─ No → Run: python scripts/with_server.py --help\r\n        │        Then use the helper + write simplified Playwright script\r\n        │\r\n        └─ Yes → Reconnaissance-then-action:\r\n            1. Navigate and wait for networkidle\r\n            2. Take screenshot or inspect DOM\r\n            3. Identify selectors from rendered state\r\n            4. Execute actions with discovered selectors\r\n```\r\n\r\n## Example: Using with_server.py\r\n\r\nTo start a server, run `--help` first, then use the helper:\r\n\r\n**Single server:**\r\n```bash\r\npython scripts/with_server.py --server \"npm run dev\" --port 5173 -- python your_automation.py\r\n```\r\n\r\n**Multiple servers (e.g., backend + frontend):**\r\n```bash\r\npython scripts/with_server.py \\\r\n  --server \"cd backend && python server.py\" --port 3000 \\\r\n  --server \"cd frontend && npm run dev\" --port 5173 \\\r\n  -- python your_automation.py\r\n```\r\n\r\nTo create an automation script, include only Playwright logic (servers are managed automatically):\r\n```python\r\nfrom playwright.sync_api import sync_playwright\r\n\r\nwith sync_playwright() as p:\r\n    browser = p.chromium.launch(headless=True) # Always launch chromium in headless mode\r\n    page = browser.new_page()\r\n    page.goto('http://localhost:5173') # Server already running and ready\r\n    page.wait_for_load_state('networkidle') # CRITICAL: Wait for JS to execute\r\n    # ... your automation logic\r\n    browser.close()\r\n```\r\n\r\n## Reconnaissance-Then-Action Pattern\r\n\r\n1. **Inspect rendered DOM**:\r\n   ```python\r\n   page.screenshot(path='/tmp/inspect.png', full_page=True)\r\n   content = page.content()\r\n   page.locator('button').all()\r\n   ```\r\n\r\n2. **Identify selectors** from inspection results\r\n\r\n3. **Execute actions** using discovered selectors\r\n\r\n## Common Pitfall\r\n\r\n❌ **Don't** inspect the DOM before waiting for `networkidle` on dynamic apps\r\n✅ **Do** wait for `page.wait_for_load_state('networkidle')` before inspection\r\n\r\n## Best Practices\r\n\r\n- **Use bundled scripts as black boxes** - To accomplish a task, consider whether one of the scripts available in `scripts/` can help. These scripts handle common, complex workflows reliably without cluttering the context window. Use `--help` to see usage, then invoke directly. \r\n- Use `sync_playwright()` for synchronous scripts\r\n- Always close the browser when done\r\n- Use descriptive selectors: `text=`, `role=`, CSS selectors, or IDs\r\n- Add appropriate waits: `page.wait_for_selector()` or `page.wait_for_timeout()`\r\n\r\n## Reference Files\r\n\r\n- **examples/** - Examples showing common patterns:\r\n  - `element_discovery.py` - Discovering buttons, links, and inputs on a page\r\n  - `static_html_automation.py` - Using file:// URLs for local HTML\r\n  - `console_logging.py` - Capturing console logs during automation",
+  "end_skill": "---\r\nname: webapp-testing\r\ndescription: Toolkit for interacting with and testing local web applications using Playwright. Supports verifying frontend functionality, debugging UI behavior, capturing browser screenshots, and viewing browser logs.\r\nlicense: Complete terms in LICENSE.txt\r\n---\r\n\r\n# Web Application Testing\r\n\r\nTo test local web applications, write native Python Playwright scripts.\r\n\r\n**Helper Scripts Available**:\r\n- `scripts/with_server.py` - Manages server lifecycle (supports multiple servers)\r\n\r\n**Always run scripts with `--help` first** to see usage. DO NOT read the source until you try running the script first and find that a customized solution is abslutely necessary. These scripts can be very large and thus pollute your context window. They exist to be called directly as black-box scripts rather than ingested into your context window.\r\n\r\n## Decision Tree: Choosing Your Approach\r\n\r\n```\r\nUser task → Is it static HTML?\r\n    ├─ Yes → Read HTML file directly to identify selectors\r\n    │         ├─ Success → Write Playwright script using selectors\r\n    │         └─ Fails/Incomplete → Treat as dynamic (below)\r\n    │\r\n    └─ No (dynamic webapp) → Is the server already running?\r\n        ├─ No → Run: python scripts/with_server.py --help\r\n        │        Then use the helper + write simplified Playwright script\r\n        │\r\n        └─ Yes → Reconnaissance-then-action:\r\n            1. Navigate and wait for networkidle\r\n            2. Take screenshot or inspect DOM\r\n            3. Identify selectors from rendered state\r\n            4. Execute actions with discovered selectors\r\n```\r\n\r\n## Example: Using with_server.py\r\n\r\nTo start a server, run `--help` first, then use the helper:\r\n\r\n**Single server:**\r\n```bash\r\npython scripts/with_server.py --server \"npm run dev\" --port 5173 -- python your_automation.py\r\n```\r\n\r\n**Multiple servers (e.g., backend + frontend):**\r\n```bash\r\npython scripts/with_server.py \\\r\n  --server \"cd backend && python server.py\" --port 3000 \\\r\n  --server \"cd frontend && npm run dev\" --port 5173 \\\r\n  -- python your_automation.py\r\n```\r\n\r\nTo create an automation script, include only Playwright logic (servers are managed automatically):\r\n```python\r\nfrom playwright.sync_api import sync_playwright\r\n\r\nwith sync_playwright() as p:\r\n    browser = p.chromium.launch(headless=True) # Always launch chromium in headless mode\r\n    page = browser.new_page()\r\n    page.goto('http://localhost:5173') # Server already running and ready\r\n    page.wait_for_load_state('networkidle') # CRITICAL: Wait for JS to execute\r\n    # ... your automation logic\r\n    browser.close()\r\n```\r\n\r\n## Reconnaissance-Then-Action Pattern\r\n\r\n1. **Inspect rendered DOM**:\r\n   ```python\r\n   page.screenshot(path='/tmp/inspect.png', full_page=True)\r\n   content = page.content()\r\n   page.locator('button').all()\r\n   ```\r\n\r\n2. **Identify selectors** from inspection results\r\n\r\n3. **Execute actions** using discovered selectors\r\n\r\n## Common Pitfall\r\n\r\n❌ **Don't** inspect the DOM before waiting for `networkidle` on dynamic apps\r\n✅ **Do** wait for `page.wait_for_load_state('networkidle')` before inspection\r\n\r\n## Best Practices\r\n\r\n- **Use bundled scripts as black boxes** - To accomplish a task, consider whether one of the scripts available in `scripts/` can help. These scripts handle common, complex workflows reliably without cluttering the context window. Use `--help` to see usage, then invoke directly. \r\n- Use `sync_playwright()` for synchronous scripts\r\n- Always close the browser when done\r\n- Use descriptive selectors: `text=`, `role=`, CSS selectors, or IDs\r\n- Add appropriate waits: `page.wait_for_selector()` or `page.wait_for_timeout()`\r\n\r\n## Reference Files\r\n\r\n- **examples/** - Examples showing common patterns:\r\n  - `element_discovery.py` - Discovering buttons, links, and inputs on a page\r\n  - `static_html_automation.py` - Using file:// URLs for local HTML\r\n  - `console_logging.py` - Capturing console logs during automation",
+  "gate_action": "reject",
+  "accepted": false,
+  "baseline_score": 0.974,
+  "candidate_score": 0.974,
+  "gate_trials": [
+    {
+      "target": "skill",
+      "baseline_score": 0.974,
+      "candidate_score": 0.974,
+      "accepted": false,
+      "blocked_by_regression": false,
+      "task_deltas": [
+        {
+          "task_id": "webapp-testing-t5",
+          "tags": [],
+          "baseline_score": 0.9650000000000001,
+          "candidate_score": 0.985,
+          "status": "improved",
+          "scores_are_finite": true
+        },
+        {
+          "task_id": "webapp-testing-t6",
+          "tags": [],
+          "baseline_score": 0.985,
+          "candidate_score": 0.985,
+          "status": "unchanged",
+          "scores_are_finite": true
+        },
+        {
+          "task_id": "webapp-testing-t7",
+          "tags": [],
+          "baseline_score": 0.935,
+          "candidate_score": 0.95,
+          "status": "improved",
+          "scores_are_finite": true
+        },
+        {
+          "task_id": "webapp-testing-t8",
+          "tags": [],
+          "baseline_score": 1.0,
+          "candidate_score": 0.9650000000000001,
+          "status": "regressed",
+          "scores_are_finite": true
+        },
+        {
+          "task_id": "webapp-testing-t9",
+          "tags": [],
+          "baseline_score": 0.985,
+          "candidate_score": 0.985,
+          "status": "unchanged",
+          "scores_are_finite": true
+        }
+      ]
+    },
+    {
+      "target": "final",
+      "baseline_score": 0.974,
+      "candidate_score": 0.974,
+      "accepted": false,
+      "blocked_by_regression": false,
+      "task_deltas": [
+        {
+          "task_id": "webapp-testing-t5",
+          "tags": [],
+          "baseline_score": 0.9650000000000001,
+          "candidate_score": 0.9650000000000001,
+          "status": "unchanged",
+          "scores_are_finite": true
+        },
+        {
+          "task_id": "webapp-testing-t6",
+          "tags": [],
+          "baseline_score": 0.985,
+          "candidate_score": 0.985,
+          "status": "unchanged",
+          "scores_are_finite": true
+        },
+        {
+          "task_id": "webapp-testing-t7",
+          "tags": [],
+          "baseline_score": 0.935,
+          "candidate_score": 0.935,
+          "status": "unchanged",
+          "scores_are_finite": true
+        },
+        {
+          "task_id": "webapp-testing-t8",
+          "tags": [],
+          "baseline_score": 1.0,
+          "candidate_score": 1.0,
+          "status": "unchanged",
+          "scores_are_finite": true
+        },
+        {
+          "task_id": "webapp-testing-t9",
+          "tags": [],
+          "baseline_score": 0.985,
+          "candidate_score": 0.985,
+          "status": "unchanged",
+          "scores_are_finite": true
+        }
+      ]
+    }
+  ],
+  "holdout_leaked": false,
+  "call_error": "",
+  "reflect_raw": "```json\n[\n  {\n    \"op\": \"add\",\n    \"content\": \"For a static HTML page (file:// URL, no server), the script MUST follow every one of these steps in order: (1) tell the user you read the HTML file first to identify real selectors (use the actual ids, names and labels from the file, never invented ones); if the file is not available, say so and mark which selectors are assumed; (2) launch chromium with `headless=True`; (3) `page.goto(Path('index.html').resolve().as_uri())`; (4) call `page.wait_for_load_state('networkidle')` right after goto, even for file:// pages; (5) call `browser.close()` at the end, in a `try/finally` when assertions are present. Never skip a step because the page looks simple.\",\n    \"rationale\": \"The decision tree says to read static HTML to identify selectors, and the Best Practices require a headless launch, the networkidle wait and closing the browser. The previous answer used a file:// script but apparently skipped some of these steps.\"\n  },\n  {\n    \"op\": \"add\",\n    \"content\": \"When a test submits a form or triggers a UI change, do not check the result immediately. Wait explicitly first with `page.wait_for_selector(<success-selector>, state='visible')` or `expect(locator).to_be_visible()`, then assert the exact expected text with `expect(locator).to_contain_text(...)` or an `assert` on `locator.inner_text()`. Fill fields with `page.fill()` or `page.get_by_label()`, and click with `page.get_by_role('button', name=...)` or `page.click('text=...')`. Use the descriptive selectors the skill recommends: `text=`, `role=`, ids or CSS.\",\n    \"rationale\": \"Concrete wait-then-assert rules make the form-submission check reliable and consistent with the skill's Best Practices.\"\n  },\n  {\n    \"op\": \"add\",\n    \"content\": \"Always give a complete, runnable Python script in a single fenced ```python block, starting with `from playwright.sync_api import sync_playwright` and using `with sync_playwright() as p:`. Add a short note after the script on how to run it (`python test_contact_form.py`), and state that `with_server.py` is not needed for static files. Do not give only fragments or prose descriptions of the test.\",\n    \"rationale\": \"Requiring a full runnable sync_playwright script plus run instructions removes ambiguity about what counts as a complete answer.\"\n  },\n  {\n    \"op\": \"add\",\n    \"content\": \"Add basic diagnostics to every test script: register `page.on('console', lambda m: print('console:', m.text))`, and on failure (in an `except` block) call `page.screenshot(path='failure.png', full_page=True)` before re-raising. Also include one sentence saying that if the static-file approach fails or the page turns out to load content dynamically, you switch to the reconnaissance-then-action pattern (screenshot, then inspect the rendered DOM).\",\n    \"rationale\": \"The skill's reference files show console logging, and its decision tree says a failed static approach falls back to the dynamic pattern. Making both explicit covers the debugging and fallback behavior the skill promises.\"\n  }\n]\n```",
+  "edits": [
+    {
+      "op": "add",
+      "content": "For a static HTML page (file:// URL, no server), the script MUST follow every one of these steps in order: (1) tell the user you read the HTML file first to identify real selectors (use the actual ids, names and labels from the file, never invented ones); if the file is not available, say so and mark which selectors are assumed; (2) launch chromium with `headless=True`; (3) `page.goto(Path('index.html').resolve().as_uri())`; (4) call `page.wait_for_load_state('networkidle')` right after goto, even for file:// pages; (5) call `browser.close()` at the end, in a `try/finally` when assertions are present. Never skip a step because the page looks simple.",
+      "anchor": "",
+      "rationale": "The decision tree says to read static HTML to identify selectors, and the Best Practices require a headless launch, the networkidle wait and closing the browser. The previous answer used a file:// script but apparently skipped some of these steps.",
+      "skillopt": "rejected"
+    },
+    {
+      "op": "add",
+      "content": "When a test submits a form or triggers a UI change, do not check the result immediately. Wait explicitly first with `page.wait_for_selector(<success-selector>, state='visible')` or `expect(locator).to_be_visible()`, then assert the exact expected text with `expect(locator).to_contain_text(...)` or an `assert` on `locator.inner_text()`. Fill fields with `page.fill()` or `page.get_by_label()`, and click with `page.get_by_role('button', name=...)` or `page.click('text=...')`. Use the descriptive selectors the skill recommends: `text=`, `role=`, ids or CSS.",
+      "anchor": "",
+      "rationale": "Concrete wait-then-assert rules make the form-submission check reliable and consistent with the skill's Best Practices.",
+      "skillopt": "rejected"
+    },
+    {
+      "op": "add",
+      "content": "Always give a complete, runnable Python script in a single fenced ```python block, starting with `from playwright.sync_api import sync_playwright` and using `with sync_playwright() as p:`. Add a short note after the script on how to run it (`python test_contact_form.py`), and state that `with_server.py` is not needed for static files. Do not give only fragments or prose descriptions of the test.",
+      "anchor": "",
+      "rationale": "Requiring a full runnable sync_playwright script plus run instructions removes ambiguity about what counts as a complete answer.",
+      "skillopt": "rejected"
+    },
+    {
+      "op": "add",
+      "content": "Add basic diagnostics to every test script: register `page.on('console', lambda m: print('console:', m.text))`, and on failure (in an `except` block) call `page.screenshot(path='failure.png', full_page=True)` before re-raising. Also include one sentence saying that if the static-file approach fails or the page turns out to load content dynamically, you switch to the reconnaissance-then-action pattern (screenshot, then inspect the rendered DOM).",
+      "anchor": "",
+      "rationale": "The skill's reference files show console logging, and its decision tree says a failed static approach falls back to the dynamic pattern. Making both explicit covers the debugging and fallback behavior the skill promises.",
+      "skillopt": "rejected"
+    }
+  ],
+  "cost_usd": 0.5850518000000001,
+  "calls": 31,
+  "models": [
+    "claude-sonnet-5"
+  ]
+}

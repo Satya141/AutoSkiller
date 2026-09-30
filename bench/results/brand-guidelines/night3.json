@@ -1,0 +1,70 @@
+{
+  "skill": "brand-guidelines",
+  "night": 3,
+  "start_skill": "---\r\nname: brand-guidelines\r\ndescription: Applies Anthropic's official brand colors and typography to any sort of artifact that may benefit from having Anthropic's look-and-feel. Use it when brand colors or style guidelines, visual formatting, or company design standards apply.\r\nlicense: Complete terms in LICENSE.txt\r\n---\r\n\r\n# Anthropic Brand Styling\r\n\r\n## Overview\r\n\r\nTo access Anthropic's official brand identity and style resources, use this skill.\r\n\r\n**Keywords**: branding, corporate identity, visual identity, post-processing, styling, brand colors, typography, Anthropic brand, visual formatting, visual design\r\n\r\n## Brand Guidelines\r\n\r\n### Colors\r\n\r\n**Main Colors:**\r\n\r\n- Dark: `#141413` - Primary text and dark backgrounds\r\n- Light: `#faf9f5` - Light backgrounds and text on dark\r\n- Mid Gray: `#b0aea5` - Secondary elements\r\n- Light Gray: `#e8e6dc` - Subtle backgrounds\r\n\r\n**Accent Colors:**\r\n\r\n- Orange: `#d97757` - Primary accent\r\n- Blue: `#6a9bcc` - Secondary accent\r\n- Green: `#788c5d` - Tertiary accent\r\n\r\n### Typography\r\n\r\n- **Headings**: Poppins (with Arial fallback)\r\n- **Body Text**: Lora (with Georgia fallback)\r\n- **Note**: Fonts should be pre-installed in your environment for best results\r\n\r\n## Features\r\n\r\n### Smart Font Application\r\n\r\n- Applies Poppins font to headings (24pt and larger)\r\n- Applies Lora font to body text\r\n- Automatically falls back to Arial/Georgia if custom fonts unavailable\r\n- Preserves readability across all systems\r\n\r\n### Text Styling\r\n\r\n- Headings (24pt+): Poppins font\r\n- Body text: Lora font\r\n- Smart color selection based on background\r\n- Preserves text hierarchy and formatting\r\n\r\n### Shape and Accent Colors\r\n\r\n- Non-text shapes use accent colors\r\n- Cycles through orange, blue, and green accents\r\n- Maintains visual interest while staying on-brand\r\n\r\n## Technical Details\r\n\r\n### Font Management\r\n\r\n- Uses system-installed Poppins and Lora fonts when available\r\n- Provides automatic fallback to Arial (headings) and Georgia (body)\r\n- No font installation required - works with existing system fonts\r\n- For best results, pre-install Poppins and Lora fonts in your environment\r\n\r\n### Color Application\r\n\r\n- Uses RGB color values for precise brand matching\r\n- Applied via python-pptx's RGBColor class\r\n- Maintains color fidelity across different systems\n\n<!-- SKILLOPT-SLEEP:LEARNED START -->\n## Learned preferences & procedures\n\n_This block is maintained by SkillOpt-Sleep. Edits here are proposed offline, validated against your past tasks, and adopted only after you approve them. Hand-edits outside this block are never touched._\n\n- When asked what colors/fonts to use for a slide or artifact, answer for EVERY named element (background, title, subtitle, body, accent shape) with an explicit line each in the form 'Element: font (fallback) + hex color'. Never stop after the background and title. Use exact hex codes from the palette: Dark #141413, Light #faf9f5, Mid Gray #b0aea5, Light Gray #e8e6dc, Orange #d97757, Blue #6a9bcc, Green #788c5d.\n- Dark-background rule: background Dark #141413; all text on it uses Light #faf9f5 (Mid Gray #b0aea5 is allowed only for de-emphasized secondary text). Title/headings (24pt and larger): Poppins, fallback Arial. Subtitle and any body-size text (below 24pt): Lora, fallback Georgia. State the font name AND its fallback every time. A subtitle is body text, so it uses Lora/Georgia, not Poppins, unless it is 24pt or larger.\n- Decorative, non-text shapes (accent bars, dividers, icons) use accent colors only. Default to Orange #d97757 as the primary accent for a single shape. When several shapes are used, cycle Orange #d97757, then Blue #6a9bcc, then Green #788c5d. Never use the Dark/Light neutrals for an accent bar. Always name the hex code for the accent bar.\n- Keep answers compact and structured: one bullet per element with font, fallback and hex. Give the rationale in at most one short sentence, and do not restate the guidelines. Cover all elements the user names before adding any extras.\n<!-- SKILLOPT-SLEEP:LEARNED END -->\n",
+  "end_skill": "---\r\nname: brand-guidelines\r\ndescription: Applies Anthropic's official brand colors and typography to any sort of artifact that may benefit from having Anthropic's look-and-feel. Use it when brand colors or style guidelines, visual formatting, or company design standards apply.\r\nlicense: Complete terms in LICENSE.txt\r\n---\r\n\r\n# Anthropic Brand Styling\r\n\r\n## Overview\r\n\r\nTo access Anthropic's official brand identity and style resources, use this skill.\r\n\r\n**Keywords**: branding, corporate identity, visual identity, post-processing, styling, brand colors, typography, Anthropic brand, visual formatting, visual design\r\n\r\n## Brand Guidelines\r\n\r\n### Colors\r\n\r\n**Main Colors:**\r\n\r\n- Dark: `#141413` - Primary text and dark backgrounds\r\n- Light: `#faf9f5` - Light backgrounds and text on dark\r\n- Mid Gray: `#b0aea5` - Secondary elements\r\n- Light Gray: `#e8e6dc` - Subtle backgrounds\r\n\r\n**Accent Colors:**\r\n\r\n- Orange: `#d97757` - Primary accent\r\n- Blue: `#6a9bcc` - Secondary accent\r\n- Green: `#788c5d` - Tertiary accent\r\n\r\n### Typography\r\n\r\n- **Headings**: Poppins (with Arial fallback)\r\n- **Body Text**: Lora (with Georgia fallback)\r\n- **Note**: Fonts should be pre-installed in your environment for best results\r\n\r\n## Features\r\n\r\n### Smart Font Application\r\n\r\n- Applies Poppins font to headings (24pt and larger)\r\n- Applies Lora font to body text\r\n- Automatically falls back to Arial/Georgia if custom fonts unavailable\r\n- Preserves readability across all systems\r\n\r\n### Text Styling\r\n\r\n- Headings (24pt+): Poppins font\r\n- Body text: Lora font\r\n- Smart color selection based on background\r\n- Preserves text hierarchy and formatting\r\n\r\n### Shape and Accent Colors\r\n\r\n- Non-text shapes use accent colors\r\n- Cycles through orange, blue, and green accents\r\n- Maintains visual interest while staying on-brand\r\n\r\n## Technical Details\r\n\r\n### Font Management\r\n\r\n- Uses system-installed Poppins and Lora fonts when available\r\n- Provides automatic fallback to Arial (headings) and Georgia (body)\r\n- No font installation required - works with existing system fonts\r\n- For best results, pre-install Poppins and Lora fonts in your environment\r\n\r\n### Color Application\r\n\r\n- Uses RGB color values for precise brand matching\r\n- Applied via python-pptx's RGBColor class\r\n- Maintains color fidelity across different systems\n\n<!-- SKILLOPT-SLEEP:LEARNED START -->\n## Learned preferences & procedures\n\n_This block is maintained by SkillOpt-Sleep. Edits here are proposed offline, validated against your past tasks, and adopted only after you approve them. Hand-edits outside this block are never touched._\n\n- When asked what colors/fonts to use for a slide or artifact, answer for EVERY named element (background, title, subtitle, body, accent shape) with an explicit line each in the form 'Element: font (fallback) + hex color'. Never stop after the background and title. Use exact hex codes from the palette: Dark #141413, Light #faf9f5, Mid Gray #b0aea5, Light Gray #e8e6dc, Orange #d97757, Blue #6a9bcc, Green #788c5d.\n- Dark-background rule: background Dark #141413; all text on it uses Light #faf9f5 (Mid Gray #b0aea5 is allowed only for de-emphasized secondary text). Title/headings (24pt and larger): Poppins, fallback Arial. Subtitle and any body-size text (below 24pt): Lora, fallback Georgia. State the font name AND its fallback every time. A subtitle is body text, so it uses Lora/Georgia, not Poppins, unless it is 24pt or larger.\n- Decorative, non-text shapes (accent bars, dividers, icons) use accent colors only. Default to Orange #d97757 as the primary accent for a single shape. When several shapes are used, cycle Orange #d97757, then Blue #6a9bcc, then Green #788c5d. Never use the Dark/Light neutrals for an accent bar. Always name the hex code for the accent bar.\n- Keep answers compact and structured: one bullet per element with font, fallback and hex. Give the rationale in at most one short sentence, and do not restate the guidelines. Cover all elements the user names before adding any extras.\n<!-- SKILLOPT-SLEEP:LEARNED END -->\n",
+  "gate_action": "reject",
+  "accepted": false,
+  "baseline_score": 0.968,
+  "candidate_score": 0.968,
+  "gate_trials": [
+    {
+      "target": "final",
+      "baseline_score": 0.968,
+      "candidate_score": 0.968,
+      "accepted": false,
+      "blocked_by_regression": false,
+      "task_deltas": [
+        {
+          "task_id": "brand-guidelines-t5",
+          "tags": [],
+          "baseline_score": 1.0,
+          "candidate_score": 1.0,
+          "status": "unchanged",
+          "scores_are_finite": true
+        },
+        {
+          "task_id": "brand-guidelines-t6",
+          "tags": [],
+          "baseline_score": 1.0,
+          "candidate_score": 1.0,
+          "status": "unchanged",
+          "scores_are_finite": true
+        },
+        {
+          "task_id": "brand-guidelines-t7",
+          "tags": [],
+          "baseline_score": 0.975,
+          "candidate_score": 0.975,
+          "status": "unchanged",
+          "scores_are_finite": true
+        },
+        {
+          "task_id": "brand-guidelines-t8",
+          "tags": [],
+          "baseline_score": 0.94,
+          "candidate_score": 0.94,
+          "status": "unchanged",
+          "scores_are_finite": true
+        },
+        {
+          "task_id": "brand-guidelines-t9",
+          "tags": [],
+          "baseline_score": 0.925,
+          "candidate_score": 0.925,
+          "status": "unchanged",
+          "scores_are_finite": true
+        }
+      ]
+    }
+  ],
+  "holdout_leaked": false,
+  "call_error": "",
+  "reflect_raw": "",
+  "edits": [],
+  "cost_usd": 0.37042,
+  "calls": 20,
+  "models": [
+    "claude-sonnet-5"
+  ]
+}

@@ -1,0 +1,72 @@
+[
+  {
+    "intent": "I finished an MCP server for our Notion workspace. Can you help me write the evaluation file to test whether an LLM can actually use it well? Give me the format and a few example questions.",
+    "rubric": "A good answer uses the <evaluation><qa_pair><question>/<answer> XML format and aims for 10 questions. Each example question needs several tool calls, can be answered with read-only operations, is independent of the others, is realistic, and has one stable answer that can be checked by string comparison. It also says to verify each answer by solving the question yourself.",
+    "kind": "aligned",
+    "id": "mcp-builder-t0",
+    "split": "train"
+  },
+  {
+    "intent": "Need a quick MCP server for the Stripe API in TypeScript, just a handful of tools for customers and invoices. Please skip the whole evaluation/test-question part, I just want the working server code and nothing else.",
+    "rubric": "The answer gives only working server code for the requested customer and invoice tools and leaves out any evaluation XML, test questions or testing phase, as the user explicitly asked.",
+    "kind": "preference",
+    "id": "mcp-builder-t1",
+    "split": "train"
+  },
+  {
+    "intent": "My MCP server's error messages are just things like 'Error 404' or 'Request failed'. The agent keeps getting stuck. How should I rewrite error handling?",
+    "rubric": "A good answer explains that errors should steer the agent toward a fix with specific suggestions and next steps, for example 'Repository not found; check the owner/repo format or call github_list_repos'. It proposes a shared error-handling helper so all tools handle errors the same way, and it gives concrete examples for common HTTP statuses such as 401, 403, 404 and 429.",
+    "kind": "aligned",
+    "id": "mcp-builder-t2",
+    "split": "train"
+  },
+  {
+    "intent": "I want to build an MCP server that wraps the Linear API so Claude can manage issues for my team. Can you plan out which tools I should expose and what they should be called?",
+    "rubric": "A good answer puts broad API coverage ahead of a few narrow workflow tools, with issue, project, team, comment and cycle operations. Tool names use a consistent service prefix and start with the action (for example linear_create_issue, linear_list_issues). It separates read-only tools from destructive ones and mentions pagination and filtering for the list tools.",
+    "kind": "aligned",
+    "id": "mcp-builder-t3",
+    "split": "train"
+  },
+  {
+    "intent": "python fastmcp server for the openweathermap api - just need current weather + 5 day forecast tools. how would you write it",
+    "rubric": "A good answer uses FastMCP with @mcp.tool and Pydantic input models that have field constraints and descriptions. Tool names are prefixed (for example openweather_get_current, openweather_get_forecast) and the tools are marked read-only. It uses async HTTP with a shared API client that handles the API key and returns concise, focused output, optionally with a JSON or Markdown format choice. Errors are actionable, for example for a city that isn't found or a bad API key.",
+    "kind": "aligned",
+    "id": "mcp-builder-t4",
+    "split": "train"
+  },
+  {
+    "intent": "Building an MCP server for my personal todo app API. I hate long prefixed tool names like todoapp_list_tasks — this is the only server I run, so I want short names like `list`, `add`, `done`. Can you write the tool definitions that way?",
+    "rubric": "The answer uses the short, unprefixed tool names the user asked for (list, add, done and similar) and does not rename them with a service prefix.",
+    "kind": "preference",
+    "id": "mcp-builder-t5",
+    "split": "val"
+  },
+  {
+    "intent": "For my GitHub MCP server, I want one tool called `github_do` that takes a free-text instruction and figures out which API call to make internally. I don't want dozens of separate endpoint tools cluttering things up. How do I implement that?",
+    "rubric": "The answer implements the single catch-all workflow tool the user asked for, with no pushback toward splitting it into many separate endpoint tools.",
+    "kind": "preference",
+    "id": "mcp-builder-t6",
+    "split": "val"
+  },
+  {
+    "intent": "I'm deploying an MCP server for our internal CRM so people across the company can use it from Claude. Should I use stdio or HTTP, and how should I set up the transport?",
+    "rubric": "A good answer recommends Streamable HTTP for a remote, shared deployment and advises a stateless JSON setup over stateful sessions and streaming because it is easier to scale and maintain. It says stdio is for local, single-user servers, and it also covers authentication or security for a remote server.",
+    "kind": "aligned",
+    "id": "mcp-builder-t7",
+    "split": "val"
+  },
+  {
+    "intent": "Write me a TypeScript MCP server tool using the official SDK that searches Jira issues by JQL. Include the input schema and everything.",
+    "rubric": "A good answer registers the tool with server.registerTool and defines a Zod input schema with constraints, descriptions and examples (JQL string, limit, offset or cursor). It sets the readOnlyHint, destructiveHint, idempotentHint and openWorldHint annotations and supports pagination. It defines an outputSchema, returns structuredContent next to the text content, uses async/await, and gives error messages that tell the agent what to do next, such as how to fix invalid JQL or an auth failure.",
+    "kind": "aligned",
+    "id": "mcp-builder-t8",
+    "split": "val"
+  },
+  {
+    "intent": "Reviewing a teammate's MCP server before we ship. What should I be checking for, and how do I actually test it runs?",
+    "rubric": "A good answer covers the review points: no duplicated code, consistent error handling, full type coverage, clear and concise tool descriptions, correct annotations, and pagination on list tools. For testing it gives npm run build for TypeScript or python -m py_compile for Python, plus exercising the tools with the MCP Inspector (npx @modelcontextprotocol/inspector).",
+    "kind": "aligned",
+    "id": "mcp-builder-t9",
+    "split": "val"
+  }
+]

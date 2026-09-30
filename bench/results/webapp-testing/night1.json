@@ -1,0 +1,148 @@
+{
+  "skill": "webapp-testing",
+  "night": 1,
+  "start_skill": "---\r\nname: webapp-testing\r\ndescription: Toolkit for interacting with and testing local web applications using Playwright. Supports verifying frontend functionality, debugging UI behavior, capturing browser screenshots, and viewing browser logs.\r\nlicense: Complete terms in LICENSE.txt\r\n---\r\n\r\n# Web Application Testing\r\n\r\nTo test local web applications, write native Python Playwright scripts.\r\n\r\n**Helper Scripts Available**:\r\n- `scripts/with_server.py` - Manages server lifecycle (supports multiple servers)\r\n\r\n**Always run scripts with `--help` first** to see usage. DO NOT read the source until you try running the script first and find that a customized solution is abslutely necessary. These scripts can be very large and thus pollute your context window. They exist to be called directly as black-box scripts rather than ingested into your context window.\r\n\r\n## Decision Tree: Choosing Your Approach\r\n\r\n```\r\nUser task → Is it static HTML?\r\n    ├─ Yes → Read HTML file directly to identify selectors\r\n    │         ├─ Success → Write Playwright script using selectors\r\n    │         └─ Fails/Incomplete → Treat as dynamic (below)\r\n    │\r\n    └─ No (dynamic webapp) → Is the server already running?\r\n        ├─ No → Run: python scripts/with_server.py --help\r\n        │        Then use the helper + write simplified Playwright script\r\n        │\r\n        └─ Yes → Reconnaissance-then-action:\r\n            1. Navigate and wait for networkidle\r\n            2. Take screenshot or inspect DOM\r\n            3. Identify selectors from rendered state\r\n            4. Execute actions with discovered selectors\r\n```\r\n\r\n## Example: Using with_server.py\r\n\r\nTo start a server, run `--help` first, then use the helper:\r\n\r\n**Single server:**\r\n```bash\r\npython scripts/with_server.py --server \"npm run dev\" --port 5173 -- python your_automation.py\r\n```\r\n\r\n**Multiple servers (e.g., backend + frontend):**\r\n```bash\r\npython scripts/with_server.py \\\r\n  --server \"cd backend && python server.py\" --port 3000 \\\r\n  --server \"cd frontend && npm run dev\" --port 5173 \\\r\n  -- python your_automation.py\r\n```\r\n\r\nTo create an automation script, include only Playwright logic (servers are managed automatically):\r\n```python\r\nfrom playwright.sync_api import sync_playwright\r\n\r\nwith sync_playwright() as p:\r\n    browser = p.chromium.launch(headless=True) # Always launch chromium in headless mode\r\n    page = browser.new_page()\r\n    page.goto('http://localhost:5173') # Server already running and ready\r\n    page.wait_for_load_state('networkidle') # CRITICAL: Wait for JS to execute\r\n    # ... your automation logic\r\n    browser.close()\r\n```\r\n\r\n## Reconnaissance-Then-Action Pattern\r\n\r\n1. **Inspect rendered DOM**:\r\n   ```python\r\n   page.screenshot(path='/tmp/inspect.png', full_page=True)\r\n   content = page.content()\r\n   page.locator('button').all()\r\n   ```\r\n\r\n2. **Identify selectors** from inspection results\r\n\r\n3. **Execute actions** using discovered selectors\r\n\r\n## Common Pitfall\r\n\r\n❌ **Don't** inspect the DOM before waiting for `networkidle` on dynamic apps\r\n✅ **Do** wait for `page.wait_for_load_state('networkidle')` before inspection\r\n\r\n## Best Practices\r\n\r\n- **Use bundled scripts as black boxes** - To accomplish a task, consider whether one of the scripts available in `scripts/` can help. These scripts handle common, complex workflows reliably without cluttering the context window. Use `--help` to see usage, then invoke directly. \r\n- Use `sync_playwright()` for synchronous scripts\r\n- Always close the browser when done\r\n- Use descriptive selectors: `text=`, `role=`, CSS selectors, or IDs\r\n- Add appropriate waits: `page.wait_for_selector()` or `page.wait_for_timeout()`\r\n\r\n## Reference Files\r\n\r\n- **examples/** - Examples showing common patterns:\r\n  - `element_discovery.py` - Discovering buttons, links, and inputs on a page\r\n  - `static_html_automation.py` - Using file:// URLs for local HTML\r\n  - `console_logging.py` - Capturing console logs during automation",
+  "end_skill": "---\r\nname: webapp-testing\r\ndescription: Toolkit for interacting with and testing local web applications using Playwright. Supports verifying frontend functionality, debugging UI behavior, capturing browser screenshots, and viewing browser logs.\r\nlicense: Complete terms in LICENSE.txt\r\n---\r\n\r\n# Web Application Testing\r\n\r\nTo test local web applications, write native Python Playwright scripts.\r\n\r\n**Helper Scripts Available**:\r\n- `scripts/with_server.py` - Manages server lifecycle (supports multiple servers)\r\n\r\n**Always run scripts with `--help` first** to see usage. DO NOT read the source until you try running the script first and find that a customized solution is abslutely necessary. These scripts can be very large and thus pollute your context window. They exist to be called directly as black-box scripts rather than ingested into your context window.\r\n\r\n## Decision Tree: Choosing Your Approach\r\n\r\n```\r\nUser task → Is it static HTML?\r\n    ├─ Yes → Read HTML file directly to identify selectors\r\n    │         ├─ Success → Write Playwright script using selectors\r\n    │         └─ Fails/Incomplete → Treat as dynamic (below)\r\n    │\r\n    └─ No (dynamic webapp) → Is the server already running?\r\n        ├─ No → Run: python scripts/with_server.py --help\r\n        │        Then use the helper + write simplified Playwright script\r\n        │\r\n        └─ Yes → Reconnaissance-then-action:\r\n            1. Navigate and wait for networkidle\r\n            2. Take screenshot or inspect DOM\r\n            3. Identify selectors from rendered state\r\n            4. Execute actions with discovered selectors\r\n```\r\n\r\n## Example: Using with_server.py\r\n\r\nTo start a server, run `--help` first, then use the helper:\r\n\r\n**Single server:**\r\n```bash\r\npython scripts/with_server.py --server \"npm run dev\" --port 5173 -- python your_automation.py\r\n```\r\n\r\n**Multiple servers (e.g., backend + frontend):**\r\n```bash\r\npython scripts/with_server.py \\\r\n  --server \"cd backend && python server.py\" --port 3000 \\\r\n  --server \"cd frontend && npm run dev\" --port 5173 \\\r\n  -- python your_automation.py\r\n```\r\n\r\nTo create an automation script, include only Playwright logic (servers are managed automatically):\r\n```python\r\nfrom playwright.sync_api import sync_playwright\r\n\r\nwith sync_playwright() as p:\r\n    browser = p.chromium.launch(headless=True) # Always launch chromium in headless mode\r\n    page = browser.new_page()\r\n    page.goto('http://localhost:5173') # Server already running and ready\r\n    page.wait_for_load_state('networkidle') # CRITICAL: Wait for JS to execute\r\n    # ... your automation logic\r\n    browser.close()\r\n```\r\n\r\n## Reconnaissance-Then-Action Pattern\r\n\r\n1. **Inspect rendered DOM**:\r\n   ```python\r\n   page.screenshot(path='/tmp/inspect.png', full_page=True)\r\n   content = page.content()\r\n   page.locator('button').all()\r\n   ```\r\n\r\n2. **Identify selectors** from inspection results\r\n\r\n3. **Execute actions** using discovered selectors\r\n\r\n## Common Pitfall\r\n\r\n❌ **Don't** inspect the DOM before waiting for `networkidle` on dynamic apps\r\n✅ **Do** wait for `page.wait_for_load_state('networkidle')` before inspection\r\n\r\n## Best Practices\r\n\r\n- **Use bundled scripts as black boxes** - To accomplish a task, consider whether one of the scripts available in `scripts/` can help. These scripts handle common, complex workflows reliably without cluttering the context window. Use `--help` to see usage, then invoke directly. \r\n- Use `sync_playwright()` for synchronous scripts\r\n- Always close the browser when done\r\n- Use descriptive selectors: `text=`, `role=`, CSS selectors, or IDs\r\n- Add appropriate waits: `page.wait_for_selector()` or `page.wait_for_timeout()`\r\n\r\n## Reference Files\r\n\r\n- **examples/** - Examples showing common patterns:\r\n  - `element_discovery.py` - Discovering buttons, links, and inputs on a page\r\n  - `static_html_automation.py` - Using file:// URLs for local HTML\r\n  - `console_logging.py` - Capturing console logs during automation",
+  "gate_action": "reject",
+  "accepted": false,
+  "baseline_score": 0.975,
+  "candidate_score": 0.975,
+  "gate_trials": [
+    {
+      "target": "skill",
+      "baseline_score": 0.975,
+      "candidate_score": 0.9690000000000001,
+      "accepted": false,
+      "blocked_by_regression": false,
+      "task_deltas": [
+        {
+          "task_id": "webapp-testing-t5",
+          "tags": [],
+          "baseline_score": 0.975,
+          "candidate_score": 0.985,
+          "status": "improved",
+          "scores_are_finite": true
+        },
+        {
+          "task_id": "webapp-testing-t6",
+          "tags": [],
+          "baseline_score": 0.985,
+          "candidate_score": 0.98,
+          "status": "regressed",
+          "scores_are_finite": true
+        },
+        {
+          "task_id": "webapp-testing-t7",
+          "tags": [],
+          "baseline_score": 0.9650000000000001,
+          "candidate_score": 0.9650000000000001,
+          "status": "unchanged",
+          "scores_are_finite": true
+        },
+        {
+          "task_id": "webapp-testing-t8",
+          "tags": [],
+          "baseline_score": 0.9650000000000001,
+          "candidate_score": 0.95,
+          "status": "regressed",
+          "scores_are_finite": true
+        },
+        {
+          "task_id": "webapp-testing-t9",
+          "tags": [],
+          "baseline_score": 0.985,
+          "candidate_score": 0.9650000000000001,
+          "status": "regressed",
+          "scores_are_finite": true
+        }
+      ]
+    },
+    {
+      "target": "final",
+      "baseline_score": 0.975,
+      "candidate_score": 0.975,
+      "accepted": false,
+      "blocked_by_regression": false,
+      "task_deltas": [
+        {
+          "task_id": "webapp-testing-t5",
+          "tags": [],
+          "baseline_score": 0.975,
+          "candidate_score": 0.975,
+          "status": "unchanged",
+          "scores_are_finite": true
+        },
+        {
+          "task_id": "webapp-testing-t6",
+          "tags": [],
+          "baseline_score": 0.985,
+          "candidate_score": 0.985,
+          "status": "unchanged",
+          "scores_are_finite": true
+        },
+        {
+          "task_id": "webapp-testing-t7",
+          "tags": [],
+          "baseline_score": 0.9650000000000001,
+          "candidate_score": 0.9650000000000001,
+          "status": "unchanged",
+          "scores_are_finite": true
+        },
+        {
+          "task_id": "webapp-testing-t8",
+          "tags": [],
+          "baseline_score": 0.9650000000000001,
+          "candidate_score": 0.9650000000000001,
+          "status": "unchanged",
+          "scores_are_finite": true
+        },
+        {
+          "task_id": "webapp-testing-t9",
+          "tags": [],
+          "baseline_score": 0.985,
+          "candidate_score": 0.985,
+          "status": "unchanged",
+          "scores_are_finite": true
+        }
+      ]
+    }
+  ],
+  "holdout_leaked": false,
+  "call_error": "",
+  "reflect_raw": "```json\n[\n  {\n    \"op\": \"add\",\n    \"content\": \"For a static HTML file with no server (e.g. a plain index.html), do NOT use with_server.py. Load it via a file:// URL built with `Path('index.html').resolve().as_uri()` (or `file:///abs/path/index.html`), and say in one sentence why no server helper is needed. Use synchronous Playwright: `with sync_playwright() as p: browser = p.chromium.launch(headless=True)`, then `page.goto(url)` and `page.wait_for_load_state('networkidle')`, and finish with `browser.close()`.\",\n    \"rationale\": \"Makes the static-page path explicit and concrete: file:// URL, headless sync Playwright, no server helper, and the wait and close steps.\"\n  },\n  {\n    \"op\": \"add\",\n    \"content\": \"When asked how to write a test for a form, put ONE complete, runnable Python script in the first code block of the response, before any long explanation. The script must (1) fill every field with `page.fill()` or `page.get_by_label(...).fill()`, (2) submit with `page.click('button[type=submit]')` or `page.get_by_role('button', name=...)`, and (3) assert the thank-you outcome with `expect(...).to_be_visible()` or an explicit `assert`. Keep the prose around the script under about 15 lines so the answer is never cut off mid-sentence, and always finish the answer, including the closing code fence and every numbered step you start.\",\n    \"rationale\": \"The previous answer was truncated at '**1. Check the'. This rule puts the full working script first, requires fill, submit and assert, and caps the surrounding prose.\"\n  },\n  {\n    \"op\": \"add\",\n    \"content\": \"For any form-submission test, include short fallbacks for the ways a thank-you can appear, since the HTML is unknown. (a) Same-page message, where inline JS reveals or changes an element: use `expect(page.get_by_text('Thank you')).to_be_visible()`. (b) Navigation to another page: use `page.wait_for_url('**/thanks*')` or `page.expect_navigation()` and then check the text. Also cover selector fallbacks: prefer `get_by_label`, `name=` and `id` selectors, use `select_option()` for dropdowns and `check()` for checkboxes, and name the fallback if a form uses them. Show these as brief commented alternatives inside the same script, not as separate long sections.\",\n    \"rationale\": \"The failing criteria call for fallbacks such as the navigation case and select handling. This makes them a standard part of the answer, kept compact.\"\n  },\n  {\n    \"op\": \"add\",\n    \"content\": \"OVERRIDE: the 'Reconnaissance-then-action' steps and the 'read the HTML first' advice must not delay the answer to a how-would-you-write-it question. Answer directly with the script and a note like 'adjust selectors to match your markup'. Do not tell the user to run reconnaissance or ask them for the HTML, and do not ask clarifying questions. State any assumed field names and thank-you text in a comment at the top of the script.\",\n    \"rationale\": \"Stops the agent stalling on discovery steps or asking questions for an answerable request, and keeps the response actionable.\"\n  }\n]\n```",
+  "edits": [
+    {
+      "op": "add",
+      "content": "For a static HTML file with no server (e.g. a plain index.html), do NOT use with_server.py. Load it via a file:// URL built with `Path('index.html').resolve().as_uri()` (or `file:///abs/path/index.html`), and say in one sentence why no server helper is needed. Use synchronous Playwright: `with sync_playwright() as p: browser = p.chromium.launch(headless=True)`, then `page.goto(url)` and `page.wait_for_load_state('networkidle')`, and finish with `browser.close()`.",
+      "anchor": "",
+      "rationale": "Makes the static-page path explicit and concrete: file:// URL, headless sync Playwright, no server helper, and the wait and close steps.",
+      "skillopt": "rejected"
+    },
+    {
+      "op": "add",
+      "content": "When asked how to write a test for a form, put ONE complete, runnable Python script in the first code block of the response, before any long explanation. The script must (1) fill every field with `page.fill()` or `page.get_by_label(...).fill()`, (2) submit with `page.click('button[type=submit]')` or `page.get_by_role('button', name=...)`, and (3) assert the thank-you outcome with `expect(...).to_be_visible()` or an explicit `assert`. Keep the prose around the script under about 15 lines so the answer is never cut off mid-sentence, and always finish the answer, including the closing code fence and every numbered step you start.",
+      "anchor": "",
+      "rationale": "The previous answer was truncated at '**1. Check the'. This rule puts the full working script first, requires fill, submit and assert, and caps the surrounding prose.",
+      "skillopt": "rejected"
+    },
+    {
+      "op": "add",
+      "content": "For any form-submission test, include short fallbacks for the ways a thank-you can appear, since the HTML is unknown. (a) Same-page message, where inline JS reveals or changes an element: use `expect(page.get_by_text('Thank you')).to_be_visible()`. (b) Navigation to another page: use `page.wait_for_url('**/thanks*')` or `page.expect_navigation()` and then check the text. Also cover selector fallbacks: prefer `get_by_label`, `name=` and `id` selectors, use `select_option()` for dropdowns and `check()` for checkboxes, and name the fallback if a form uses them. Show these as brief commented alternatives inside the same script, not as separate long sections.",
+      "anchor": "",
+      "rationale": "The failing criteria call for fallbacks such as the navigation case and select handling. This makes them a standard part of the answer, kept compact.",
+      "skillopt": "rejected"
+    },
+    {
+      "op": "add",
+      "content": "OVERRIDE: the 'Reconnaissance-then-action' steps and the 'read the HTML first' advice must not delay the answer to a how-would-you-write-it question. Answer directly with the script and a note like 'adjust selectors to match your markup'. Do not tell the user to run reconnaissance or ask them for the HTML, and do not ask clarifying questions. State any assumed field names and thank-you text in a comment at the top of the script.",
+      "anchor": "",
+      "rationale": "Stops the agent stalling on discovery steps or asking questions for an answerable request, and keeps the response actionable.",
+      "skillopt": "rejected"
+    }
+  ],
+  "cost_usd": 0.5701178000000001,
+  "calls": 31,
+  "models": [
+    "claude-sonnet-5"
+  ]
+}

@@ -1,0 +1,72 @@
+[
+  {
+    "intent": "What are the actual size/fps/color limits I should target for a slack emoji gif vs one I post in a channel? and how do I check mine passes before uploading",
+    "rubric": "States 128x128 for emoji and 480x480 for message GIFs, 10–30 FPS, 48–128 colors, and under 3 seconds for emoji, then shows how to check a GIF with validate_gif(is_emoji=True) or is_slack_ready from core.validators.",
+    "kind": "aligned",
+    "id": "slack-gif-creator-t0",
+    "split": "train"
+  },
+  {
+    "intent": "Our team wants a looping 'loading...' spinner emoji that runs about 6 seconds per cycle so it feels slow and chill. Don't shorten it, the slowness is the joke.",
+    "rubric": "Keeps the full slow loop of about 6 seconds as asked, without cutting it to under 3 seconds, and gives a working spinner emoji script.",
+    "kind": "preference",
+    "id": "slack-gif-creator-t1",
+    "split": "train"
+  },
+  {
+    "intent": "make a 'ship it' emoji: a little rocket that shakes nervously then blasts off upward out of frame. for slack",
+    "rubric": "Gives a 128x128 GIFBuilder script that combines a sine-based shake with small random jitter and then an eased upward launch that leaves the frame. Draws a detailed rocket from polygons and ellipses with a flame, thick outlines and contrasting colors, and keeps the loop under 3 seconds.",
+    "kind": "aligned",
+    "id": "slack-gif-creator-t2",
+    "split": "train"
+  },
+  {
+    "intent": "need a heartbeat emoji gif for slack, red heart that does the double-pulse thing",
+    "rubric": "Gives a 128x128 GIFBuilder script in which the heart does two quick pulses and then pauses, scaled roughly between 0.8x and 1.2x with sine math, draws a symmetric heart from polygons and ellipses with a highlight and thick outline, keeps the loop under 3 seconds, and avoids emoji fonts.",
+    "kind": "aligned",
+    "id": "slack-gif-creator-t3",
+    "split": "train"
+  },
+  {
+    "intent": "Can you write the code for a 480x480 Slack message GIF where a golden trophy slides in from the left with a little overshoot and then sparkles? It's for announcing our sales contest winner.",
+    "rubric": "Gives a runnable PIL/GIFBuilder script at 480x480 that slides the trophy in using the back_out easing, builds the trophy from layered polygons and ellipses with thick outlines and a gradient background, adds sparkle or particle effects, and saves with a sensible FPS and color count.",
+    "kind": "aligned",
+    "id": "slack-gif-creator-t4",
+    "split": "train"
+  },
+  {
+    "intent": "Can you just render the 🎉 emoji character with a font and make it wiggle? I don't want you to redraw it with shapes, I want it to look exactly like the real emoji.",
+    "rubric": "Renders the real 🎉 emoji glyph with an emoji font such as Segoe UI Emoji on Windows, not a hand-drawn shape version, and animates it with a wiggle.",
+    "kind": "preference",
+    "id": "slack-gif-creator-t5",
+    "split": "val"
+  },
+  {
+    "intent": "I want a retro pixel-art style Slack emoji of a tiny ghost floating up and down. Keep it authentic 1-bit Game Boy style — single-pixel outlines, flat 4-color palette, no gradients or glows please.",
+    "rubric": "Delivers a true retro pixel-art ghost with crisp 1-pixel outlines, a flat palette of about 4 colors and no gradients, glows or extra polish, with a gentle float up and down.",
+    "kind": "preference",
+    "id": "slack-gif-creator-t6",
+    "split": "val"
+  },
+  {
+    "intent": "I uploaded our company logo (logo.png). Can you make it spin slowly as a Slack emoji? Just tell me the script, I'll run it myself.",
+    "rubric": "Loads the user's logo with PIL and uses it directly, not just as inspiration, resizing it to fit 128x128 and rotating it with Image.rotate using BICUBIC resampling over the frames. Handles transparency or the background properly and saves a short loop through GIFBuilder with emoji optimization.",
+    "kind": "aligned",
+    "id": "slack-gif-creator-t7",
+    "split": "val"
+  },
+  {
+    "intent": "make me a GIF of a party parrot-style rainbow blob bouncing for a Slack custom emoji",
+    "rubric": "Gives a complete Python script that uses GIFBuilder at 128x128 and stays under 3 seconds, uses bounce_out and ease_in easing for the fall and landing, draws a detailed blob from PIL primitives with outlines of width 2 or more, a highlight and bright colors, and saves with emoji optimization.",
+    "kind": "aligned",
+    "id": "slack-gif-creator-t8",
+    "split": "val"
+  },
+  {
+    "intent": "Write me a Slack GIF of a firework exploding — dark blue night sky, colorful particle burst that fades out. Message size is fine.",
+    "rubric": "Gives a script that draws a dark gradient sky and generates particles with random angles and speeds, moving them with vx/vy updates and gravity and fading them out over time. Uses thick, vibrant shapes rather than 1px dots and builds and saves the GIF with GIFBuilder at a Slack-appropriate size.",
+    "kind": "aligned",
+    "id": "slack-gif-creator-t9",
+    "split": "val"
+  }
+]

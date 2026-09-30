@@ -1,0 +1,87 @@
+{
+  "skill": "brand-guidelines",
+  "threshold": 1.0,
+  "samples": 2,
+  "edits": [
+    {
+      "night": 1,
+      "index": 0,
+      "op": "add",
+      "content": "When asked what colors/fonts to use for a slide or artifact, answer for EVERY named element (background, title, subtitle, body, accent shape) with an explicit line each in the form 'Element: font (fallback) + hex color'. Never stop after the background and title. Use exact hex codes from the palette: Dark #141413, Light #faf9f5, Mid Gray #b0aea5, Light Gray #e8e6dc, Orange #d97757, Blue #6a9bcc, Green #788c5d.",
+      "anchor": "",
+      "rationale": "The failing answer covered the background and title but was cut off or incomplete for the subtitle and accent bar. Requiring one line per named element prevents omissions.",
+      "skillopt": "accepted",
+      "baseline_mean": 8.625,
+      "baseline_noise": 0.25,
+      "noop": false,
+      "edited_mean": 8.5,
+      "delta": -0.125,
+      "harmful": false,
+      "deviations": [
+        "It uses Poppins for text below 24pt: the 11pt header row and the 10.5pt column-1 body cells. The skill uses Poppins only for headings of 24pt or larger and Lora for body text. The response even applies that 24pt rule correctly to the caption, so it contradicts itself. Minor: it limits tables to one accent color, while the skill says to cycle through orange, blue and green."
+      ]
+    },
+    {
+      "night": 1,
+      "index": 1,
+      "op": "add",
+      "content": "Dark-background rule: background Dark #141413; all text on it uses Light #faf9f5 (Mid Gray #b0aea5 is allowed only for de-emphasized secondary text). Title/headings (24pt and larger): Poppins, fallback Arial. Subtitle and any body-size text (below 24pt): Lora, fallback Georgia. State the font name AND its fallback every time. A subtitle is body text, so it uses Lora/Georgia, not Poppins, unless it is 24pt or larger.",
+      "anchor": "",
+      "rationale": "Makes the title/subtitle font split explicit and specifies text color on dark backgrounds, so the subtitle is not left ambiguous.",
+      "skillopt": "accepted",
+      "baseline_mean": 8.625,
+      "baseline_noise": 0.25,
+      "noop": false,
+      "edited_mean": 9,
+      "delta": 0.375,
+      "harmful": false,
+      "deviations": []
+    },
+    {
+      "night": 1,
+      "index": 2,
+      "op": "add",
+      "content": "Decorative, non-text shapes (accent bars, dividers, icons) use accent colors only. Default to Orange #d97757 as the primary accent for a single shape. When several shapes are used, cycle Orange #d97757, then Blue #6a9bcc, then Green #788c5d. Never use the Dark/Light neutrals for an accent bar. Always name the hex code for the accent bar.",
+      "anchor": "",
+      "rationale": "The accent bar color was the likely missed criterion. This rule gives a concrete hex and an ordering.",
+      "skillopt": "accepted",
+      "baseline_mean": 8.625,
+      "baseline_noise": 0.25,
+      "noop": false,
+      "edited_mean": 8.875,
+      "delta": 0.25,
+      "harmful": false,
+      "deviations": []
+    },
+    {
+      "night": 1,
+      "index": 3,
+      "op": "add",
+      "content": "Keep answers compact and structured: one bullet per element with font, fallback and hex. Give the rationale in at most one short sentence, and do not restate the guidelines. Cover all elements the user names before adding any extras.",
+      "anchor": "",
+      "rationale": "Prevents verbose reasoning from crowding out or truncating the required per-element specifications.",
+      "skillopt": "accepted",
+      "baseline_mean": 8.625,
+      "baseline_noise": 0.25,
+      "noop": false,
+      "edited_mean": 8.5,
+      "delta": -0.125,
+      "harmful": false,
+      "deviations": [
+        "The response uses Poppins for the table's header row and for the first-column labels. The skill only applies Poppins to headings of 24pt or larger and uses Lora for body text. Table cells are small text, so they should be set in Lora (fallback Georgia). All the colour values and the fallback fonts are correct."
+      ]
+    }
+  ],
+  "cost_usd": {
+    "target": 1.0686764,
+    "grader": 1.5568080000000002
+  },
+  "models": {
+    "target": [
+      "claude-sonnet-5"
+    ],
+    "grader": [
+      "claude-opus-5-5"
+    ]
+  }
+}

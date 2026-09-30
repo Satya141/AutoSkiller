@@ -1,0 +1,72 @@
+[
+  {
+    "intent": "Our team is setting up a Tailwind config for a small internal tool and we want it to follow Anthropic brand guidelines. Can you write the theme.extend section?",
+    "rubric": "Provides a Tailwind theme.extend block with named colors that map to the exact seven brand hexes and fontFamily entries for headings (Poppins, Arial fallback) and body (Lora, Georgia fallback), with names that separate main colors from accents.",
+    "kind": "aligned",
+    "id": "brand-guidelines-t0",
+    "split": "train"
+  },
+  {
+    "intent": "Building a slide with a dark background for a keynote title. What exact colors and fonts should the title, subtitle, and a decorative accent bar use to be on-brand?",
+    "rubric": "Recommends a #141413 background, light #faf9f5 text for the title in Poppins (24pt or larger) and for the subtitle, Lora for any smaller body-size subtitle, an accent color such as orange #d97757 for the bar, and mentions the Arial/Georgia fallbacks.",
+    "kind": "aligned",
+    "id": "brand-guidelines-t1",
+    "split": "train"
+  },
+  {
+    "intent": "Need Anthropic brand CSS for a dashboard, but please use Poppins for everything including body text. Serif body fonts look dated on data-heavy screens and our users complained last time.",
+    "rubric": "The user wants Poppins (a sans-serif) for all text, body included, with no serif body font, while still using the Anthropic brand colors correctly.",
+    "kind": "preference",
+    "id": "brand-guidelines-t2",
+    "split": "train"
+  },
+  {
+    "intent": "Restyle my pptx shapes to anthropic colors, but I want every shape filled orange only. No cycling through blue and green, it looks too busy for our exec audience.",
+    "rubric": "The user wants all non-text shapes filled with the single orange accent #d97757 and does not want blue or green cycled in.",
+    "kind": "preference",
+    "id": "brand-guidelines-t3",
+    "split": "train"
+  },
+  {
+    "intent": "Make me a matplotlib rcParams config / style dict matching Anthropic's brand — fonts, colors, the works. I'll drop it into our analytics notebooks.",
+    "rubric": "Gives a working rcParams dict or style that sets the axes color cycle to orange, blue, green with the exact hexes, uses light brand backgrounds and dark #141413 text, sets Poppins for titles and Lora for body text with Arial/Georgia fallbacks, and uses gray tones for grids and spines.",
+    "kind": "aligned",
+    "id": "brand-guidelines-t4",
+    "split": "train"
+  },
+  {
+    "intent": "Can you write me a CSS stylesheet (just :root variables plus basic h1-h3, body, and button styles) that makes an internal docs page look like Anthropic's brand?",
+    "rubric": "Defines CSS variables with the exact brand hexes (#141413, #faf9f5, #b0aea5, #e8e6dc, #d97757, #6a9bcc, #788c5d), uses Poppins with an Arial fallback for headings and Lora with a Georgia fallback for body, and uses orange as the primary accent for buttons.",
+    "kind": "aligned",
+    "id": "brand-guidelines-t5",
+    "split": "val"
+  },
+  {
+    "intent": "what colors should i use for a 3-series line chart so it's on brand with anthropic? background is light",
+    "rubric": "Recommends orange #d97757, blue #6a9bcc, and green #788c5d in that order for the series, a light background like #faf9f5, dark #141413 for text and labels, and mid or light gray for gridlines and axes.",
+    "kind": "aligned",
+    "id": "brand-guidelines-t6",
+    "split": "val"
+  },
+  {
+    "intent": "just give me the anthropic brand hex codes and font names, nothing else. no fallback fonts, no usage notes, no explanation, i'm pasting into a figma file",
+    "rubric": "The user wants a bare list of hex codes and font names with no fallback fonts, usage guidance, or explanation.",
+    "kind": "preference",
+    "id": "brand-guidelines-t7",
+    "split": "val"
+  },
+  {
+    "intent": "I have a python-pptx script that makes a quarterly review deck. Give me a helper function that goes through every slide and restyles text and shapes to Anthropic brand standards.",
+    "rubric": "Gives a python-pptx function that sets Poppins for text 24pt and larger and Lora for smaller body text, with Arial and Georgia as fallbacks, picks dark or light text color based on the background, cycles non-text shape fills through orange, blue, and green using RGBColor with the correct hex values, and keeps the existing text hierarchy.",
+    "kind": "aligned",
+    "id": "brand-guidelines-t8",
+    "split": "val"
+  },
+  {
+    "intent": "I'm writing an HTML email announcement for an Anthropic event. Give me inline-styled HTML skeleton with header, body paragraph, and a CTA button that follows the brand.",
+    "rubric": "Produces inline-styled HTML that uses Poppins with an Arial fallback for the header, Lora with a Georgia fallback for the body, brand colors for background and text (for example #faf9f5 with #141413), and an orange #d97757 CTA button with readable contrasting text.",
+    "kind": "aligned",
+    "id": "brand-guidelines-t9",
+    "split": "val"
+  }
+]

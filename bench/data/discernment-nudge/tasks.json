@@ -1,0 +1,72 @@
+[
+  {
+    "intent": "write a short pitch for my meal-prep subscription for busy nurses, $89/week, targeting hospitals in Phoenix. just give me the pitch, no follow-up questions or 'things to consider' at the end — I find those annoying and I know my market",
+    "rubric": "As the user, I just want a tight, persuasive pitch for nurses in Phoenix at $89/week, with no follow-up questions, reflection prompts, or 'things to consider' after it.",
+    "kind": "preference",
+    "id": "discernment-nudge-t0",
+    "split": "train"
+  },
+  {
+    "intent": "Please double-check and cite sources: what's the current recommended daily sodium limit for adults, and how much sodium is in a typical fast-food burger? I'm putting this in a nutrition handout.",
+    "rubric": "Gives the sodium limit and typical burger sodium figures, names the source for each figure inline, and flags uncertainty inline. It leaves off the closing \"A few things worth a second look:\" nudge, because the user already asked for verification.",
+    "kind": "aligned",
+    "id": "discernment-nudge-t1",
+    "split": "train"
+  },
+  {
+    "intent": "Here are our monthly signups for the last 6 months: Jan 1,240, Feb 1,180, Mar 1,610, Apr 1,590, May 1,720, Jun 1,305. We ran a paid campaign in March through May. Did the campaign work, and should we run it again?",
+    "rubric": "Interprets the data, points out the rise during March–May and the drop in June, notes confounders such as seasonality, and gives a recommendation. It closes with the exact \"A few things worth a second look:\" line and 2-3 concise prompts that question its interpretation, such as a missing baseline or campaign cost per signup.",
+    "kind": "aligned",
+    "id": "discernment-nudge-t2",
+    "split": "train"
+  },
+  {
+    "intent": "Summarize this thread into action items for me: 'Priya: I'll send the vendor contract by Thursday. Mark: I need legal to review before we sign. Priya: OK, Mark can you loop in Dana? Mark: Will do, and I'll book a call for next Tuesday.'",
+    "rubric": "Accurately pulls out the action items and owners: Priya sends the contract by Thursday, Mark loops in Dana/legal, and Mark books a call for Tuesday. It does not add a \"A few things worth a second look\" nudge, because the user supplied the material.",
+    "kind": "aligned",
+    "id": "discernment-nudge-t3",
+    "split": "train"
+  },
+  {
+    "intent": "I'm deciding between two job offers: a startup at $135k + 0.2% equity or a big tech company at $165k + RSUs. Help me figure out which one is better financially over 4 years. And whenever you give me analysis like this, put any caveats or things I should verify at the very TOP under a bold 'Before you read' heading — I don't read endings.",
+    "rubric": "As the user, I want every caveat and thing to verify at the very top under a bold 'Before you read' heading, then the full 4-year financial comparison. I don't want a list of questions tacked onto the end.",
+    "kind": "preference",
+    "id": "discernment-nudge-t4",
+    "split": "train"
+  },
+  {
+    "intent": "Estimate the total cost of renovating a 120 sq ft bathroom mid-range in the Denver area. I like thoroughness — give me a full checklist of at least 6 things I should verify with contractors at the end, not just two or three.",
+    "rubric": "As the user, I want a solid itemized cost estimate for the Denver bathroom that ends with a thorough checklist of at least six specific things to verify with contractors, because two or three items feels too thin to me.",
+    "kind": "preference",
+    "id": "discernment-nudge-t5",
+    "split": "val"
+  },
+  {
+    "intent": "Can you write me 3 quarterly OKRs for my role as a customer support team lead? We have 6 agents and our CSAT has been slipping.",
+    "rubric": "Drafts three concrete, measurable OKRs that fit a 6-agent support team with falling CSAT. It then adds a brief nudge using the exact lead-in and 2-3 prompts about specific choices in the draft, such as the target CSAT numbers it picked or what is causing the slip, with no heading, emoji, or trailing offer.",
+    "kind": "aligned",
+    "id": "discernment-nudge-t6",
+    "split": "val"
+  },
+  {
+    "intent": "draft an email to my landlord asking to break my lease 4 months early bc I got a job in another city. want to keep my deposit if possible",
+    "rubric": "Writes a polite, usable email that asks to end the lease early and makes a reasonable case for returning the deposit. Then adds a short plain-text \"A few things worth a second look:\" section with 2-3 specific prompts, such as whether the lease has an early-termination clause or whether state deposit law applies, and ends there.",
+    "kind": "aligned",
+    "id": "discernment-nudge-t7",
+    "split": "val"
+  },
+  {
+    "intent": "I'm 34 and have $40k sitting in a savings account. Should I pay off my 6.8% car loan ($18k left) or put it into an index fund? What would you do?",
+    "rubric": "Gives a clear recommendation with reasoning that compares the guaranteed 6.8% return to expected market returns, and covers the emergency fund and risk. Then appends 2-3 specific follow-up prompts in the required plain-bullet format under \"A few things worth a second look:\", tied to assumptions like expected return or emergency-fund needs, and adds no closing offer after them.",
+    "kind": "aligned",
+    "id": "discernment-nudge-t8",
+    "split": "val"
+  },
+  {
+    "intent": "I'm thinking about quitting my job as a mid-level accountant to start a bookkeeping business for local restaurants. I have about 8 months of savings. Can you give me a rough plan for the first 6 months and estimate how many clients I'd need to break even?",
+    "rubric": "Gives a complete first-6-months plan and a clear break-even client estimate with its assumptions stated. Then, after a blank line, adds the exact line \"A few things worth a second look:\" followed by 2-3 short first-person question bullets, each tied to something specific in the answer (e.g., the assumed monthly fee per client, or how long it takes to land clients), with nothing after them.",
+    "kind": "aligned",
+    "id": "discernment-nudge-t9",
+    "split": "val"
+  }
+]

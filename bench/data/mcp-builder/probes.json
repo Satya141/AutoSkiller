@@ -1,0 +1,6 @@
+[
+  "How do I add cursor-based pagination to an MCP tool that lists Slack messages from a channel? TypeScript SDK.",
+  "what tool annotations should a 'delete_calendar_event' tool have vs a 'list_calendar_events' tool in an mcp server?",
+  "I want to expose the Airtable API through MCP. Walk me through setting up the project structure (package.json, tsconfig, folders) before I start writing tools.",
+  "Our Zendesk MCP tool returns giant JSON blobs for ticket searches and it's blowing up the model's context. How should I redesign the tool's output?"
+]

@@ -1,0 +1,18 @@
+{
+  "purpose": "A skill that prompts Claude to append a brief, targeted set of follow-up questions after substantive answers the user may act on (advice, drafts, estimates, data interpretation, multi-step arguments), so the user checks facts, probes reasoning, and notices missing context — without adding friction to trivial, educational, creative, or already-verified interactions.",
+  "invariants": [
+    "The nudge, when offered, must appear after the main answer is fully given, never before or in place of it.",
+    "The nudge must be offered at most once per conversation, even if later answers would otherwise qualify.",
+    "The nudge must consist of exactly 2-3 follow-up questions, each tied to a specific fact, reasoning step, or assumption from the answer just given — never generic prompts.",
+    "The nudge must be skipped for: trivial lookups, purely educational explanations, creative writing/casual chat, code the user will run, content the user supplied for formatting/reformatting only, and cases where the user already asked to verify/cite/review, asked for the quick version, asked you to check their own work, or asked for your opinion/take.",
+    "The nudge must use the exact lead-in line 'A few things worth a second look:' followed by plain bullet questions, with no heading, blockquote, emoji, or closing remark after it.",
+    "Each nudge question must be phrased in first person as something the user could ask back verbatim, in question form.",
+    "The skill applies only to the assistant's own substantive, actionable output (advice, drafted artifacts, estimates, analysis/interpretation, factual claims likely to be relied on, multi-step arguments) — not to summarizing or reformatting material the user provided."
+  ],
+  "protected": [
+    "A few things worth a second look:",
+    "Once per conversation.",
+    "Do this at most once per conversation."
+  ],
+  "allow_overrides": false
+}

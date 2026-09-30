@@ -1,0 +1,72 @@
+[
+  {
+    "intent": "I'm building a landing page for a small independent bike repair shop in Portland that also runs weekend fix-it-yourself classes. Can you give me a design direction and the HTML/CSS for the hero section?",
+    "rubric": "The answer grounds the design in bike-repair specifics (tools, parts, grease, workshop vernacular), gives a compact plan with 4–6 named hex colors, deliberate typefaces with roles, and a layout sketch, checks that plan against generic defaults and revises before coding, then gives a hero that opens with something typical of the shop rather than a stock big-stat block.",
+    "kind": "aligned",
+    "id": "frontend-design-t0",
+    "split": "train"
+  },
+  {
+    "intent": "Building a product page for a handmade ceramic mug brand. I want it to feel special, not like every Shopify template. Give me a design plan and the key CSS. Keep motion tasteful.",
+    "rubric": "The answer builds a distinctive plan from ceramics materials and craft (glazes, clay, kilns) and avoids the cream-and-terracotta default or explains how it steers clear of it. It uses a single orchestrated motion moment instead of fade-ups on every section, respects reduced motion, gives visible focus states, and writes CSS with sensible selector specificity that won't cancel section spacing.",
+    "kind": "aligned",
+    "id": "frontend-design-t1",
+    "split": "train"
+  },
+  {
+    "intent": "Our fintech dashboard for mid-market CFOs looks exactly like every other SaaS product: rounded white cards, soft grey shadows, a purple gradient. How would you reshape it so it has its own identity without hurting readability?",
+    "rubric": "The answer names the specific templated traits in the current design and proposes a concrete alternative token system (palette, type, layout) drawn from the finance and CFO world. It makes the visual structure carry information, for example varying hierarchy instead of using identical cards, and puts the boldness in one element while keeping data readability and accessibility intact.",
+    "kind": "aligned",
+    "id": "frontend-design-t2",
+    "split": "train"
+  },
+  {
+    "intent": "Can you write the typography system for a long-form essay site about the history of Japanese woodblock printing? Fonts, scale, line length, the works.",
+    "rubric": "The answer picks typefaces on purpose for this subject rather than defaults, and sets a clear type scale in the spirit of The Elements of Typographic Style with intended weights and spacing. It keeps line length at roughly 80 characters or fewer and gives serif body text a little extra line-height. It uses the headline type as an active design element and avoids clichés like accenting a single word or all-caps labels.",
+    "kind": "aligned",
+    "id": "frontend-design-t3",
+    "split": "train"
+  },
+  {
+    "intent": "Design a page for me.",
+    "rubric": "Since no subject is given, the answer proposes one concrete subject, audience, and main job for the page and asks the user to confirm it, instead of producing a generic templated page.",
+    "kind": "aligned",
+    "id": "frontend-design-t4",
+    "split": "train"
+  },
+  {
+    "intent": "Design a features section for our project management tool. I really like when every card fades and slides up on scroll and lifts on hover, it makes the site feel alive, so please put that on all of them.",
+    "rubric": "The user wants every feature card to fade and slide up on scroll and lift on hover, and the answer should deliver exactly that motion on all cards.",
+    "kind": "preference",
+    "id": "frontend-design-t5",
+    "split": "val"
+  },
+  {
+    "intent": "need a homepage design for a pediatric dental clinic, parents are the audience but kids see it too. give me the plan first then code",
+    "rubric": "A good answer first gives a token plan (named hex palette, one or two clearly distinct typefaces, a layout concept with an ASCII wireframe and alignment guidance, principles) that suits anxious parents and kids. It then reviews that plan against templated defaults like the SaaS-card kit or cream/terracotta and says what it changed. The code that follows uses plain, reassuring copy in sentence case with specific CTAs such as \"Book a checkup\".",
+    "kind": "aligned",
+    "id": "frontend-design-t6",
+    "split": "val"
+  },
+  {
+    "intent": "I have a signup flow for a community garden plot waitlist app. Review my copy: button says 'Submit', error says 'Oops! Something went wrong :(', empty state says 'Nothing here yet...'. Also suggest how the confirmation screen should look.",
+    "rubric": "The answer rewrites the copy in active voice from the user's point of view: a specific CTA like \"Join the waitlist\" that stays consistent into the confirmation, an error that explains what happened and how to fix it without apologizing, and an empty state that invites action. It also suggests a confirmation screen that fits the garden subject and uses motion only to show what changed.",
+    "kind": "aligned",
+    "id": "frontend-design-t7",
+    "split": "val"
+  },
+  {
+    "intent": "Need a hero section for my AI note-taking app. Keep your answer super short: 5 bullet points max for the direction, no ASCII art, no hex tables, then the code.",
+    "rubric": "The user wants a short answer: at most five bullets of direction with no ASCII wireframes or color tables, then the hero code.",
+    "kind": "preference",
+    "id": "frontend-design-t8",
+    "split": "val"
+  },
+  {
+    "intent": "Just give me the full HTML/CSS for a landing page for my yoga studio's new prenatal class. Please skip the design plan, the wireframes, the self-review. I only want code I can paste.",
+    "rubric": "The user wants only paste-ready code for a prenatal yoga landing page, with no design plan, wireframes, or review commentary.",
+    "kind": "preference",
+    "id": "frontend-design-t9",
+    "split": "val"
+  }
+]

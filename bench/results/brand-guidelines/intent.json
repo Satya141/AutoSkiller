@@ -1,0 +1,26 @@
+{
+  "purpose": "Provides Anthropic's official brand colors and typography so Claude can apply the Anthropic look-and-feel to artifacts (slides, documents, visuals) whenever brand or style guidelines or company design standards apply.",
+  "invariants": [
+    "Specifies the exact Anthropic palette hex values: main colors (Dark, Light, Mid Gray, Light Gray) and accent colors (Orange, Blue, Green).",
+    "Specifies typography: Poppins for headings with an Arial fallback, and Lora for body text with a Georgia fallback.",
+    "Headings at 24pt and larger use Poppins; body text uses Lora.",
+    "Non-text shapes use the accent colors, cycling through orange, blue and green.",
+    "Text color is chosen based on the background, using the Dark and Light colors for contrast.",
+    "Fonts fall back to Arial or Georgia automatically when Poppins or Lora is unavailable, and no font installation is required.",
+    "Colors are applied as exact RGB values, for example through python-pptx's RGBColor.",
+    "Frontmatter keeps the name `brand-guidelines` and a description that says when to trigger the skill, which is when brand colors, style guidelines, visual formatting, or company design standards apply."
+  ],
+  "protected": [
+    "name: brand-guidelines",
+    "- Dark: `#141413` - Primary text and dark backgrounds",
+    "- Light: `#faf9f5` - Light backgrounds and text on dark",
+    "- Mid Gray: `#b0aea5` - Secondary elements",
+    "- Light Gray: `#e8e6dc` - Subtle backgrounds",
+    "- Orange: `#d97757` - Primary accent",
+    "- Blue: `#6a9bcc` - Secondary accent",
+    "- Green: `#788c5d` - Tertiary accent",
+    "- **Headings**: Poppins (with Arial fallback)",
+    "- **Body Text**: Lora (with Georgia fallback)"
+  ],
+  "allow_overrides": false
+}

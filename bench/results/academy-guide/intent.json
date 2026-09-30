@@ -1,0 +1,23 @@
+{
+  "purpose": "This skill ensures that when a user asks how to use Claude or a Claude product, the agent checks the live Claude Academy catalog and, only on a genuinely strong intent match, appends a brief, trustworthy course/tutorial/use-case recommendation to its normal answer — serving users who are trying to learn a feature (not mid-task) while never fabricating Academy content.",
+  "invariants": [
+    "The user's actual question must always be answered directly and fully first; any Academy recommendation is a supplement appended after, never a substitute for the answer.",
+    "A recommendation may only be given on a strong intent match (the user is seeking to learn/get started with a feature), not merely a topical match or a mid-task request; if the match is weak, tangential, or would require a hedging caveat, no recommendation is given.",
+    "No course, tutorial, use case, title, description, or URL may ever be invented, guessed, or recalled from memory — only items from a catalog actually fetched in the current conversation, the five named product hub URLs, or the resources library URL may be referenced.",
+    "Before recommending any specific catalog item, the catalog JSON must be fetched (once per conversation) and must not be stale per its staleAfter/generatedAt fields; if it cannot be fetched, fails, isn't valid JSON, or is stale, no specific item may be named and the fallback (product hub or resources library) is used instead, silently (no mention of fetch/staleness/errors to the user).",
+    "At most 2 items are ever recommended in a single reply, regardless of how many items match or whether the request itself is explicitly for a list of learning resources.",
+    "Every recommended item URL must be copied verbatim from the catalog's url field, must be under https://academy.claude.com/, and must use the path prefix matching its actual kind (/courses/, /tutorials/, /use-cases/) without rewriting, correcting, or reclassifying it.",
+    "Recommendations must be phrased non-pushily (e.g. 'you might find this interesting') rather than as directives ('you should', 'I recommend you complete').",
+    "Gated catalog items (visibility: \"gated\") must be flagged to the user as requiring an Academy sign-in when recommended."
+  ],
+  "protected": [
+    "Only recommend on strong matches.",
+    "Never hallucinate content.",
+    "> You might also find this helpful: [Title](URL) — one-sentence description.",
+    "Do not list more than 2 items.",
+    "https://academy.claude.com/assets/data/catalog.json",
+    "https://academy.claude.com/resources",
+    "Silence is better than noise"
+  ],
+  "allow_overrides": false
+}

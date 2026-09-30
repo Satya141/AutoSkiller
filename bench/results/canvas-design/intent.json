@@ -1,0 +1,21 @@
+{
+  "purpose": "This skill guides an agent to create original, museum-quality static visual art (posters/designs as .md philosophy plus .pdf/.png output) by first authoring a generic design philosophy/aesthetic movement, then expressing it visually with minimal text and a subtly embedded niche reference, for users requesting posters, art pieces, or design work.",
+  "invariants": [
+    "The workflow must always proceed in two steps: (1) create a written design philosophy/aesthetic movement as a .md file, then (2) express that philosophy visually as a .pdf or .png canvas artifact.",
+    "Final deliverables must include the design philosophy .md file alongside the final .pdf or .png artwork.",
+    "The design philosophy must be 4-6 paragraphs, name a movement, remain generic/reusable (not tied to the specific request's subject matter), and repeatedly stress expert-level craftsmanship.",
+    "Text on the canvas must always be minimal, visual-first, and integrated as a design element - never explanatory paragraphs or dense blocks of text.",
+    "Designs must be original; existing artists' work must never be copied, to avoid copyright violations.",
+    "A subtle, niche conceptual reference tied to the user's request must be deduced and embedded invisibly into the visual composition rather than stated literally or explicitly.",
+    "All visual elements (text, graphics, shapes) must remain fully contained within canvas boundaries with proper margins - nothing may overlap or fall off the page.",
+    "The refinement/final pass must polish and simplify the existing composition rather than adding new graphics, shapes, or elements."
+  ],
+  "protected": [
+    "Output only .md files, .pdf files, and .png files.",
+    "Create original visual designs, never copying existing artists' work to avoid copyright violations.",
+    "Regardless of text scale, nothing falls off the page and nothing overlaps. Every element must be contained within the canvas boundaries with proper margins.",
+    "If the instinct is to call a new function or draw a new shape, STOP and instead ask: \"How can I make what's already here more of a piece of art?\"",
+    "The design philosophy should be 4-6 paragraphs long."
+  ],
+  "allow_overrides": false
+}

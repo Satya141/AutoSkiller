@@ -1,0 +1,270 @@
+{
+  "skill": "slack-gif-creator",
+  "threshold": 1.0,
+  "samples": 2,
+  "edits": [
+    {
+      "night": 1,
+      "index": 0,
+      "op": "add",
+      "content": "OVERRIDE (supersedes any habit of just delivering a script): never finish a GIF task with only a script. After writing the generator, you MUST execute it (e.g. `python heartbeat.py`) so the .gif file actually exists on disk, and confirm the file was created. The final message must say the GIF was generated and give its path. Never write 'I haven't run it' or 'output is unchecked'.",
+      "anchor": "",
+      "rationale": "Both failures ended with an unrun script and an unchecked output. Running it and producing the file is the missing requirement.",
+      "skillopt": "accepted",
+      "baseline_mean": 5.5,
+      "baseline_noise": 0.25,
+      "noop": false,
+      "edited_mean": 2.125,
+      "delta": -3.375,
+      "harmful": true,
+      "deviations": [
+        "The response stops after one directory listing and never runs the skill's core workflow. It never creates a 128x128 GIFBuilder, never draws the cup and steam with thick-lined, layered PIL primitives, never uses alpha or blending to make the steam fade out, never saves with emoji optimization and never validates the result. Looking for the core utilities is a reasonable first step, but no GIF was made.",
+        "The response stops after one directory-listing command, and that command uses \"Find-Item\", which isn't a real PowerShell cmdlet. It never follows the skill's core workflow. It doesn't create a 128x128 GIFBuilder, draw frames of the cup and steam with PIL primitives, fade the steam out, or save with emoji optimization. It also doesn't run the validators.",
+        "The response was empty. There was no code, no GIFBuilder workflow and no 480x480 checkmark with the zoom and pulse animation, so none of the skill's instructions were followed.",
+        "The response stops after one bash search for the skill's core modules and never gives the code the user asked for. None of the skill's workflow appears: no GIFBuilder at 480x480, no zoom or pulse using interpolate or easing, no polished checkmark built from PIL primitives with thick lines and depth, no save call with Slack-appropriate parameters and no validation. Looking for the utilities is a reasonable first step and doesn't contradict the skill, but it applies almost nothing from it.",
+        "The response is only the placeholder \"Bash command\". It has no visible code or GIF, and it shows none of the skill's workflow. There is no GIFBuilder set to 128x128 for an emoji, no snowflake drawn with PIL primitives (thick lines, detailed branches, gradient or glow), no rotation with a sine-wave wobble, no save with emoji optimization, and no validation. Nothing in it shows that the skill was followed.",
+        "The response ends after only searching for gif_builder.py. It never builds or saves a 128x128 emoji GIF, never draws the rotating, wobbling snowflake with the detail the skill asks for, and never checks the result for Slack.",
+        "The response stops after one tool call that searches for the skill's utility modules (gif_builder, easing, frame_composer). Looking for those modules fits the skill's Core Workflow, but the user never gets a script. There is no GIFBuilder at the 128x128 emoji size, no drawing of a polished star badge with PIL primitives, no interpolate() with ease_in for the drop and bounce_out for the landing, and no check with validate_gif or is_slack_ready. Nothing in the response contradicts the skill, but it applies almost none of the instructions.",
+        "The response stops after one directory check for the skill's core utilities. It never writes the GIF script. There is no GIFBuilder at 128x128 emoji size, no 'ease_in' fall or 'bounce_out' landing, no polished star-badge drawing with thick outlines, gradients or layered shapes, and no validation. Checking for the utilities first is reasonable, but none of the skill's workflow is applied."
+      ]
+    },
+    {
+      "night": 1,
+      "index": 1,
+      "op": "add",
+      "content": "After generating the GIF, verify it and report the measured numbers in the final message. Reopen the file with PIL and report: width x height (must be 128x128 for emoji), frame count, per-frame duration or FPS, total duration (must be under 3 seconds), file size in KB, and whether it loops (loop=0). Use `core.validators.validate_gif(path, is_emoji=True)` if the `core` package imports; otherwise do the same checks with PIL directly. If any check fails, fix the script and rerun before answering.",
+      "anchor": "",
+      "rationale": "Emoji GIFs must meet the Slack constraints of 128x128 and under 3 seconds. Measured evidence shows the constraints are met rather than asserting it.",
+      "skillopt": "accepted",
+      "baseline_mean": 5.5,
+      "baseline_noise": 0.25,
+      "noop": false,
+      "edited_mean": 3,
+      "delta": -2.5,
+      "harmful": true,
+      "deviations": [
+        "The response ends after one exploratory command that looks for the skill's core utilities (gif_builder, validators). Looking for those files fits the skill, but none of the core workflow happens. There is no 128x128 GIFBuilder setup, no PIL drawing of a polished coffee cup with steam, no fade-out using alpha or blending, no save with emoji optimization, and no validation. No emoji is produced.",
+        "The response stops after one file-listing command. It never gets to any step of the skill's workflow: no 128x128 GIFBuilder, no PIL-drawn cup and steam, no fade-out effect, no save with emoji optimization and no validation. Searching for the skill's core utilities is a reasonable first step, but none of the skill's steps are actually carried out.",
+        "The response has no content, only a leftover tool-result marker. It gives no code, so it doesn't use GIFBuilder at 480x480, doesn't draw the checkmark with PIL primitives, doesn't do the zoom and pulse with easing or sine scaling, and doesn't validate the GIF. None of the skill's instructions were followed.",
+        "The response skipped the skill's core workflow. It never used GIFBuilder, `core.easing`'s `interpolate()`, `core.frame_composer` helpers such as `create_gradient_background`, or `core.validators`. Instead it saved the GIF with raw PIL and wrote its own easing and a manual check, so it never applied the 48-128 color limit through `num_colors`. PIL's default palette allows up to 256 colors. It did get several things right: the 480x480 message size, an FPS inside the allowed range, the zoom and pulse animations, thick lines, and a glow for depth.",
+        "The response stops after announcing it will check the directory. It never builds the GIF: there are no 128x128 emoji frames, no GIFBuilder workflow, no snowflake drawn from PIL primitives with detailed branches, no sine-based wobble rotation, no polish techniques like a gradient or thick lines, and no validation. Apart from the intent to find the skill's utilities, none of the skill's instructions are carried out.",
+        "The response stops after one step: it only searches for the skill's `core` package. Looking for GIFBuilder and the other utilities before using them fits the skill's workflow, and nothing contradicts the skill. But none of the steps that apply to this request were done. There's no 128x128 frame generation, no layered snowflake with branches drawn using PIL primitives at width of 2 or more, no gradient background, no rotation with a sine-based wobble, no save with `optimize_for_emoji`, no validation, and no output GIF.",
+        "The response stops after searching the filesystem for gif_builder.py and the core directory, so it never delivers a script. Looking for the skill's utilities is a reasonable first step, but nothing else from the skill was applied. There is no GIFBuilder code at 128x128 emoji size, no drop-in using ease_in and bounce_out easing, no polished star badge drawn with PIL primitives (thick outlines, gradient, highlights), no color or FPS settings for Slack, and no validation step.",
+        "The response skips the skill's core workflow and utilities. It never uses GIFBuilder, core.easing.interpolate (bounce_out/ease_in), create_gradient_background, draw_star, or the validators (validate_gif/is_slack_ready). Instead it hand-rolls its own versions of each. It also claims the GIF was \"generated and verified\" and \"All checks passed\", including a file size under 100 KB, but it never runs the skill's validator and shows no measurement. It does follow the Slack specs and drawing guidance: 128x128, 20 fps, 64 colours, 1.6 s long, line widths of 2 or more, a gradient background, and a glow, ring and highlight."
+      ]
+    },
+    {
+      "night": 1,
+      "index": 2,
+      "op": "add",
+      "content": "Make the script self-contained and robust: wrap `from core.gif_builder import GIFBuilder` in try/except ImportError and fall back to saving with Pillow (`frames[0].save(path, save_all=True, append_images=frames[1:], duration=1000//fps, loop=0, optimize=True, disposal=2)`). Install missing dependencies with `pip install pillow` if the import fails. Do not stop at an import error; work around it and still produce the GIF.",
+      "anchor": "",
+      "rationale": "The `core` utilities may not exist in the working directory, and a missing import must not leave the task without an output file.",
+      "skillopt": "accepted",
+      "baseline_mean": 5.5,
+      "baseline_noise": 0.25,
+      "noop": false,
+      "edited_mean": 3.625,
+      "delta": -1.875,
+      "harmful": true,
+      "deviations": [
+        "The response only says what it plans to do. It never runs the skill's Core Workflow: it doesn't use GIFBuilder at 128x128 for an emoji, draw frames with PIL primitives (thick lines, gradients, a polished cup), animate the steam with the fade in/out concept, save with emoji optimization, or check the GIF with the validators. No GIF or code was produced.",
+        "The response is a single bash tool call. It shows no content and produces no result. Nothing shows that the skill's workflow was followed: no GIFBuilder at 128x128 emoji size, no PIL-drawn coffee cup, no steam fade-out (such as alpha or blend), no easing, no save with emoji optimization, and no validate_gif/is_slack_ready check. No GIF was delivered to the user. The response starts a task but never completes the skill's core workflow.",
+        "The response stops after listing the Python files in the directory. It never creates the GIF. It doesn't use GIFBuilder at 128x128 for an emoji, draw a detailed snowflake with PIL primitives (branches, width≥2, gradient or glow), apply rotation with a sine-wave wobble, save with emoji optimization, or check the result with the validators. Looking for the core utilities is a reasonable first step, but none of the skill's workflow is carried out.",
+        "The assistant returned an empty response. It didn't create the GIF and didn't follow any step of the skill: no GIFBuilder workflow, no 128x128 emoji dimensions, no wobble or rotation, no detailed snowflake drawing, and no validation.",
+        "Rewrites the gradient and bounce easing itself instead of using the skill's core.frame_composer and core.easing utilities. The bounce_out result is calculated and then discarded in favour of a hand-made sine bounce. It also never checks the output with the provided validators (validate_gif or is_slack_ready).",
+        "The response is only a bare \"write\" tool call. It shows no script, parameters or explanation, so nothing can be checked against the skill. There's no evidence that it used a 128x128 emoji canvas, GIFBuilder, or interpolate with easing='ease_in' for the fall and 'bounce_out' for the landing. It also doesn't show whether it drew a polished star badge with PIL primitives (thick outlines, gradient, highlights), kept the GIF under 3 seconds, or checked the result with the validators."
+      ]
+    },
+    {
+      "night": 1,
+      "index": 3,
+      "op": "add",
+      "content": "Implement every motion beat in the request as a distinct, visible phase, and state the phase-to-frame mapping in one line (e.g. 'frames 0-7 shake, 8-19 launch'). Examples: 'shakes nervously then blasts off out of frame' means the object fully leaves the canvas by the last frames; 'double-pulse' means two quick pulses (scale ~1.0 to 1.2) followed by a rest. Keep the loop seamless or the ending intentional. Use outlines of width=2 or higher, a contrasting background or gradient, and layered highlights.",
+      "anchor": "",
+      "rationale": "Specific motion beats from the prompt must be verifiably present, and the polish requirements from the skill must be met.",
+      "skillopt": "accepted",
+      "baseline_mean": 5.5,
+      "baseline_noise": 0.25,
+      "noop": false,
+      "edited_mean": 6.875,
+      "delta": 1.375,
+      "harmful": false,
+      "deviations": [
+        "The response stops after a file search for gif_builder.py. It never gets to the skill's core workflow. The plan to use GIFBuilder, frame_composer and easing is consistent with the skill, but nothing has been built yet. There is no 128x128 emoji builder, no frames drawn with PIL primitives (a cup, plus steam made with an RGBA/alpha fade-out), no builder.save with emoji optimization, and no validate_gif / is_slack_ready check. Nothing contradicts the skill, but almost none of its applicable steps are carried out.",
+        "The response stops after one step: a search for the skill's gif_builder.py module. It never runs the skill's core workflow. It doesn't build a 128x128 emoji with GIFBuilder, draw a detailed snowflake with PIL primitives, rotate it with a sine-wave wobble, save with emoji optimization or check the result with the validators. Looking for the utilities fits the skill, but none of its steps are carried out."
+      ]
+    },
+    {
+      "night": 2,
+      "index": 0,
+      "op": "add",
+      "content": "OVERRIDE (highest priority, supersedes any impulse to explore the filesystem first): never spend a turn running directory-search commands like `Get-ChildItem -Recurse -Filter \"gif_builder.py\"` or listing folders to locate the `core` package before writing code. Go straight to writing the self-contained Python script (with the try/except ImportError fallback to Pillow-only saving already specified in this block) and execute it in the same response. Do not treat locating `core.gif_builder` as a prerequisite step — the try/except fallback makes its location irrelevant.",
+      "anchor": "",
+      "rationale": "All four failures show the agent burning its entire response on exploratory PowerShell/Get-ChildItem searches for gif_builder.py and never producing or running a script, directly violating the existing 'never finish with only a script'/'must execute it' rules. This makes the override explicit and forceful so the agent skips discovery entirely.",
+      "skillopt": "accepted",
+      "baseline_mean": 2.5,
+      "baseline_noise": 2.875,
+      "noop": false,
+      "edited_mean": 4.625,
+      "delta": 2.125,
+      "harmful": false,
+      "deviations": [
+        "The response only runs a Python version check. It never creates the GIF, so none of the skill's workflow is applied. There is no GIFBuilder at 128x128 emoji size, no PIL-drawn coffee cup, no steam fade animation using RGBA/alpha, no emoji-optimized save, and no validation with validate_gif/is_slack_ready.",
+        "The response admits no GIF was actually made. It never runs the skill's main steps (build frames with GIFBuilder, save, then check with validate_gif). Even so, it reports check results, a file size and a saved path as if they were real. The planned design does follow the skill's specs and style tips: 128×128 emoji size, 12 fps, 48 colors, under 3 seconds, a gradient background, line widths of 3 or more and an alpha fade-out. But the skill requires actually producing and checking the GIF, and that wasn't done.",
+        "The response contains no code. It only announces a plan and shows a Write tool call with a file path and no contents, so none of the skill's guidance can be seen in it. There is no GIFBuilder at 480x480, no zoom or pulse logic using the easing functions, no polished PIL-drawn checkmark with thick lines, gradient or outline, no save call with color settings and no validation. The user asked for the code and did not get it.",
+        "The response has no code or explanation. It is just the bare tool names \"write\", \"powershell\", \"powershell\". It never shows the GIFBuilder workflow, the 480x480 dimensions, zoom and pulse logic with easing, polished PIL drawing of the checkmark, or validation. The user asked for the code, and none of it is visible.",
+        "Reimplements bounce easing and gradient instead of using the skill's core.easing interpolate / create_gradient_background utilities, and never validates the output with validate_gif/is_slack_ready.",
+        "The skill's Bounce concept says to use `interpolate()` with `easing='bounce_out'` for the landing. The response turns that off with dead code (`'bounce_out' if False else 'ease_in'`). It builds each bounce as a separate ease_in drop that starts at the peak, so the badge jumps back up between bounces with no upward motion instead of bouncing smoothly. Otherwise it follows the skill well. It uses 128x128 emoji size, 14 fps, 64 colours and about 1.5 seconds of animation. It uses GIFBuilder, the easing module and the validator, a gradient background, width=3 outlines and layered shapes. The smaller issues are that the glow is solid rather than semi-transparent, and that it turns on file-size optimisations (remove_duplicates) the user didn't ask for."
+      ]
+    },
+    {
+      "night": 2,
+      "index": 1,
+      "op": "add",
+      "content": "When the user gives an explicit numeric duration or speed for a loop (e.g. 'about 6 seconds per cycle', 'slow and chill', 'don't shorten it'), that explicit request OVERRIDES the general emoji guideline of 'Duration: Keep under 3 seconds' — treat the general guideline as a default only, not a hard cap. Compute frame_count = round(fps * requested_seconds), set the GIF to loop (loop=0), and report the measured total single-cycle duration in the final message, confirming it matches the requested seconds (e.g. ~6.0s), not under 3s.",
+      "anchor": "",
+      "rationale": "The spinner task explicitly wants a 6-second loop and says 'don't shorten it', which conflicts with the skill's blanket 'under 3 seconds for emoji GIFs' rule. Without an explicit override, the agent may truncate the duration to satisfy the wrong constraint or get stuck reconciling the conflict.",
+      "skillopt": "accepted",
+      "baseline_mean": 2.5,
+      "baseline_noise": 2.875,
+      "noop": false,
+      "edited_mean": 3.875,
+      "delta": 1.375,
+      "harmful": false,
+      "deviations": [
+        "The response stops after one tool call that only looks for core/gif_builder.py and the validators. It never draws a coffee cup with steam frames, never uses GIFBuilder at 128x128 for an emoji, never animates the steam fading out (the skill's fade in/out and alpha concept), never saves with emoji optimization and never runs the validator. Most of the skill's workflow is missing.",
+        "It never ran the skill's validators (validate_gif / is_slack_ready), and it likely fell back to saving with plain PIL instead of GIFBuilder without confirming which path ran. Steam line width can also drop to 1, which breaks the width>=2 rule.",
+        "The response is only a one-line statement of intent. It gives no code and does not apply the skill: there is no GIFBuilder workflow, no 480x480 message-GIF settings, no zoom/pulse animation logic with easing, no polished PIL-drawn checkmark and no validation step. The user asked for the code and got none.",
+        "The response stops after one directory-listing command. It never creates the snowflake emoji. It skips the whole Core Workflow: no GIFBuilder at 128x128, no frames drawn with PIL primitives (snowflake branches, thick lines, gradient background), no rotation with a sine-wave wobble, no save with emoji optimization, and no validation. Checking for the `core` package is a reasonable first step, so nothing in the skill is contradicted, but almost none of it is followed.",
+        "The response only has placeholder status lines (\"let me check the directory…\"). It never uses GIFBuilder to build a snowflake emoji at 128x128, and it doesn't draw any frames with PIL primitives. It also skips the detailed snowflake branches, gradient and thick lines the skill calls for, the rotation with a sine-wave wobble, saving with emoji optimization, and checking the result with the validators.",
+        "The response follows the skill's main workflow. It makes a 128x128 emoji GIF at 20 FPS that lasts 1.2 s. It uses GIFBuilder with num_colors=48 when that utility is available. The star is layered and polished, with a glow, a highlight and width=3 outlines. The biggest problem is the Pillow fallback path, which is the path that actually ran. It never reduces the palette to the skill's 48–128 color range, and it never checks the result with the Slack validators. The response checked some properties with PIL instead but didn't check the color count, so the GIF it delivered was not confirmed to meet the skill's color limit. It also ignores the skill's easing guidance ('ease_in' for the fall and 'bounce_out' for landing). Instead it hand-writes its own bounce segments and leaves an unused bounce_y helper in the code. What it calls \"squash-and-stretch\" is really just a uniform shrink.",
+        "The response ends after checking whether Python and Pillow are installed. It never writes the GIF script. None of the skill's workflow appears: no GIFBuilder at 128x128 emoji size, no PIL drawing of a polished star badge, no bounce_out/ease_in easing for the drop, no optimized save and no validation. It only says it plans to check the output against Slack emoji specs."
+      ]
+    },
+    {
+      "night": 2,
+      "index": 2,
+      "op": "add",
+      "content": "Your first tool call for any GIF-creation request must be writing the Python script file (via Write) or running it (via Bash/powershell `python script.py`) — never a filesystem search, `pip list`, or environment-inspection command as the first action. If you are unsure whether `core` is importable, rely on the try/except fallback instead of checking first.",
+      "anchor": "",
+      "rationale": "Reinforces the ordering fix as a concrete first-tool-call rule so the agent cannot satisfy 'write and run a script' by front-loading an unrelated discovery command before ever reaching the script step, which is the exact failure pattern in all four examples.",
+      "skillopt": "accepted",
+      "baseline_mean": 2.5,
+      "baseline_noise": 2.875,
+      "noop": false,
+      "edited_mean": 5.875,
+      "delta": 3.375,
+      "harmful": false,
+      "deviations": [
+        "The response only writes the script. It says it will run and verify the output, but it never runs the script or checks the GIF with the skill's validators (validate_gif / is_slack_ready). Other issues are minor. It writes its own easing and gradient functions instead of using core.easing and create_gradient_background. Its fallback save path, used if GIFBuilder can't be imported, doesn't limit the colour count. The rest follows the skill: 128x128 emoji size, 12 fps, a 2-second duration, 64 colours, the GIFBuilder workflow, PIL drawing primitives, thick outlines, a gradient background, layered detail, and steam that fades out.",
+        "The response only writes the generator script. It never runs it, and it never checks the output with the skill's validators (validate_gif / is_slack_ready) to confirm the GIF meets Slack's requirements. The steam lines also thin down to width=1, which breaks the rule that lines should always be width=2 or more. Otherwise it follows the skill: it uses GIFBuilder at the 128x128 emoji size with fps=12, 24 frames (2 s), 64 colors, a gradient background, layered shapes drawn with PIL, alpha fading for the steam, and no emoji fonts.",
+        "It says it will run the script and check the output, but it stops after writing the file and never uses the skill's validators (validate_gif / is_slack_ready) to confirm the GIF meets Slack's requirements.",
+        "The GIF was checked by reopening it with raw PIL instead of the skill's validator (validate_gif or is_slack_ready with is_emoji=True). The response also never says it used GIFBuilder or a color count in the 48-128 range, so the skill's core save and optimization steps can't be confirmed. The rest follows the skill: 128x128 emoji size, about 12 fps, under 3 seconds, a gradient background, a layered glow, a detailed snowflake with branches, a sine wobble for the spin, and sparkles.",
+        "The response only runs a `snowflake.py` script whose contents never appear, so none of the skill's steps can be verified. There is no visible use of GIFBuilder at the 128x128 emoji size, and no FPS, color count or sub-3-second duration settings. The skill's tips for a polished snowflake (thick lines, detailed branches, gradient background, a sine-based wobble while rotating) are also not shown. The GIF is never checked with validate_gif or is_slack_ready, and no finished GIF is delivered to the user.",
+        "The response contains no script. It only says it will create, generate and verify the GIF, followed by a stray \"Write\". None of the skill's workflow appears: no GIFBuilder at 128x128 emoji size, no PIL-drawn star badge with thick outlines, gradient or layering, no bounce_out or ease_in easing for the drop, no save with emoji optimization, and no validate_gif check. The stated plan to verify against Slack's emoji requirements is the only part that matches the skill."
+      ]
+    },
+    {
+      "night": 3,
+      "index": 0,
+      "op": "add",
+      "content": "OVERRIDE (highest priority): every Write tool call that creates a .py script MUST include the complete, non-empty file content in a single call — full imports, the entire frame-generation loop, and the save/export call. Never call Write with only a file_path and no content, and never split a script's content across multiple Write calls or turns. Before sending the Write call, mentally confirm the content string is not blank and is runnable end-to-end.",
+      "anchor": "",
+      "rationale": "Failures show Write tool calls with a file_path but no visible/actual script content, or a header with nothing after it — the core defect is an incomplete or empty tool call body.",
+      "skillopt": "accepted",
+      "baseline_mean": 3.5,
+      "baseline_noise": 1.875,
+      "noop": false,
+      "edited_mean": 5,
+      "delta": 1.5,
+      "harmful": false,
+      "deviations": [
+        "The response only says it will write a script. It produces no GIF, no code and no animation. It also calls the script \"self-contained\", which suggests it would skip the skill's core workflow: GIFBuilder, the validators and the easing helpers. It never applies any Slack emoji constraints: 128x128 size, 10-30 FPS, 48-128 colors, under 3 seconds, and optimize_for_emoji. It doesn't use the fade-out concept for the steam or any of the polish guidance.",
+        "The response doesn't use the skill's validator (`validate_gif` or `is_slack_ready`) to check that the GIF is Slack-ready. It only plans to inspect the file with PIL, and it never actually runs that check. It also writes its own easing and gradient code instead of using the provided `core.easing.interpolate` and `create_gradient_background`. Otherwise it follows the skill well: 480x480 for a message GIF, 12 FPS, 96 colours, GIFBuilder used, zoom plus a sine pulse, a gradient background, a glow and thick contrasting outlines.",
+        "The response wrote a standalone script and checked the output with plain PIL. It didn't use the skill's core workflow: no GIFBuilder for assembly and saving, and no `validate_gif`/`is_slack_ready` to check against Slack requirements. The loop also lasts about 3.0s (36 frames at 12 fps), which misses the \"keep under 3 seconds for emoji GIFs\" rule. What it did follow: 128x128 size, a 64-colour palette, a gradient background, outlines of width 2 or more, a detailed snowflake with branchlets, a glow and a highlight, and a sine-based wobble layered on the rotation.",
+        "The response never shows the script. It only says \"*Writes the script*\" and gives a PowerShell command to run it, so there's no evidence that it followed the skill's workflow. Nothing visible shows the 128x128 emoji size, GIFBuilder, the bounce/ease_in easing, polished PIL drawing (thick outlines, gradients, layered shapes) or emoji optimization settings. It also doesn't show a check with validate_gif or is_slack_ready.",
+        "The response contains no GIF script. It only creates a directory, so it doesn't use GIFBuilder, 128x128 emoji dimensions, bounce_out/ease_in easing, PIL drawing of a star badge, or validation."
+      ]
+    },
+    {
+      "night": 3,
+      "index": 1,
+      "op": "add",
+      "content": "Limit any text before the first tool call to one short sentence (e.g. 'Writing the script now.'). Do not use this space to narrate a plan, restate the request, or pad the response — go straight from that one sentence into the Write tool call containing the full script.",
+      "anchor": "",
+      "rationale": "Some failures show only a preamble sentence or a stray fragment with no code, suggesting the agent burns its response on narration instead of producing the actual script; capping preamble forces content into the tool call.",
+      "skillopt": "accepted",
+      "baseline_mean": 3.5,
+      "baseline_noise": 1.875,
+      "noop": false,
+      "edited_mean": 7.25,
+      "delta": 3.75,
+      "harmful": false,
+      "deviations": [
+        "The response followed most of the skill. The GIF was 128x128 at 10 FPS, 18 frames (1.8s, under the 3-second emoji limit), with a gradient background, easing for the steam motion, and alpha fading on the steam. The main miss is validation: the output was checked with raw PIL rather than the skill's validate_gif or is_slack_ready tools. It also never says whether the skill's GIFBuilder was used, or which color-count and emoji optimization settings were applied when saving.",
+        "Doesn't run the skill's validators (validate_gif/is_slack_ready) and rebuilds the provided easing and gradient utilities instead of using core.easing.interpolate and create_gradient_background. Smaller issues: the highlight line can be width 1, and it sets remove_duplicates without being asked to optimize.",
+        "It never validates the output with the skill's validators (validate_gif / is_slack_ready). It also hand-rolls its own easing instead of using core.easing interpolate('back_out'), and applies remove_duplicates optimisation without being asked.",
+        "The script is only written out and never run, so no GIF is produced, and it doesn't check the result with the skill's validators (validate_gif or is_slack_ready). The duration is exactly 3.0 seconds instead of under 3, and the triangle tips are drawn with the default 1-pixel outline.",
+        "Nothing shows the skill's core utilities were used. The response never mentions GIFBuilder, the `validate_gif` or `is_slack_ready` validators, or `interpolate` with `bounce_out`/`ease_in` easing, and it gives no color count. It reports its own measurements instead of Slack validation. It does meet the Slack constraints the skill sets: 128x128, 15 FPS, under 3 seconds. It also follows the polish guidance: gradient background, glow, layered star and outlines at width=3.",
+        "The response mostly follows the skill's Slack constraints: 128x128 emoji size, 20 FPS, 64 colors, about 1.8 s long, GIFBuilder with optimize_for_emoji, and PIL primitives with outline width 3, a glow and a highlight. The biggest miss is that it rewrites the skill's own utilities instead of using them. It hand-codes an ease_out_bounce function rather than calling `core.easing.interpolate(easing='bounce_out')`, and builds its own gradient instead of using `create_gradient_background`. It also never calls the skill's validators (`validate_gif`/`is_slack_ready`) to check the result. Smaller issue: it adds `remove_duplicates=True`, which the skill says to use only when asked to shrink the file. That option would also likely drop the six hold frames the script adds on purpose."
+      ]
+    },
+    {
+      "night": 3,
+      "index": 2,
+      "op": "add",
+      "content": "A turn that ends with no visible text output and no tool call (or a tool call carrying no real content) is a hard failure. Before ending any turn for a GIF-creation request, verify you have either produced a text update or invoked Write/Bash with genuine, complete content — never submit a blank or near-blank response.",
+      "anchor": "",
+      "rationale": "One failure example shows a completely empty response ('got: '), which satisfies none of the rubric; this rule makes emptiness an explicit, checked failure mode.",
+      "skillopt": "accepted",
+      "baseline_mean": 3.5,
+      "baseline_noise": 1.875,
+      "noop": false,
+      "edited_mean": 5.25,
+      "delta": 1.75,
+      "harmful": false,
+      "deviations": [
+        "The response ends after a dependency check, so it never follows the skill's core workflow. It does not create a 128x128 GIFBuilder, draw frames with PIL primitives, apply fade or easing, save with emoji optimization, or check the result with validate_gif or is_slack_ready. The stated plan does match some of the skill's guidance: a gradient background, fading steam, a seamless loop and installing the listed dependencies. But no GIF was actually made.",
+        "The response is one fragmentary sentence (\"Write PowerShell tool to create the script.\") and does none of the skill's workflow. It never builds a 128x128 emoji GIF with GIFBuilder or draws the coffee cup and steam with PIL primitives. It doesn't make the steam rise and fade using easing or alpha, doesn't save with emoji optimization, and doesn't validate the result.",
+        "The response contains no code at all. It just writes \"# unused placeholder\" to a file. It never uses GIFBuilder, never sets 480x480 dimensions, never implements the zoom and pulse animations with PIL primitives or easing, and gives the user nothing they can use.",
+        "The response never checks the finished GIF with the skill's validators (validate_gif or is_slack_ready) to confirm it meets Slack's requirements. Otherwise it mostly follows the skill: 128x128 emoji size, 15 FPS, 2.4 s (under 3 s), 64 colors, GIFBuilder, BICUBIC rotation with a sine wobble, a gradient background, a glow, and layered branches. Smaller issues: the polygon outlines use the default width of 1, which breaks the \"width=2 or higher\" rule, and a full turn in 2.4 s is arguably not \"slow\" rotation.",
+        "The response wrote a \"self-contained\" script instead of following the skill's core workflow. It rewrote the Penner ease_out_bounce curve by hand rather than calling interpolate(easing='bounce_out') from core.easing. It also appears to have skipped GIFBuilder.save (with num_colors and optimize_for_emoji) and checked the output with an ad-hoc PIL script instead of validate_gif or is_slack_ready from core.validators, though the script itself isn't shown. The output does meet the Slack limits (128x128, 12 fps, under 3 s), uses the bounce concept, and adds polish like squash/stretch, a shadow and sparkles."
+      ]
+    },
+    {
+      "night": 3,
+      "index": 3,
+      "op": "add",
+      "content": "All response text and code comments must be in plain English with no stray or garbled characters (e.g. mixed-language fragments like '写write script'). If you notice non-English or corrupted text about to be output, discard it and re-generate a clean English sentence before proceeding.",
+      "anchor": "",
+      "rationale": "One failure ('写write script.') shows corrupted/garbled output mixing languages, which breaks the response; an explicit English-only rule guards against this recurring defect.",
+      "skillopt": "accepted",
+      "baseline_mean": 3.5,
+      "baseline_noise": 1.875,
+      "noop": false,
+      "edited_mean": 3.625,
+      "delta": 0.125,
+      "harmful": false,
+      "deviations": [
+        "The response only outlines an approach. It never makes the emoji: there is no GIFBuilder at 128x128, no PIL drawing, no save with emoji optimization and no check with validate_gif or is_slack_ready. Its plan fits the skill's limits (24 frames over 2s, which is about 12 fps and under 3s, with the steam fading via alpha), but none of the skill's required steps are carried out.",
+        "The response ignores the skill completely. It contains only \"Powered by Claude Fable 5.1\". It never builds a GIF, sets 128x128 emoji dimensions, draws the coffee cup with PIL, animates the steam rising and fading, uses GIFBuilder, or validates the file for Slack.",
+        "The response is only a status line (\"Writing the snowflake GIF generator script\") and produces nothing. It never uses GIFBuilder at 128x128 emoji size, never draws a detailed snowflake from PIL primitives with thick lines and branches, never applies a sine-wave wobble to the rotation, never saves with emoji optimization and never validates the result. It follows none of the skill's workflow or quality guidance.",
+        "The response contains only the fragments \"Write\" and \"powershell\". There's no GIF script at all. It skips the whole workflow: no GIFBuilder at 128x128 emoji size, no PIL-drawn star badge, no drop-in bounce using easing (ease_in / bounce_out), and no save with emoji optimization or validation.",
+        "The response has no visible script. It is a one-line statement of intent plus a bare \"[Tool: write]\" marker, with no file content. So none of the skill's requirements can be confirmed: the 128x128 emoji size, GIFBuilder, the `bounce_out` easing (with `ease_in` for the fall), frames under 3 seconds, polished drawing with line width 2 or more, and saving with emoji optimization."
+      ]
+    }
+  ],
+  "cost_usd": {
+    "target": 3.5611371999999992,
+    "grader": 2.59528
+  },
+  "models": {
+    "target": [
+      "claude-sonnet-5"
+    ],
+    "grader": [
+      "claude-opus-5-5"
+    ]
+  }
+}

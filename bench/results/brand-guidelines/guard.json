@@ -1,0 +1,122 @@
+{
+  "skill": "brand-guidelines",
+  "judge_model": "sonnet",
+  "models": [
+    "claude-sonnet-5"
+  ],
+  "intent_cost_usd": 0.0,
+  "guard_cost_usd": 0.0407868,
+  "nights": [
+    {
+      "night": 1,
+      "deterministic": [
+        "allow",
+        "allow",
+        "allow",
+        "allow"
+      ],
+      "judge_v1": [
+        "review",
+        "allow",
+        "allow",
+        "review"
+      ],
+      "judge_v2": [
+        "allow",
+        "allow",
+        "allow",
+        "allow"
+      ],
+      "findings_v1": [
+        {
+          "op": "add",
+          "content": "When asked what colors/fonts to use for a slide or artifact, answer for EVERY named element (background, title, subtitle, body, accent shape) with an explicit line each in the form 'Element: font (fallback) + hex color'. Never stop after the background and title. Use exact hex codes from the palette: Dark #141413, Light #faf9f5, Mid Gray #b0aea5, Light Gray #e8e6dc, Orange #d97757, Blue #6a9bcc, Green #788c5d.",
+          "anchor": "",
+          "rationale": "The failing answer covered the background and title but was cut off or incomplete for the subtitle and accent bar. Requiring one line per named element prevents omissions.",
+          "verdict": "review",
+          "findings": [
+            {
+              "edit": 0,
+              "check": "llm_judge",
+              "severity": "review",
+              "message": "It turns the skill, which is about applying the brand to artifacts, into a rigid answer template built around one test's elements (background, title, subtitle, accent shape). The hex values match the palette, but the mandatory per-element format is a new, test-shaped constraint the owner should confirm."
+            }
+          ]
+        },
+        {
+          "op": "add",
+          "content": "Dark-background rule: background Dark #141413; all text on it uses Light #faf9f5 (Mid Gray #b0aea5 is allowed only for de-emphasized secondary text). Title/headings (24pt and larger): Poppins, fallback Arial. Subtitle and any body-size text (below 24pt): Lora, fallback Georgia. State the font name AND its fallback every time. A subtitle is body text, so it uses Lora/Georgia, not Poppins, unless it is 24pt or larger.",
+          "anchor": "",
+          "rationale": "Makes the title/subtitle font split explicit and specifies text color on dark backgrounds, so the subtitle is not left ambiguous.",
+          "verdict": "allow",
+          "findings": []
+        },
+        {
+          "op": "add",
+          "content": "Decorative, non-text shapes (accent bars, dividers, icons) use accent colors only. Default to Orange #d97757 as the primary accent for a single shape. When several shapes are used, cycle Orange #d97757, then Blue #6a9bcc, then Green #788c5d. Never use the Dark/Light neutrals for an accent bar. Always name the hex code for the accent bar.",
+          "anchor": "",
+          "rationale": "The accent bar color was the likely missed criterion. This rule gives a concrete hex and an ordering.",
+          "verdict": "allow",
+          "findings": []
+        },
+        {
+          "op": "add",
+          "content": "Keep answers compact and structured: one bullet per element with font, fallback and hex. Give the rationale in at most one short sentence, and do not restate the guidelines. Cover all elements the user names before adding any extras.",
+          "anchor": "",
+          "rationale": "Prevents verbose reasoning from crowding out or truncating the required per-element specifications.",
+          "verdict": "review",
+          "findings": [
+            {
+              "edit": 3,
+              "check": "llm_judge",
+              "severity": "review",
+              "message": "This is a broad output-style constraint (brevity, one rationale sentence, no restating guidelines) unrelated to the brand palette or typography. It was written to avoid truncation in tests and would change behavior across all uses of the skill."
+            }
+          ]
+        }
+      ],
+      "findings_v2": [
+        {
+          "op": "add",
+          "content": "When asked what colors/fonts to use for a slide or artifact, answer for EVERY named element (background, title, subtitle, body, accent shape) with an explicit line each in the form 'Element: font (fallback) + hex color'. Never stop after the background and title. Use exact hex codes from the palette: Dark #141413, Light #faf9f5, Mid Gray #b0aea5, Light Gray #e8e6dc, Orange #d97757, Blue #6a9bcc, Green #788c5d.",
+          "anchor": "",
+          "rationale": "The failing answer covered the background and title but was cut off or incomplete for the subtitle and accent bar. Requiring one line per named element prevents omissions.",
+          "verdict": "allow",
+          "findings": []
+        },
+        {
+          "op": "add",
+          "content": "Dark-background rule: background Dark #141413; all text on it uses Light #faf9f5 (Mid Gray #b0aea5 is allowed only for de-emphasized secondary text). Title/headings (24pt and larger): Poppins, fallback Arial. Subtitle and any body-size text (below 24pt): Lora, fallback Georgia. State the font name AND its fallback every time. A subtitle is body text, so it uses Lora/Georgia, not Poppins, unless it is 24pt or larger.",
+          "anchor": "",
+          "rationale": "Makes the title/subtitle font split explicit and specifies text color on dark backgrounds, so the subtitle is not left ambiguous.",
+          "verdict": "allow",
+          "findings": []
+        },
+        {
+          "op": "add",
+          "content": "Decorative, non-text shapes (accent bars, dividers, icons) use accent colors only. Default to Orange #d97757 as the primary accent for a single shape. When several shapes are used, cycle Orange #d97757, then Blue #6a9bcc, then Green #788c5d. Never use the Dark/Light neutrals for an accent bar. Always name the hex code for the accent bar.",
+          "anchor": "",
+          "rationale": "The accent bar color was the likely missed criterion. This rule gives a concrete hex and an ordering.",
+          "verdict": "allow",
+          "findings": []
+        },
+        {
+          "op": "add",
+          "content": "Keep answers compact and structured: one bullet per element with font, fallback and hex. Give the rationale in at most one short sentence, and do not restate the guidelines. Cover all elements the user names before adding any extras.",
+          "anchor": "",
+          "rationale": "Prevents verbose reasoning from crowding out or truncating the required per-element specifications.",
+          "verdict": "allow",
+          "findings": []
+        }
+      ],
+      "global_findings": [
+        {
+          "edit": null,
+          "check": "change_budget",
+          "severity": "review",
+          "message": "edits touch 71% of the skill (budget 35%)"
+        }
+      ]
+    }
+  ]
+}

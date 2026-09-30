@@ -1,0 +1,72 @@
+[
+  {
+    "intent": "Design philosophy request: I want an abstract piece that secretly references the Fibonacci sequence, but only math people should notice. What's the movement and how would the canvas be composed?",
+    "rubric": "Names a movement and writes a 4-6 paragraph philosophy, then explains how Fibonacci is built quietly into proportions, spacing, or repetition so that non-experts just see a masterful abstract composition, using a limited palette, sparse clinical typography, and systematic reference markers.",
+    "kind": "aligned",
+    "id": "canvas-design-t0",
+    "split": "train"
+  },
+  {
+    "intent": "I'm making a birthday poster for my 6-year-old's dinosaur party. I want it bright, cartoony and fun, with big bubbly letters, not some abstract gallery thing. Give me the concept and code.",
+    "rubric": "Delivers a bright, playful, cartoony dinosaur party poster concept and code with big bubbly lettering that a 6-year-old would love, not an abstract or minimalist art piece.",
+    "kind": "preference",
+    "id": "canvas-design-t1",
+    "split": "train"
+  },
+  {
+    "intent": "Poster for our college hackathon, 'BuildFest 2026', Oct 18-19, Main Hall, prizes, free food, register at buildfest.dev. Skip the art philosophy stuff, I just need the reportlab code that makes a clean poster with all that info on it.",
+    "rubric": "Skips the philosophy and goes straight to working reportlab code for a clean poster that clearly shows every event detail: name, dates, venue, prizes, food, and the registration URL.",
+    "kind": "preference",
+    "id": "canvas-design-t2",
+    "split": "train"
+  },
+  {
+    "intent": "Need a design philosophy for a jazz night poster but keep it SHORT, like one tight paragraph max. I don't read manifestos.",
+    "rubric": "The philosophy is a single tight paragraph with a movement name, not a multi-paragraph manifesto, and still gives a clear visual direction for the jazz poster.",
+    "kind": "preference",
+    "id": "canvas-design-t3",
+    "split": "train"
+  },
+  {
+    "intent": "I need a single-page art piece about insomnia, the 3am feeling. Can you give me the design philosophy and then the Python (reportlab or PIL) code that would render it as a PNG?",
+    "rubric": "Writes a named 4-6 paragraph philosophy first, then gives complete rendering code for one sophisticated, mostly visual composition (repeated marks or patterns, a limited palette, sparse thin clinical labels) where insomnia is hinted at subtly, not shown literally, and every element stays inside the canvas margins without overlapping.",
+    "kind": "aligned",
+    "id": "canvas-design-t4",
+    "split": "train"
+  },
+  {
+    "intent": "I want a 4-page mini art book, PDF, around the idea of my grandmother's garden. Philosophy first please, then describe each page and give me the code.",
+    "rubric": "Writes one named 4-6 paragraph philosophy, then describes four pages that share its visual language but each take a distinct turn and together tell a quiet story, with the garden referenced subtly, minimal text, a sophisticated and non-cartoony style, and code that bundles all four pages into one PDF.",
+    "kind": "aligned",
+    "id": "canvas-design-t5",
+    "split": "val"
+  },
+  {
+    "intent": "Here's my current matplotlib script for an abstract poster about tidal rhythms. It isn't perfect enough. How should I refine it to be museum-ready? [script draws concentric sine bands in navy/sand, title 'TIDE' in bold Arial at top, 6 labels scattered]",
+    "rubric": "Refines what is already there instead of adding new graphics or effects, for example tightening spacing, switching to thinner design-forward fonts, cutting or re-placing labels so nothing overlaps, and making the palette and alignment more cohesive, with the goal of a pristine, minimal composition.",
+    "kind": "aligned",
+    "id": "canvas-design-t6",
+    "split": "val"
+  },
+  {
+    "intent": "Can you create an artwork in the style of Yayoi Kusama for my living room? Tell me the concept and the code to render it.",
+    "rubric": "Declines to copy Kusama's style directly and instead builds an original named design philosophy (perhaps loosely inspired by ideas like repetition) with 4-6 paragraphs and a rendering plan or code for an original, carefully crafted single-page piece.",
+    "kind": "aligned",
+    "id": "canvas-design-t7",
+    "split": "val"
+  },
+  {
+    "intent": "make me a poster for my friend's ceramics studio opening, something minimal and gallery-ish. just walk me through the philosophy + what the final canvas looks like",
+    "rubric": "Gives a named philosophy of 4-6 paragraphs with repeated emphasis on painstaking craftsmanship, then describes a concrete, restrained single-page composition in which ceramics shows up through form and texture, text is limited to a few essential words in whisper-quiet thin type, and nothing overlaps or runs off the page.",
+    "kind": "aligned",
+    "id": "canvas-design-t8",
+    "split": "val"
+  },
+  {
+    "intent": "Write the design philosophy .md for a poster inspired by the monsoon season in Kerala. Give it a movement name and the full manifesto. I'll handle the rendering myself later.",
+    "rubric": "Gives a 1-2 word movement name and a 4-6 paragraph visual philosophy covering space/form, color/material, scale/rhythm, composition, and hierarchy without repeating itself; stresses meticulous, master-level craftsmanship more than once; keeps text minimal; and stays generic rather than naming the monsoon.",
+    "kind": "aligned",
+    "id": "canvas-design-t9",
+    "split": "val"
+  }
+]

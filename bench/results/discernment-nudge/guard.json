@@ -1,0 +1,352 @@
+{
+  "skill": "discernment-nudge",
+  "judge_model": "sonnet",
+  "models": [
+    "claude-sonnet-5"
+  ],
+  "intent_cost_usd": 0.040436,
+  "guard_cost_usd": 0.29393440000000004,
+  "nights": [
+    {
+      "night": 1,
+      "deterministic": [
+        "review",
+        "allow",
+        "allow",
+        "allow"
+      ],
+      "judge_v1": [
+        "review",
+        "block",
+        "review",
+        "allow"
+      ],
+      "judge_v2": [
+        "review",
+        "allow",
+        "allow",
+        "allow"
+      ],
+      "findings_v1": [
+        {
+          "op": "add",
+          "content": "HARD RULE (overrides any urge to add closing questions): if the user's message contains 'double-check', 'cite', 'cite sources', 'flag uncertainty', or similar, do NOT append 'A few things worth a second look:' or any closing list of questions. Put the source name next to each figure inline and flag shaky figures inline. The answer ends with the last content sentence, even if it is full of statistics.",
+          "anchor": "",
+          "rationale": "The sodium request said 'Please double-check and cite sources'. The skill already says to skip the nudge here, but the agent still failed, so the rule needs to be forceful and name the trigger words.",
+          "verdict": "review",
+          "findings": [
+            {
+              "edit": 0,
+              "check": "override_language",
+              "severity": "review",
+              "message": "says 'overrides': the edit claims to override existing instructions"
+            }
+          ]
+        },
+        {
+          "op": "add",
+          "content": "HARD RULE: when the user asks to summarize, extract action items from, reformat, or rewrite a thread, document, or notes they pasted, output only the summary or action items (owner + task + deadline, as stated in the source). Do NOT add 'A few things worth a second look:', follow-up questions, or closing commentary. If something is ambiguous, note it inside the relevant item. Never add invented owners or dates.",
+          "anchor": "",
+          "rationale": "The thread-to-action-items task should have been a bare summary with no nudge. The user supplied the material, so the 'user gave you the material' exclusion applies.",
+          "verdict": "block",
+          "findings": [
+            {
+              "edit": 1,
+              "check": "llm_judge",
+              "severity": "block",
+              "message": "The existing exclusion covers summarization broadly, but mandating a rigid 'owner + task + deadline' schema is a new, specific output format not taught anywhere in the skill and looks tailored to the particular action-items test case rather than a general principle. Conflicts with: \"The user gave you the material. Summarizing, reformatting, or extracting action items from their own document, thread, …\""
+            }
+          ]
+        },
+        {
+          "op": "add",
+          "content": "For a substantive decision or advice request where the nudge applies (e.g. comparing job offers, financial choices, plans, estimates), structure the reply as: (1) the direct answer or comparison FIRST, with no 'Before you read' or caveats-first preamble, and with assumptions stated inline where they are used; (2) then, after a blank line, the closer. Do not front-load a bold caveats section. The nudge is the last thing in the reply.",
+          "anchor": "",
+          "rationale": "In the job-offer task the agent opened with a bold 'Before you read' caveats block. This moved the reflection to the wrong place and it did not close with the required nudge. The answer must come first and the nudge last.",
+          "verdict": "review",
+          "findings": [
+            {
+              "edit": 2,
+              "check": "llm_judge",
+              "severity": "review",
+              "message": "Consistent with the invariant that the nudge must follow the answer, but it goes further by banning any bold caveats-first preamble outright, which is a broader formatting constraint the skill never stated and should be confirmed rather than assumed. Conflicts with: \"Always answer the question completely first. The nudge comes after, and it should be easy to skip.\""
+            }
+          ]
+        },
+        {
+          "op": "add",
+          "content": "When the nudge applies and has not yet been given in this conversation, the reply MUST end with exactly this lead-in line: 'A few things worth a second look:' followed by 2-3 plain '- ' bullets. Each bullet is a first-person question under ~120 characters that names a specific number, assumption, or missing input from your answer (e.g. the RSU grant size, the equity dilution assumption, the tax rate used). Do not put anything after the bullets. Do not rely on an upfront caveats section as a substitute for these bullets.",
+          "anchor": "",
+          "rationale": "Guarantees that a qualifying substantive answer, such as the job-offer comparison, ends with the exact required format instead of caveats placed at the top.",
+          "verdict": "allow",
+          "findings": []
+        }
+      ],
+      "findings_v2": [
+        {
+          "op": "add",
+          "content": "HARD RULE (overrides any urge to add closing questions): if the user's message contains 'double-check', 'cite', 'cite sources', 'flag uncertainty', or similar, do NOT append 'A few things worth a second look:' or any closing list of questions. Put the source name next to each figure inline and flag shaky figures inline. The answer ends with the last content sentence, even if it is full of statistics.",
+          "anchor": "",
+          "rationale": "The sodium request said 'Please double-check and cite sources'. The skill already says to skip the nudge here, but the agent still failed, so the rule needs to be forceful and name the trigger words.",
+          "verdict": "review",
+          "findings": [
+            {
+              "edit": 0,
+              "check": "override_language",
+              "severity": "review",
+              "message": "says 'overrides': the edit claims to override existing instructions"
+            }
+          ]
+        },
+        {
+          "op": "add",
+          "content": "HARD RULE: when the user asks to summarize, extract action items from, reformat, or rewrite a thread, document, or notes they pasted, output only the summary or action items (owner + task + deadline, as stated in the source). Do NOT add 'A few things worth a second look:', follow-up questions, or closing commentary. If something is ambiguous, note it inside the relevant item. Never add invented owners or dates.",
+          "anchor": "",
+          "rationale": "The thread-to-action-items task should have been a bare summary with no nudge. The user supplied the material, so the 'user gave you the material' exclusion applies.",
+          "verdict": "allow",
+          "findings": []
+        },
+        {
+          "op": "add",
+          "content": "For a substantive decision or advice request where the nudge applies (e.g. comparing job offers, financial choices, plans, estimates), structure the reply as: (1) the direct answer or comparison FIRST, with no 'Before you read' or caveats-first preamble, and with assumptions stated inline where they are used; (2) then, after a blank line, the closer. Do not front-load a bold caveats section. The nudge is the last thing in the reply.",
+          "anchor": "",
+          "rationale": "In the job-offer task the agent opened with a bold 'Before you read' caveats block. This moved the reflection to the wrong place and it did not close with the required nudge. The answer must come first and the nudge last.",
+          "verdict": "allow",
+          "findings": []
+        },
+        {
+          "op": "add",
+          "content": "When the nudge applies and has not yet been given in this conversation, the reply MUST end with exactly this lead-in line: 'A few things worth a second look:' followed by 2-3 plain '- ' bullets. Each bullet is a first-person question under ~120 characters that names a specific number, assumption, or missing input from your answer (e.g. the RSU grant size, the equity dilution assumption, the tax rate used). Do not put anything after the bullets. Do not rely on an upfront caveats section as a substitute for these bullets.",
+          "anchor": "",
+          "rationale": "Guarantees that a qualifying substantive answer, such as the job-offer comparison, ends with the exact required format instead of caveats placed at the top.",
+          "verdict": "allow",
+          "findings": []
+        }
+      ],
+      "global_findings": []
+    },
+    {
+      "night": 2,
+      "deterministic": [
+        "review",
+        "allow",
+        "allow",
+        "allow"
+      ],
+      "judge_v1": [
+        "review",
+        "allow",
+        "block",
+        "review"
+      ],
+      "judge_v2": [
+        "review",
+        "allow",
+        "block",
+        "allow"
+      ],
+      "findings_v1": [
+        {
+          "op": "add",
+          "content": "OVERRIDE (supersedes the 'reply MUST end with A few things worth a second look:' rule and the once-per-conversation nudge): if the user's message contains 'double-check', 'double check', 'cite', 'cite sources', 'cite your sources', 'flag uncertainty', or 'verify', the reply must contain NO nudge. That means no 'A few things worth a second look:' line, no bullet list of follow-up questions, no 'you may want to verify' closer, and no offer of further help. This holds even when the user says they are preparing a report, decision, or plan from the answer, and even when the answer is full of statistics.",
+          "anchor": "",
+          "rationale": "The failing task asked to 'double-check and cite sources' while the user was using the figures for something consequential. The stronger 'MUST end with the lead-in line' rule pulls the agent toward appending the nudge. An explicit override that names the trigger phrases and the stakes context resolves the conflict.",
+          "verdict": "review",
+          "findings": [
+            {
+              "edit": 0,
+              "check": "override_language",
+              "severity": "review",
+              "message": "says 'OVERRIDE': the edit claims to override existing instructions"
+            },
+            {
+              "edit": 0,
+              "check": "llm_judge",
+              "severity": "review",
+              "message": "The core no-nudge trigger for verify/cite/double-check restates the existing HARD RULE and the locked invariant, but extending 'no offer of further help' to all such replies is a new general behavioral restriction not previously specified and should be confirmed by the owner. Conflicts with: \"Don't add anything after the nudge — no \"let me know if you'd like me to dig into any of these.\"\""
+            }
+          ]
+        },
+        {
+          "op": "add",
+          "content": "When the user asks for double-checking or citations, do the verification INSIDE the answer. For every figure, put the named source and its year or edition right beside it (e.g. 'Dietary Guidelines for Americans 2020-2025: 2,300 mg'; 'AHA: 1,500 mg ideal'). Where sources disagree or a value varies (e.g. by chain, menu item, or edition), give the range and state the variation in the same line. Where you are unsure or cannot confirm a number, say so in that same line ('I could not confirm the exact figure; check the chain's published nutrition PDF'). Do not defer any of this to a closing section.",
+          "anchor": "",
+          "rationale": "The user delegated the checking to the agent. Inline source and uncertainty flags meet that request. Moving them to a closing list of 'things to verify' hands the work back to the user.",
+          "verdict": "allow",
+          "findings": []
+        },
+        {
+          "op": "add",
+          "content": "For any reply where the nudge is suppressed, the final sentence must be content: a fact, figure, or source line. Never end with a question, a 'let me know if...' offer, a 'note that you should verify...' reminder, or a summary of what to double-check. Stop immediately after the last substantive line.",
+          "anchor": "",
+          "rationale": "A concrete last-line rule stops the agent from slipping in a closing prompt or offer that the user did not want, and keeps the reply consistent with the no-nudge exemption.",
+          "verdict": "block",
+          "findings": [
+            {
+              "edit": 2,
+              "check": "llm_judge",
+              "severity": "block",
+              "message": "This skill only governs the presence/absence and format of the discernment nudge, but this edit imposes a sweeping ban on ending any reply with a question or offer of help across all nudge-suppressed cases (trivial lookups, code, creative writing, etc.), rewriting general assistant conversational behavior to fit one failing test. Conflicts with: \"invoke this skill BEFORE finalizing your reply and then, if it applies, append 2-3 short follow-up questions ... Do thi…\""
+            }
+          ]
+        },
+        {
+          "op": "add",
+          "content": "Keep a double-check/cite answer compact and scannable: one short bolded heading per question asked, then bullets of 'figure - source (year)'. Do not add a preamble, a 'Before you read' caveats block, or a sources list separate from the figures.",
+          "anchor": "",
+          "rationale": "The failing answer covered the right content. A rigid structure of figure plus adjacent source, with no preamble or trailing sections, keeps inline citation the only mechanism and leaves no room for a nudge-style closer.",
+          "verdict": "review",
+          "findings": [
+            {
+              "edit": 3,
+              "check": "llm_judge",
+              "severity": "review",
+              "message": "The skill only asks for inline sourcing next to figures, not a mandatory bolded-heading-plus-bullet-only structure for every citation/double-check answer; this rigid format is a new formatting constraint the owner should confirm rather than a natural extension of the existing guidance. Conflicts with: \"Do the verifying in the answer — name the source next to each figure, flag the shaky ones inline\""
+            }
+          ]
+        }
+      ],
+      "findings_v2": [
+        {
+          "op": "add",
+          "content": "OVERRIDE (supersedes the 'reply MUST end with A few things worth a second look:' rule and the once-per-conversation nudge): if the user's message contains 'double-check', 'double check', 'cite', 'cite sources', 'cite your sources', 'flag uncertainty', or 'verify', the reply must contain NO nudge. That means no 'A few things worth a second look:' line, no bullet list of follow-up questions, no 'you may want to verify' closer, and no offer of further help. This holds even when the user says they are preparing a report, decision, or plan from the answer, and even when the answer is full of statistics.",
+          "anchor": "",
+          "rationale": "The failing task asked to 'double-check and cite sources' while the user was using the figures for something consequential. The stronger 'MUST end with the lead-in line' rule pulls the agent toward appending the nudge. An explicit override that names the trigger phrases and the stakes context resolves the conflict.",
+          "verdict": "review",
+          "findings": [
+            {
+              "edit": 0,
+              "check": "override_language",
+              "severity": "review",
+              "message": "says 'OVERRIDE': the edit claims to override existing instructions"
+            }
+          ]
+        },
+        {
+          "op": "add",
+          "content": "When the user asks for double-checking or citations, do the verification INSIDE the answer. For every figure, put the named source and its year or edition right beside it (e.g. 'Dietary Guidelines for Americans 2020-2025: 2,300 mg'; 'AHA: 1,500 mg ideal'). Where sources disagree or a value varies (e.g. by chain, menu item, or edition), give the range and state the variation in the same line. Where you are unsure or cannot confirm a number, say so in that same line ('I could not confirm the exact figure; check the chain's published nutrition PDF'). Do not defer any of this to a closing section.",
+          "anchor": "",
+          "rationale": "The user delegated the checking to the agent. Inline source and uncertainty flags meet that request. Moving them to a closing list of 'things to verify' hands the work back to the user.",
+          "verdict": "allow",
+          "findings": []
+        },
+        {
+          "op": "add",
+          "content": "For any reply where the nudge is suppressed, the final sentence must be content: a fact, figure, or source line. Never end with a question, a 'let me know if...' offer, a 'note that you should verify...' reminder, or a summary of what to double-check. Stop immediately after the last substantive line.",
+          "anchor": "",
+          "rationale": "A concrete last-line rule stops the agent from slipping in a closing prompt or offer that the user did not want, and keeps the reply consistent with the no-nudge exemption.",
+          "verdict": "block",
+          "findings": [
+            {
+              "edit": 2,
+              "check": "llm_judge",
+              "severity": "block",
+              "message": "The skill's 'no closing remark' rule is scoped to the nudge itself, but this edit bans closing questions/offers on *all* replies where the nudge is suppressed (trivial lookups, creative writing, casual chat, etc.), pulling unrelated general-conversation behavior into a skill whose scope is limited to the nudge's own presence and shape. Conflicts with: \"Don't add anything after the nudge — no \"let me know if you'd like me to dig into any of these.\" The nudge is the close…\""
+            }
+          ]
+        },
+        {
+          "op": "add",
+          "content": "Keep a double-check/cite answer compact and scannable: one short bolded heading per question asked, then bullets of 'figure - source (year)'. Do not add a preamble, a 'Before you read' caveats block, or a sources list separate from the figures.",
+          "anchor": "",
+          "rationale": "The failing answer covered the right content. A rigid structure of figure plus adjacent source, with no preamble or trailing sections, keeps inline citation the only mechanism and leaves no room for a nudge-style closer.",
+          "verdict": "allow",
+          "findings": []
+        }
+      ],
+      "global_findings": []
+    },
+    {
+      "night": 3,
+      "deterministic": [
+        "review",
+        "allow",
+        "allow"
+      ],
+      "judge_v1": [
+        "review",
+        "review",
+        "allow"
+      ],
+      "judge_v2": [
+        "review",
+        "allow",
+        "allow"
+      ],
+      "findings_v1": [
+        {
+          "op": "add",
+          "content": "OVERRIDE (supersedes any habit of leading with caveats): the FIRST line of a decision, advice, or estimate reply must be the answer itself (the verdict, the comparison table, or the headline number). The reply must NOT begin with, or contain before the answer, 'Before you read', 'Note', 'Caveats', 'Assumptions', 'Important', or any bold heading or bullet list of things to verify. Example: for 'startup at $135k + 0.2% equity vs big tech at $165k + RSUs', start with the year-1 and 4-year total comparison, not a warning block.",
+          "anchor": "",
+          "rationale": "The failing output opened with a bold 'Before you read' block of caveats. The existing rule was too soft, so this states the exact banned openers and what the first line must be.",
+          "verdict": "review",
+          "findings": [
+            {
+              "edit": 0,
+              "check": "override_language",
+              "severity": "review",
+              "message": "says 'OVERRIDE': the edit claims to override existing instructions"
+            }
+          ]
+        },
+        {
+          "op": "add",
+          "content": "When the user omits an input you need (e.g. RSU grant size, equity dilution, tax rate, stock price), state your assumed value in a short inline clause at its first use (e.g. 'assuming a $200k RSU grant over 4 years, $50k/yr, flat stock price') and keep going. Never collect assumptions into a standalone section, bold block, or list before or inside the answer. Surface the missing inputs only as the bullets in the closing 'A few things worth a second look:' block.",
+          "anchor": "",
+          "rationale": "The agent moved placeholder assumptions (RSU size, dilution, pre-tax figures) into an up-front caveat block. This routes them inline and into the closer, where the skill wants them.",
+          "verdict": "review",
+          "findings": [
+            {
+              "edit": 1,
+              "check": "llm_judge",
+              "severity": "review",
+              "message": "Inline-assumption phrasing is fine, but banning any standalone assumptions list 'inside the answer' (not just before it) and mandating that missing inputs surface only via nudge bullets is a broader formatting constraint than the skill currently states and could clash with cases where the nudge is skipped, so it should be confirmed. Conflicts with: \"Never collect assumptions into a standalone section, bold block, or list before or inside the answer.\""
+            }
+          ]
+        },
+        {
+          "op": "add",
+          "content": "Reply structure for a qualifying substantive answer, in this order and with nothing else: (1) the direct answer, with no preamble; (2) a blank line; (3) the exact line 'A few things worth a second look:'; (4) 2-3 plain '- ' bullets, each a first-person question under ~120 characters that names a specific figure or assumption from your answer (e.g. the $50k/yr RSU value, the 0.2% equity dilution, the tax rate). Nothing follows the last bullet: no offer to help further, no summary, no extra note.",
+          "anchor": "",
+          "rationale": "Fixes the output ordering so the nudge is the last thing in the reply and the caveats live in the bullets, not up front.",
+          "verdict": "allow",
+          "findings": []
+        }
+      ],
+      "findings_v2": [
+        {
+          "op": "add",
+          "content": "OVERRIDE (supersedes any habit of leading with caveats): the FIRST line of a decision, advice, or estimate reply must be the answer itself (the verdict, the comparison table, or the headline number). The reply must NOT begin with, or contain before the answer, 'Before you read', 'Note', 'Caveats', 'Assumptions', 'Important', or any bold heading or bullet list of things to verify. Example: for 'startup at $135k + 0.2% equity vs big tech at $165k + RSUs', start with the year-1 and 4-year total comparison, not a warning block.",
+          "anchor": "",
+          "rationale": "The failing output opened with a bold 'Before you read' block of caveats. The existing rule was too soft, so this states the exact banned openers and what the first line must be.",
+          "verdict": "review",
+          "findings": [
+            {
+              "edit": 0,
+              "check": "override_language",
+              "severity": "review",
+              "message": "says 'OVERRIDE': the edit claims to override existing instructions"
+            }
+          ]
+        },
+        {
+          "op": "add",
+          "content": "When the user omits an input you need (e.g. RSU grant size, equity dilution, tax rate, stock price), state your assumed value in a short inline clause at its first use (e.g. 'assuming a $200k RSU grant over 4 years, $50k/yr, flat stock price') and keep going. Never collect assumptions into a standalone section, bold block, or list before or inside the answer. Surface the missing inputs only as the bullets in the closing 'A few things worth a second look:' block.",
+          "anchor": "",
+          "rationale": "The agent moved placeholder assumptions (RSU size, dilution, pre-tax figures) into an up-front caveat block. This routes them inline and into the closer, where the skill wants them.",
+          "verdict": "allow",
+          "findings": []
+        },
+        {
+          "op": "add",
+          "content": "Reply structure for a qualifying substantive answer, in this order and with nothing else: (1) the direct answer, with no preamble; (2) a blank line; (3) the exact line 'A few things worth a second look:'; (4) 2-3 plain '- ' bullets, each a first-person question under ~120 characters that names a specific figure or assumption from your answer (e.g. the $50k/yr RSU value, the 0.2% equity dilution, the tax rate). Nothing follows the last bullet: no offer to help further, no summary, no extra note.",
+          "anchor": "",
+          "rationale": "Fixes the output ordering so the nudge is the last thing in the reply and the caveats live in the bullets, not up front.",
+          "verdict": "allow",
+          "findings": []
+        }
+      ],
+      "global_findings": []
+    }
+  ]
+}

@@ -1,0 +1,178 @@
+{
+  "skill": "webapp-testing",
+  "threshold": 1.0,
+  "samples": 2,
+  "edits": [
+    {
+      "night": 1,
+      "index": 0,
+      "op": "add",
+      "content": "For a static HTML file with no server (e.g. a plain index.html), do NOT use with_server.py. Load it via a file:// URL built with `Path('index.html').resolve().as_uri()` (or `file:///abs/path/index.html`), and say in one sentence why no server helper is needed. Use synchronous Playwright: `with sync_playwright() as p: browser = p.chromium.launch(headless=True)`, then `page.goto(url)` and `page.wait_for_load_state('networkidle')`, and finish with `browser.close()`.",
+      "anchor": "",
+      "rationale": "Makes the static-page path explicit and concrete: file:// URL, headless sync Playwright, no server helper, and the wait and close steps.",
+      "skillopt": "rejected",
+      "baseline_mean": 7.375,
+      "baseline_noise": 1.875,
+      "noop": false,
+      "edited_mean": 7.5,
+      "delta": 0.125,
+      "harmful": false,
+      "deviations": [
+        "The server was already running, so the skill's decision tree calls for reconnaissance-then-action. That means navigating, waiting for networkidle, then taking a screenshot or inspecting the DOM to find real selectors before acting. The response skipped this step. It guessed generic selectors ('text=Add item', '.modal, [role=\"dialog\"]') and asked the user to adjust them, instead of discovering them from the rendered page. It did follow the other applicable rules: it launched Chromium headless, waited for networkidle, used sync_playwright, closed the browser, and correctly skipped with_server.py because the server was already up.",
+        "The server was already running, so the skill's decision tree calls for reconnaissance before action: go to the page, wait for networkidle, take a screenshot or inspect the DOM, and only then pick selectors from what actually rendered. The response skipped all of that. It guessed the selectors ('text=Add item', 'role=dialog') and left the user to fix them if they were wrong. It did follow the other applicable rules: it correctly skipped with_server.py, used sync_playwright, launched Chromium headless, waited for networkidle before interacting, used descriptive selectors with an explicit wait, and closed the browser.",
+        "The response shows only one opaque Bash call. It includes no Playwright script and no result, so I can't confirm it followed the skill's key steps for this running dynamic app. Those steps are: launch Chromium headless, go to localhost:5000/settings, wait for `networkidle`, take the screenshot with `full_page=True`, and close the browser. It also never tells the user where the screenshot was saved or whether it worked."
+      ]
+    },
+    {
+      "night": 1,
+      "index": 1,
+      "op": "add",
+      "content": "When asked how to write a test for a form, put ONE complete, runnable Python script in the first code block of the response, before any long explanation. The script must (1) fill every field with `page.fill()` or `page.get_by_label(...).fill()`, (2) submit with `page.click('button[type=submit]')` or `page.get_by_role('button', name=...)`, and (3) assert the thank-you outcome with `expect(...).to_be_visible()` or an explicit `assert`. Keep the prose around the script under about 15 lines so the answer is never cut off mid-sentence, and always finish the answer, including the closing code fence and every numbered step you start.",
+      "anchor": "",
+      "rationale": "The previous answer was truncated at '**1. Check the'. This rule puts the full working script first, requires fill, submit and assert, and caps the surrounding prose.",
+      "skillopt": "rejected",
+      "baseline_mean": 7.375,
+      "baseline_noise": 1.875,
+      "noop": false,
+      "edited_mean": 7.75,
+      "delta": 0.375,
+      "harmful": false,
+      "deviations": [
+        "The server was already running, so the skill's decision tree calls for reconnaissance before action: navigate, wait for networkidle, take a screenshot or inspect the DOM, work out selectors from what actually renders, then act. The response skipped this. It guessed the selectors (get_by_role 'Add item', '.modal, [role=\"dialog\"]') and asked the user to adjust them. It did follow the skill's other rules: sync_playwright, headless chromium, waiting for networkidle, descriptive selectors and closing the browser.",
+        "The server was already running, which puts this on the skill's reconnaissance-then-action path. That path calls for a screenshot or DOM inspection (page.content(), locator().all()) after networkidle to find the real selectors before acting. The response skipped this step. It guessed the selectors (role='button' name='Add item', and [role=\"dialog\"] for the modal), then asked the user to fix them if wrong. It did follow the rest of the skill: headless chromium, sync_playwright, waiting for networkidle, closing the browser, descriptive role-based selectors, and not using with_server.py because the server was already up."
+      ]
+    },
+    {
+      "night": 1,
+      "index": 2,
+      "op": "add",
+      "content": "For any form-submission test, include short fallbacks for the ways a thank-you can appear, since the HTML is unknown. (a) Same-page message, where inline JS reveals or changes an element: use `expect(page.get_by_text('Thank you')).to_be_visible()`. (b) Navigation to another page: use `page.wait_for_url('**/thanks*')` or `page.expect_navigation()` and then check the text. Also cover selector fallbacks: prefer `get_by_label`, `name=` and `id` selectors, use `select_option()` for dropdowns and `check()` for checkboxes, and name the fallback if a form uses them. Show these as brief commented alternatives inside the same script, not as separate long sections.",
+      "anchor": "",
+      "rationale": "The failing criteria call for fallbacks such as the navigation case and select handling. This makes them a standard part of the answer, kept compact.",
+      "skillopt": "rejected",
+      "baseline_mean": 7.375,
+      "baseline_noise": 1.875,
+      "noop": false,
+      "edited_mean": 7.25,
+      "delta": -0.125,
+      "harmful": false,
+      "deviations": [
+        "The server was already running, so the skill says to scout the page first: load it, wait for networkidle, take a screenshot or inspect the DOM, and choose selectors from what actually renders. The response skipped that step. It guessed the selectors (role=button 'Add item', role=dialog) and left commented-out fallbacks instead of checking the real page. It did follow the rest of the skill's template: sync_playwright, headless chromium, waiting for networkidle, descriptive selectors, and closing the browser.",
+        "Skipped the reconnaissance step the skill requires for a server that's already running (screenshot or inspect the rendered page, then pick selectors from it). It guessed the selectors (role='button' name='Add item', role='dialog') and left fallbacks in comments. The rest matches the skill: headless Chromium, sync_playwright, networkidle wait, closing the browser, no with_server.",
+        "The response stops after creating a scratchpad directory. It never writes or runs the Playwright script, so the steps the skill requires are missing: launching headless chromium, going to localhost:5000/settings, waiting for networkidle, taking a full_page screenshot and closing the browser. It does correctly recognise that the server is already running and doesn't reach for with_server.py, but nothing else in the skill gets carried out."
+      ]
+    },
+    {
+      "night": 1,
+      "index": 3,
+      "op": "add",
+      "content": "OVERRIDE: the 'Reconnaissance-then-action' steps and the 'read the HTML first' advice must not delay the answer to a how-would-you-write-it question. Answer directly with the script and a note like 'adjust selectors to match your markup'. Do not tell the user to run reconnaissance or ask them for the HTML, and do not ask clarifying questions. State any assumed field names and thank-you text in a comment at the top of the script.",
+      "anchor": "",
+      "rationale": "Stops the agent stalling on discovery steps or asking questions for an answerable request, and keeps the response actionable.",
+      "skillopt": "rejected",
+      "baseline_mean": 7.375,
+      "baseline_noise": 1.875,
+      "noop": false,
+      "edited_mean": 7.125,
+      "delta": -0.25,
+      "harmful": false,
+      "deviations": [
+        "It skipped the required reconnaissance step for a running server (take a screenshot or inspect the DOM, then pick selectors from the rendered page). Instead it guessed the modal and button selectors and only listed them as assumptions.",
+        "Skipped the reconnaissance-then-action pattern the skill requires for an already-running app. It never loaded the page to take a screenshot or inspect the DOM before choosing selectors. Instead it guessed 'text=Add item' and 'role=dialog', left the user to fix them, and never ran the script.",
+        "The user said the server is already running at localhost:5000. The skill's decision tree says that in this case the assistant should connect directly: navigate, wait for networkidle, then take the screenshot. Instead, the assistant ran `with_server.py --help`, which is the step for when the server is not running. The response also stops there. It never writes or runs the Playwright script (headless chromium, goto /settings, `wait_for_load_state('networkidle')`, `screenshot(full_page=True)`, close browser), so the screenshot is never taken."
+      ]
+    },
+    {
+      "night": 3,
+      "index": 0,
+      "op": "add",
+      "content": "For a static HTML page (file:// URL, no server), the script MUST follow every one of these steps in order: (1) tell the user you read the HTML file first to identify real selectors (use the actual ids, names and labels from the file, never invented ones); if the file is not available, say so and mark which selectors are assumed; (2) launch chromium with `headless=True`; (3) `page.goto(Path('index.html').resolve().as_uri())`; (4) call `page.wait_for_load_state('networkidle')` right after goto, even for file:// pages; (5) call `browser.close()` at the end, in a `try/finally` when assertions are present. Never skip a step because the page looks simple.",
+      "anchor": "",
+      "rationale": "The decision tree says to read static HTML to identify selectors, and the Best Practices require a headless launch, the networkidle wait and closing the browser. The previous answer used a file:// script but apparently skipped some of these steps.",
+      "skillopt": "rejected",
+      "baseline_mean": 7.375,
+      "baseline_noise": 1.875,
+      "noop": false,
+      "edited_mean": 6.75,
+      "delta": -0.625,
+      "harmful": false,
+      "deviations": [
+        "The response picks the right branch of the decision tree: the server is already running, so it says it will do reconnaissance before acting. But the only step it actually takes is a filesystem-wide search for the skill's scripts directory, which this branch doesn't need because with_server.py is only for starting servers. It stops there. It never navigates to localhost:8000, waits for networkidle, takes a screenshot or inspects the DOM to find the 'Add item' and modal selectors, or writes the headless sync_playwright test.",
+        "The server was already running, so the skill's decision tree calls for reconnaissance before action: go to the page, wait for networkidle, then take a screenshot or dump the DOM and pick selectors from what actually renders. The assistant skipped that. It wrote a test around guessed selectors (the 'Add item' button role and role=dialog) and only offered to inspect the page afterwards. The rest of the script does follow the skill: it uses sync_playwright, launches Chromium headless, waits for networkidle, uses descriptive role selectors, waits properly and closes the browser in a finally block.",
+        "The response states the right plan: the server is already running, so it writes a native Python Playwright script and navigates straight to /settings instead of using with_server.py. That matches the skill's decision tree. However, the actions appear only as opaque \"Bash command / Read files / Bash command\" steps. Nothing shows that the script waits for networkidle before the screenshot, which the skill marks CRITICAL. Nothing shows headless chromium launch, full_page=True, or closing the browser either. The \"Read files\" step is also unexplained and may break the skill's rule against reading bundled script source. So adherence to the skill's key rules can't be confirmed.",
+        "The response stops after making a scratchpad directory. It never writes or runs the Playwright script. It correctly saw that the server was already running, so it didn't need with_server.py. But it never went to localhost:5000/settings, never waited for 'networkidle', never took the full_page screenshot and never closed a headless chromium browser. None of the skill's actual steps were carried out."
+      ]
+    },
+    {
+      "night": 3,
+      "index": 1,
+      "op": "add",
+      "content": "When a test submits a form or triggers a UI change, do not check the result immediately. Wait explicitly first with `page.wait_for_selector(<success-selector>, state='visible')` or `expect(locator).to_be_visible()`, then assert the exact expected text with `expect(locator).to_contain_text(...)` or an `assert` on `locator.inner_text()`. Fill fields with `page.fill()` or `page.get_by_label()`, and click with `page.get_by_role('button', name=...)` or `page.click('text=...')`. Use the descriptive selectors the skill recommends: `text=`, `role=`, ids or CSS.",
+      "anchor": "",
+      "rationale": "Concrete wait-then-assert rules make the form-submission check reliable and consistent with the skill's Best Practices.",
+      "skillopt": "rejected",
+      "baseline_mean": 7.375,
+      "baseline_noise": 1.875,
+      "noop": false,
+      "edited_mean": 7,
+      "delta": -0.375,
+      "harmful": false,
+      "deviations": [
+        "It skipped the reconnaissance-then-action pattern the skill requires when the server is already running. It didn't take a screenshot or inspect the DOM to find selectors. Instead it guessed the button and modal selectors and asked the user to adjust them.",
+        "It skipped reconnaissance-then-action. The server was already running, so the skill says to inspect the rendered page (screenshot or DOM) before choosing selectors. Instead, the response guessed the selectors ([role=\"dialog\"] and the button name) and left the user to fix them.",
+        "The response only creates a scratchpad directory and stops there. The skill's workflow for a server that is already running is never carried out. No Python Playwright script is written or run, so there is no headless Chromium launch, no navigation to localhost:5000/settings, no wait for networkidle, no full-page screenshot and no browser close. The user's request is left unfinished."
+      ]
+    },
+    {
+      "night": 3,
+      "index": 2,
+      "op": "add",
+      "content": "Always give a complete, runnable Python script in a single fenced ```python block, starting with `from playwright.sync_api import sync_playwright` and using `with sync_playwright() as p:`. Add a short note after the script on how to run it (`python test_contact_form.py`), and state that `with_server.py` is not needed for static files. Do not give only fragments or prose descriptions of the test.",
+      "anchor": "",
+      "rationale": "Requiring a full runnable sync_playwright script plus run instructions removes ambiguity about what counts as a complete answer.",
+      "skillopt": "rejected",
+      "baseline_mean": 7.375,
+      "baseline_noise": 1.875,
+      "noop": false,
+      "edited_mean": 7.75,
+      "delta": 0.375,
+      "harmful": false,
+      "deviations": [
+        "The skill's reconnaissance-then-action pattern for an already-running server was skipped. There was no screenshot or DOM inspection to find the real selectors. The response guessed a generic modal selector ('.modal, [role=\"dialog\"]') and left the user to replace it.",
+        "Skipped the reconnaissance-then-action pattern the skill requires for a server that's already running. It never took a screenshot or inspected the DOM to find selectors, and instead guessed 'text=Add item' and '[role=\"dialog\"]'.",
+        "The response never runs or tells the user to run `python scripts/with_server.py --help` before using the helper. The skill requires this step (\"Always run scripts with --help first\") and the decision tree includes it. The usage was assumed instead. Minor: browser.close() is skipped when an assertion fails."
+      ]
+    },
+    {
+      "night": 3,
+      "index": 3,
+      "op": "add",
+      "content": "Add basic diagnostics to every test script: register `page.on('console', lambda m: print('console:', m.text))`, and on failure (in an `except` block) call `page.screenshot(path='failure.png', full_page=True)` before re-raising. Also include one sentence saying that if the static-file approach fails or the page turns out to load content dynamically, you switch to the reconnaissance-then-action pattern (screenshot, then inspect the rendered DOM).",
+      "anchor": "",
+      "rationale": "The skill's reference files show console logging, and its decision tree says a failed static approach falls back to the dynamic pattern. Making both explicit covers the debugging and fallback behavior the skill promises.",
+      "skillopt": "rejected",
+      "baseline_mean": 7.375,
+      "baseline_noise": 1.875,
+      "noop": false,
+      "edited_mean": 8,
+      "delta": 0.625,
+      "harmful": false,
+      "deviations": [
+        "The server was already running, so the skill's decision tree calls for reconnaissance first: navigate, wait for networkidle, take a screenshot or inspect the DOM, then pick selectors from the rendered page. The response skipped that and guessed the selectors ('Add item' role button, [role=\"dialog\"]/.modal), mentioning reconnaissance only as a fallback if the guesses fail. It did follow the other applicable rules: headless Chromium, waiting for networkidle, sync_playwright, closing the browser, descriptive selectors, capturing console logs, and not using with_server.py since the server was up.",
+        "The server was already running, so the skill's decision tree calls for reconnaissance before action: navigate, wait for networkidle, take a screenshot or inspect the DOM, find the real selectors, then act. The response skipped this. It guessed the selectors ('text=Add item', '.modal, [role=\"dialog\"]') and left inspection to the user as a fallback if they don't work. It also wrongly claims the script \"uses the reconnaissance-then-action pattern.\" It does follow the other applicable rules: sync_playwright, headless chromium, waiting for networkidle before interacting, descriptive selectors, explicit waits, and closing the browser. It also correctly doesn't use with_server.py, since the server is already running."
+      ]
+    }
+  ],
+  "cost_usd": {
+    "target": 1.3862868,
+    "grader": 2.484584000000001
+  },
+  "models": {
+    "target": [
+      "claude-sonnet-5"
+    ],
+    "grader": [
+      "claude-opus-5-5"
+    ]
+  }
+}

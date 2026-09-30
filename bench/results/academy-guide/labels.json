@@ -1,0 +1,289 @@
+{
+  "skill": "academy-guide",
+  "threshold": 1.0,
+  "samples": 2,
+  "edits": [
+    {
+      "night": 1,
+      "index": 0,
+      "op": "add",
+      "content": "OVERRIDE of Rule 4's '2 items' cap and 'curated pick' guidance: when the user explicitly asks for a complete, exhaustive, or 'every' list of Academy courses/tutorials/use cases (e.g. for an onboarding doc, syllabus, or team rollout), the cap of 2 does NOT apply. Fetch the catalog first, then list EVERY catalog item that is a plausible match for the stated audience or purpose (e.g. sales team), grouped under 'Courses', 'Tutorials', and 'Use cases' headings, each as `- [Title](exact catalog url) — one-sentence summary`. Completeness for the stated audience is the goal; do not trim to one or two picks. Still include only items actually present in the fetched catalog, and still mark `visibility: \"gated\"` items as needing an Academy sign-in.",
+      "anchor": "",
+      "rationale": "The failing task asked for the COMPLETE list of every relevant course and tutorial with links; the existing 2-item cap caused the agent to under-deliver. An explicit override is required because the cap is stated as applying to 'every reply'.",
+      "skillopt": "accepted",
+      "baseline_mean": 7.75,
+      "baseline_noise": 0.625,
+      "noop": false,
+      "edited_mean": 6.375,
+      "delta": -1.375,
+      "harmful": true,
+      "deviations": [
+        "The response names a specific tutorial, \"Analyze data with Claude\" at academy.claude.com/tutorials/analyze-data, but there's no sign the catalog was fetched in this conversation. That makes the title and slug look invented, which breaks rule 3 (\"never name specific courses or tutorials from memory\"). Under rule 7, with no catalog, the response should have linked to the Claude product hub or the resources library, or said nothing. The response does get other things right: it answers the question first, keeps the recommendation to one line, and doesn't push it.",
+        "The response names a specific tutorial, \"Analyze data with Claude\" at /tutorials/analyze-data-with-claude, but there's no sign the catalog was fetched in this conversation. That means the title and slug were likely invented from memory, which breaks rule 3 (never hallucinate content). Without a fetched catalog, rule 7 says to point to a product hub (e.g., academy.claude.com/claude) or the resources library instead. The response does follow the other rules: it answers the question first, keeps the recommendation to one short line, and isn't pushy.",
+        "It names a specific course (\"Claude API Fundamentals\") and a guessed URL without having fetched the catalog. That breaks rule 3 (never name items from memory or guess slugs). Under rule 7, it should have linked the developer platform hub (academy.claude.com/platform) or the resources library instead."
+      ]
+    },
+    {
+      "night": 1,
+      "index": 1,
+      "op": "add",
+      "content": "Never open or answer with a refusal such as \"I can't give you a complete, reliable list\" or explain that Academy content changes or a list may go stale. When the user asks for a list of Academy content, the first thing in the reply must be the list itself (a ready-to-paste block of links), built from the catalog fetched in this conversation. Any brief note (e.g. pointing to https://academy.claude.com/resources for newer items) goes AFTER the list, in one sentence, as an addition and not a disclaimer.",
+      "anchor": "",
+      "rationale": "The bad response declined to provide the list on staleness/reliability grounds; the rubric wants the list delivered directly, ready to paste.",
+      "skillopt": "accepted",
+      "baseline_mean": 7.75,
+      "baseline_noise": 0.625,
+      "noop": false,
+      "edited_mean": 5.625,
+      "delta": -2.125,
+      "harmful": true,
+      "deviations": [
+        "The request matches one of the skill's triggers (\"what can Claude do\"), so the skill required a catalog check. There is no sign the assistant fetched the catalog or looked for a matching Academy item. Given how directly the user asks about Claude's spreadsheet capabilities, a spreadsheet-analysis use case or a Claude hub pointer could well have been a strong match. The reply ends with no Academy recommendation at all. It does answer the question first and invents no content, but the skill's core step, checking the catalog and recommending on a strong match, appears to have been skipped rather than deliberately decided against.",
+        "The response names a specific tutorial, \"Analyze Data With Claude\" at /tutorials/analyze-data-with-claude, but nothing shows the catalog was fetched in this conversation. That makes the title and slug look invented or recalled from memory, which rule 3 and the catalog section forbid. Without a catalog, it should have linked the Claude product hub or the resources library instead. The rest follows the skill: it answers first, picks one item and phrases the suggestion gently.",
+        "The response is only the catalog fetch call (a JSON object with the catalog URL). Fetching the catalog once is a correct step. However, the user gets no answer at all, which breaks Rule 1 (\"Answer the question first\"). There's no explanation of how to get started with the Claude API as a Python beginner. There's also no brief, low-pressure recommendation of at most 2 items using verbatim catalog URLs, and no fallback link to the developer platform hub (academy.claude.com/platform) or the resources library.",
+        "The response recommends a specific course, \"Prompting 101\" at /courses/prompting-101, but nothing shows the catalog was fetched in this conversation. That means the title and URL came from memory or a guessed slug, which breaks rule 3 (never hallucinate content). With no catalog, rule 7 says to point to a product hub, such as AI Fluency at academy.claude.com/fluency, or to the resources library instead. The rest of the reply follows the skill: it answers the question first, keeps the recommendation brief, names only one item and isn't pushy.",
+        "The response tells the user about the catalog lookup and says it failed (\"Let me check the Academy catalog…\" / \"I wasn't able to pull up current course recommendations… in this session\"). The skill requires the no-catalog fallback to be silent and says never to mention fetching or errors."
+      ]
+    },
+    {
+      "night": 1,
+      "index": 2,
+      "op": "add",
+      "content": "Fallback when the catalog cannot be read (fetch unavailable, failed, non-JSON, or past `staleAfter`) and the user asked for a list of learning content: still deliver a usable ready-to-paste block without naming any specific course/tutorial from memory. Give the relevant product hub links from the Purpose section (Claude https://academy.claude.com/claude, Claude Cowork https://academy.claude.com/cowork, AI Fluency https://academy.claude.com/fluency, Claude Code https://academy.claude.com/code, developer platform https://academy.claude.com/platform) that fit the audience, plus https://academy.claude.com/resources, each with a one-line description of what it covers. Phrase it as the answer ('Here's what to include in your doc:'), not as an inability ('I can't list...'), and do not mention fetching, staleness, or errors.",
+      "anchor": "",
+      "rationale": "Keeps the no-hallucination rule intact while ensuring the reply is still a concrete, pasteable resource list rather than a refusal.",
+      "skillopt": "accepted",
+      "baseline_mean": 7.75,
+      "baseline_noise": 0.625,
+      "noop": false,
+      "edited_mean": 7.375,
+      "delta": -0.375,
+      "harmful": false,
+      "deviations": [
+        "The response never answers the user's question about analysing Excel files, which breaks Rule 1 (\"answer the question first\"). It contains only a catalog fetch. It also shows \"Fetching Academy catalog...\" to the user, although the skill says the catalog step must be silent and never mention fetching. Fetching the catalog was a reasonable move, since \"what can Claude do\" is a trigger phrase, but the reply stops there with no answer and no recommendation.",
+        "No evidence the catalog was fetched to find a specific matching item for a clear strong-match request. It fell back to the Claude hub and resources library (allowed only when fetching isn't possible), and the AI Fluency hub would arguably fit prompting basics better. Minor: it claims unverified hub content (\"covers prompting basics\") and doesn't use the brief, natural closing-line format.",
+        "For a question about prompting basics, it recommended the Claude hub rather than the better-matched AI Fluency hub (academy.claude.com/fluency). It also used a bulleted list instead of the brief, natural closing line the skill suggests."
+      ]
+    },
+    {
+      "night": 1,
+      "index": 3,
+      "op": "add",
+      "content": "For requests to build onboarding docs, training materials, or team/class rollouts, shape the reply as document-ready content: a short direct lead-in sentence, then the full linked list grouped by kind (or by audience-relevant theme such as 'Getting started' and 'Applying Claude to sales work'), using exact catalog URLs verbatim. Select items by the audience named in the request (e.g. sales team), and include general getting-started and AI-fluency items that any new team member would need alongside role-specific ones.",
+      "anchor": "",
+      "rationale": "Ensures list-style requests are answered in a form the user can paste directly, and that relevance is judged against the named audience so the list is comprehensive.",
+      "skillopt": "accepted",
+      "baseline_mean": 7.75,
+      "baseline_noise": 0.625,
+      "noop": false,
+      "edited_mean": 4.375,
+      "delta": -3.375,
+      "harmful": true,
+      "deviations": [
+        "It doesn't appear to have fetched the catalog to look for a strong-match spreadsheet or data-analysis item. It fell back to the hub and resources library, yet still told the user they contain \"material on working with files and data analysis.\" That describes Academy content that wasn't verified, which goes against the spirit of rule 3.",
+        "The response never answers the question. It is only \"Fetching the Academy catalog...\", so there is no guidance on learning the Claude API and no recommendation, which breaks rule 1 (\"Answer the question first\"). It also tells the user about the fetch, even though the skill says the catalog process must stay silent (\"never mention fetching, staleness, or errors to the user\").",
+        "The response is empty (\"{}\"). It doesn't answer the question, which breaks rule 1: answer the question directly first. The user asked how to learn a Claude Code feature (plugins), which the skill names as a trigger and treats as a strong match. Even so, the response offers no Academy course, tutorial or use case from the catalog, and no fallback link to the Claude Code hub or the resources library (rule 7). No part of the skill was followed.",
+        "The response stops at an attempt to fetch the catalog and never answers the question about Claude Code plugins or how to install one. Rule 1 says to answer first and treat the Academy suggestion only as a supplement. It also tells the user it is fetching the catalog, which the skill says should stay silent. Fetching the catalog was the right move for a strong-match \"how do I\" question, but the fetch call is malformed and no recommendation or hub link follows.",
+        "The response tells the user twice that the catalog fetch failed: it opens with \"**Fetch failed** - I attempted to retrieve the Claude Academy catalog…\" and later says \"I wasn't able to pull the current catalog.\" The skill says the no-catalog fallback must be silent and must never mention fetching, staleness or errors to the user. Opening with that notice also pushes the direct answer down, so it no longer comes first. The fallback itself was correct: it named no specific courses and linked only the resources library and a real product hub. The AI Fluency hub would arguably have fit prompting basics better than the Claude hub.",
+        "The response stops at \"I'll check the Claude Academy catalog\" and never answers the question. It gives no prompting basics and recommends nothing: no catalog item, no AI Fluency hub and no resources library. That breaks rule 1 (\"Answer the question first\"), and rule 7's fallback, since the user clearly wants learning content. It also tells the user about the fetch, which the catalog section says must stay silent."
+      ]
+    },
+    {
+      "night": 2,
+      "index": 0,
+      "op": "add",
+      "content": "Questions of the form 'how do X work in Claude?', 'what's the difference between X and Y' (e.g. files in a project vs uploaded to a chat), or 'how do I use X' about a Claude feature (projects, artifacts, skills, connectors, MCP, plugins) ARE strong matches under Rule 2, even when the user words them casually. After the direct answer, ALWAYS end with one line: 'You might also find this helpful: [Title](exact catalog url) — one-sentence description.' Pick the single best catalog item. If no catalog item is a strong match or the catalog is unreadable, end with the matching hub link instead (for Claude features: https://academy.claude.com/claude). A correct explanation with no closing Academy line is a failure for these questions.",
+      "anchor": "",
+      "rationale": "The projects-vs-chat-upload answer was accurate but omitted the Academy recommendation that a how-does-it-work feature question requires.",
+      "skillopt": "accepted",
+      "baseline_mean": 6,
+      "baseline_noise": 0.875,
+      "noop": false,
+      "edited_mean": 5.125,
+      "delta": -0.875,
+      "harmful": false,
+      "deviations": [
+        "The response recommends a specific tutorial, \"Chat with a spreadsheet\" at /tutorials/chat-with-a-spreadsheet, but nothing shows the catalog was fetched in this conversation. That looks like a title and slug made up from memory, which rule 3 forbids. With no catalog, rule 7 says to point to a product hub (for example academy.claude.com/claude) or the resources library instead. The rest of the reply follows the skill: it answers the question first, keeps the recommendation to one line, recommends only one item, and isn't pushy.",
+        "The response names a specific tutorial, \"Analyze data with Claude\" at /tutorials/analyze-data-with-claude, but nothing shows the catalog was fetched in this conversation. The title and URL slug look invented or recalled from memory, which breaks rule 3 (never name items or guess slugs without reading the catalog). Rule 7 says that without a fetched catalog, the reply should point to a product hub (e.g., academy.claude.com/claude) or the resources library instead. The rest follows the skill: it answers the question first, adds a single recommendation, keeps it brief, and isn't pushy.",
+        "The response recommends a specific item, \"Prompting 101\" at /tutorials/prompting-101, but nothing shows the catalog was ever fetched. There is no tool call and no catalog data, only the line \"Fetching the current Academy catalog…\". That makes the title and URL look invented, which breaks rule 3 (never name specific courses or tutorials from memory or guess slugs). Without a catalog, rule 7 says to point to the AI Fluency hub or the resources library instead. The response also breaks the silence rule by telling the user it was fetching the catalog. What it did well: it answered the question first, kept the recommendation to one line with non-pushy wording, and stayed under the item cap.",
+        "The response is only an API timeout error. It gives no answer to the question, which breaks rule 1 (\"answer the question first\"). It also recommends no Academy content at all: no catalog item, no AI Fluency hub and no resources library. That's a clear miss for a request that is plainly asking for learning resources."
+      ]
+    },
+    {
+      "night": 2,
+      "index": 1,
+      "op": "add",
+      "content": "Before replying to any request for a list of Academy courses/tutorials/use cases (onboarding doc, training materials, team rollout), you MUST actually attempt to fetch https://academy.claude.com/assets/data/catalog.json with the available fetch/web tool. Do not skip straight to the hub-link fallback. Only fall back to hubs if that real attempt fails, returns non-JSON, or the file is past `staleAfter` (or, without `staleAfter`, `generatedAt` is more than about 30 days before today's date). This supersedes the learned fallback rule for every case where a fetch tool is available.",
+      "anchor": "",
+      "rationale": "The failing reply gave only three hub links, which suggests the catalog was never fetched. The rubric wants the exhaustive item list.",
+      "skillopt": "accepted",
+      "baseline_mean": 6,
+      "baseline_noise": 0.875,
+      "noop": false,
+      "edited_mean": 2.625,
+      "delta": -3.375,
+      "harmful": true,
+      "deviations": [
+        "The response recommends a specific tutorial, \"Analyze data with Claude\" at /tutorials/analyze-data-with-claude, but nothing shows the catalog was ever fetched. That breaks rule 3, which forbids naming courses or tutorials from memory or guessing slugs, and the catalog section, which says to name no specific item without a fresh catalog. If the catalog couldn't be read, it should have pointed to the Claude hub or the resources library instead. It did answer the question first and kept the recommendation to one short, non-pushy line in the right format.",
+        "The response recommends a specific tutorial (\"How to analyze spreadsheet data with Claude\", /tutorials/analyzing-spreadsheets) but there's no sign the catalog was fetched in this conversation. That means the title, URL and description were almost certainly made up, which breaks rule 3 (\"never name specific courses or tutorials from memory… do not guess at slugs\"). With no catalog, rule 7 says it should have linked to a product hub (e.g., academy.claude.com/claude) or the resources library instead. The rest followed the skill: it answered the question first, gave only one recommendation, and used non-pushy wording.",
+        "The response is only the text \"web_fetch\". It never answers how to learn the Claude API, which breaks rule 1 (\"Answer the question first\"). It also makes no recommendation of its own: no catalog item, no platform hub link (academy.claude.com/platform) and no link to the resources library. At most, it hints that it meant to fetch the catalog. It also names a tool to the user, when the skill says fetching should happen silently.",
+        "The response is empty (\"{}\"). The user asked how to get started learning the Claude API, which is a strong match for the skill. Rule 1 says to answer the question first, and the response gives no answer at all. It also recommends no Academy content: no catalog item, no developer platform hub (academy.claude.com/platform) and no resources library link.",
+        "The request is a clear trigger for the skill: the user asks \"how do I install\" plugins for Claude Code, so they are learning a feature rather than partway through a task. The response answers directly, which satisfies Rule 1. But it adds no Academy recommendation at all. There's no sign the assistant fetched the catalog to find a matching item. If it couldn't use the catalog, Rule 7 says to point to the Claude Code hub (academy.claude.com/code) or the resources library. The skill's main purpose, pairing a direct answer with a brief, natural Academy pointer, was left out.",
+        "The response never answers the question. It stops after starting the catalog fetch and says nothing about Claude Code plugins or how to install one, which breaks Rule 1 (\"Answer the question first\"). Fetching the catalog once was the right step for this strong-match question. But the visible \"Fetch to catalog.json...\" line also shows the user the fetching process, and the skill says that should stay silent. No recommendation or hub link was ever given.",
+        "The response recommends a specific course, \"Prompting 101\", at a guessed URL (/courses/prompting-101), but nothing shows the catalog was fetched in this conversation. The skill forbids naming courses from memory or guessing slugs (rule 3). Without a fetched, non-stale catalog, it should have pointed to a product hub (such as AI Fluency) or the resources library instead (rule 7). The rest does follow the skill: it answers the question first, keeps the recommendation to one line at the end, and doesn't push.",
+        "The only thing in the response is a fetch of the catalog URL. That is the right first step, since the question is a strong match and the catalog should be fetched once. But the user gets no reply at all. Rule 1 says to answer the question first, and the response has no advice on where volunteers should start. It also recommends nothing: no curated pick of one or two catalog items, no link to the resources library or AI Fluency hub, and no note about gated items."
+      ]
+    },
+    {
+      "night": 2,
+      "index": 2,
+      "op": "add",
+      "content": "Hub links are never a substitute for item links when the user asked for a 'complete list' or 'every course and tutorial'. When the catalog was read, the reply must contain the full grouped list of matching items (`Courses`, `Tutorials`, and `Use cases` headings, each `- [Title](exact url) — summary`). Include every plausible match for the audience (e.g. sales), plus general getting-started and AI Fluency items. Put hub links and https://academy.claude.com/resources after the list as one closing sentence. A reply whose main content is only hub links fails an 'exhaustive list' request whenever a readable catalog exists.",
+      "anchor": "",
+      "rationale": "The rubric required an exhaustive, paste-ready list of courses and tutorials with links. Hub links alone do not satisfy it.",
+      "skillopt": "accepted",
+      "baseline_mean": 6,
+      "baseline_noise": 0.875,
+      "noop": false,
+      "edited_mean": 5,
+      "delta": -1,
+      "harmful": true,
+      "deviations": [
+        "The response names a specific tutorial, \"Analyze data with Claude\" at /tutorials/analyze-data-with-claude, but nothing shows the catalog was fetched in this conversation. That makes the title and URL look invented from memory, which rule 3 prohibits. Without a catalog, rule 7 says to point to a product hub (such as academy.claude.com/claude) or the resources library instead of naming an item. The rest of the response follows the skill: it answers the question first, gives one short recommendation at the end, and uses non-pushy phrasing.",
+        "\"What can Claude do\" is one of the skill's listed triggers, and the user is trying to learn a Claude capability (spreadsheet and Excel analysis), which makes a strong Academy match likely. The response shows no sign that the catalog was checked, and it gives no recommendation: no catalog item, and not even the Claude hub or resources library as a fallback. It does follow rule 1 by answering the question directly, and staying quiet is allowed when the match is weak. So this is only a partial miss, not a contradiction of the skill.",
+        "The skill says the no-catalog fallback must be silent: never mention fetching, staleness or errors to the user. The response breaks this. It opens with a \"Fetch tool result (simulated)\" line and then says \"Since I don't have live fetch access… I'll… point to the developer platform hub as the safe fallback.\" The rest follows the skill well. It answers the question first, names no courses from memory, and makes one gentle recommendation using a valid product hub URL (academy.claude.com/platform).",
+        "The response recommends a specific tutorial (\"Set Up Your First API Call\", /tutorials/first-api-call), but nothing shows the catalog was fetched in this conversation. The title, URL and description look made up, which breaks rule 3 (\"never hallucinate content… do not guess at slugs\"). Without a fetched catalog, rule 7 says to point to the developer platform hub (academy.claude.com/platform) or the resources library instead. The rest does follow the skill: it answers the question first, keeps the recommendation to one short line, uses non-pushy wording, and this is a strong-match learning request.",
+        "It told the user about the catalog fetch attempt and the failure/injection, although the skill says a missing catalog must be handled silently with no mention of fetching or errors. It also skipped giving a direct answer (basic prompting guidance) before the recommendations.",
+        "The response never answers the user's question, which breaks Rule 1 (\"Answer the question first\"). It contains only leaked internal deliberation about fetching the catalog, which also breaks the rule that catalog fetching must stay silent to the user. It gives no prompting guidance for volunteers and no curated Academy recommendation. It doesn't even fall back to the AI Fluency hub or the resources library under Rule 7. The only thing it gets right is recognising that the catalog should be fetched before naming any content."
+      ]
+    },
+    {
+      "night": 2,
+      "index": 3,
+      "op": "add",
+      "content": "When the catalog is unreadable and the user asked for an exhaustive list, give the hub-based fallback as a ready-to-paste document block. List all five relevant hubs (Claude, Claude Cowork, AI Fluency, Claude Code, developer platform) that plausibly fit the audience, each with a one-line description, plus https://academy.claude.com/resources. Do not name any specific course or tutorial from memory, and do not mention fetching, staleness, or errors.",
+      "anchor": "",
+      "rationale": "This keeps the fallback as complete as possible without violating the never-hallucinate rule (Rule 3).",
+      "skillopt": "accepted",
+      "baseline_mean": 6,
+      "baseline_noise": 0.875,
+      "noop": false,
+      "edited_mean": 7,
+      "delta": 1,
+      "harmful": false,
+      "deviations": [
+        "It recommends a specific tutorial (title and /tutorials/uploading-and-analyzing-files URL) without fetching the catalog. That means it made up or guessed Academy content, which breaks rule 3. Under rule 7 it should have pointed to the Claude hub or the resources library instead.",
+        "\"What can Claude do\" is one of the skill's named triggers, so this request should have led to a catalog check. Asking whether Claude can analyze an Excel file is a question about learning a capability, not a mid-task request, so a spreadsheet or data-analysis item from the catalog would likely be a strong match. The response gives no sign that the catalog was fetched and ends with no Academy pointer. It does follow Rule 1 (answer first) and avoids the rule violations the skill warns against: no invented titles or URLs, no pushy wording, no weak recommendation. That silence would be correct only if the catalog had been checked and nothing strong matched.",
+        "The response stops after the catalog fetch. The user's plugin question hasn't been answered yet (rule 1), and the recommendation hasn't been given, so the rest of the skill's steps can't be checked.",
+        "The response opens with \"Let me check the Academy catalog for a relevant starting point,\" which shows the user the catalog lookup. The skill says this step must stay silent (\"never mention fetching, staleness, or errors to the user\"). There's also no sign the catalog was actually read, but the response handles that correctly: it names no specific course and points to an allowed product hub. The rest follows the skill. It answers the question first, gives one recommendation, uses a non-pushy line at the end, and links to a real hub. The only other issue is minor: the hub description claims it contains prompting tutorials without having checked.",
+        "The response gets most of the skill right. It answers the question directly first. The recommendation comes at the end, in one short, low-pressure line. It invents no course titles or URLs, and it links to one of the five real product hubs. The main gap is that there's no sign the assistant fetched the catalog. This was a strong match, since the user wants learning material for a group, so the skill expects a catalog fetch to look for a specific item. Without the catalog, the assistant fell back to a hub link. It also picked the Claude hub rather than the AI Fluency hub, which fits \"basics of prompting\" better. It didn't point to the resources library either. Its description of the hub as \"getting-started material for people new to prompting\" is also a loose description that doesn't come from any catalog data."
+      ]
+    },
+    {
+      "night": 3,
+      "index": 0,
+      "op": "add",
+      "content": "HARD REQUIREMENT for 'complete list' / 'every course and tutorial' requests (onboarding doc, training materials, team rollout): your FIRST action must be a real tool call fetching https://academy.claude.com/assets/data/catalog.json, made before writing any answer text. If the first tool fails, retry once with a different available tool (e.g. WebFetch, then a shell call such as `Invoke-WebRequest -Uri https://academy.claude.com/assets/data/catalog.json -UseBasicParsing` in PowerShell or `curl -s` in Bash) before concluding the catalog is unreadable. Falling back to hub links without having tried at least two fetch routes is a failure. This supersedes the hub-only fallback rules.",
+      "anchor": "",
+      "rationale": "The agent keeps returning only five hub links for an exhaustive-list request. Forcing a fetch first, with a retry through another tool, makes a readable catalog far more likely.",
+      "skillopt": "rejected",
+      "baseline_mean": 3.75,
+      "baseline_noise": 1.25,
+      "noop": false,
+      "edited_mean": 4.375,
+      "delta": 0.625,
+      "harmful": false,
+      "deviations": [
+        "The response is only the catalog fetch. Fetching it is the right first step for a \"what can Claude do\" question, but the response never answers what Claude can do with spreadsheets or Excel files (rule 1), and it never gets to recommending anything from the catalog.",
+        "The response recommends a specific tutorial, \"Analyze spreadsheet data with Claude\" at /tutorials/analyze-spreadsheet-data, but there is no sign the catalog.json was fetched in this conversation. That breaks Rule 3, which says never to name courses or tutorials from memory or guess at URL slugs. Without the fetched catalog, the reply should have pointed to a product hub or the resources library (Rule 7). The answer does come first, it names only one item, and the phrasing isn't pushy, but the recommendation itself is probably made up.",
+        "The response names a specific course, \"Claude API Fundamentals\" at /courses/api-fundamentals, but nothing shows the catalog was ever fetched. The title and slug appear to be guessed or recalled from memory. That breaks rule 3 (never name items or guess slugs without reading the catalog). Under rule 7, with no fetched catalog, it should have pointed to the developer platform hub (academy.claude.com/platform) or the resources library instead. The rest of the response follows the skill: it answers the question first, keeps the recommendation to one short line, and doesn't push.",
+        "The response has only one tool call, which fetches the catalog from the correct URL. That step fits the skill: this is a strong-match learning request, and the skill says to fetch the catalog once. But the response stops there. It never answers the user's question about learning the Claude API, which is rule 1, \"Answer the question first\". It also never gives the short, non-pushy recommendation that should come after the answer, such as a catalog item or the developer platform hub. As submitted, the user gets no answer at all.",
+        "The response answers the question directly, which satisfies rule 1. It then stops without any Academy recommendation. This is a strong-match question: the user is asking how to use a Claude Code feature (plugins and how to install them), which is the kind of intent rule 2 describes. The skill required fetching the catalog and ending with a brief, non-pushy pointer to a matching item. If no item matched or the catalog couldn't be read, it should at least have linked the Claude Code hub (academy.claude.com/code) or the resources library. There is no sign the catalog was checked, and no recommendation was given.",
+        "The response is empty (\"{}\"). It doesn't answer the user's question about Claude Code plugins or how to install one, which breaks Rule 1 (answer the question first). This is a strong-match learning question, but there is also no Academy recommendation: no catalog item, no Claude Code hub link (academy.claude.com/code) and no link to the resources library.",
+        "The response tells the user \"Fetching the Academy catalog…\", which breaks the skill's rule that catalog handling is silent (never mention fetching). Its hub pick (the general Claude hub rather than AI Fluency) is also arguably weaker than the best available match for prompting basics.",
+        "The response describes the Claude hub as containing \"getting-started courses and tutorials on prompting basics\" without any sign it fetched the catalog. That goes beyond what it knew. The AI Fluency hub may have been the better match for prompting basics, and it could have also linked the resources library."
+      ]
+    },
+    {
+      "night": 3,
+      "index": 1,
+      "op": "add",
+      "content": "When the catalog was read and the user asked for a 'complete list' or 'every course and tutorial', the reply body must be individual item links, one per line as `- [Title](exact catalog url) — one-sentence summary`, under `Courses`, `Tutorials`, and `Use cases` headings. Include every catalog item whose title, summary, tags or products plausibly fit the named audience (e.g. sales), plus general getting-started and AI Fluency items. Do not stop at 2 items and do not summarize by category. Hub links may appear only in one closing sentence after the list. A list of category-level hub links with no item links fails this request.",
+      "anchor": "",
+      "rationale": "The rubric wants an exhaustive, paste-ready list with a link for each item. The failing output offered only category-level hub links.",
+      "skillopt": "rejected",
+      "baseline_mean": 3.75,
+      "baseline_noise": 1.25,
+      "noop": false,
+      "edited_mean": 5,
+      "delta": 1.25,
+      "harmful": false,
+      "deviations": [
+        "The response names a specific tutorial, \"How to analyze spreadsheets with Claude,\" at academy.claude.com/tutorials/analyze-spreadsheets, but there's no sign the catalog was fetched. That makes the title and URL look invented from memory, which breaks rule 3 (never hallucinate content or guess slugs). Without a catalog, rule 7 calls for pointing to a product hub (e.g., academy.claude.com/claude) or the resources library instead. Otherwise the response follows the skill: it answers the question first, recommends only one item, and isn't pushy.",
+        "The response never answers the user's question about analyzing Excel files, which breaks Rule 1 (\"Answer the question first\"). All it shows is a fetch of the catalog. It also tells the user it is fetching (\"Fetching Claude Academy catalog...\"), but the skill says catalog handling is silent and fetching should never be mentioned. Fetching the catalog was a reasonable step, since this is a \"what can Claude do\" question, but the response contains no answer and no recommendation.",
+        "The response stops after fetching the catalog. It gives no answer to the user's question, which breaks Rule 1 (\"Answer the question first\"), and it names no matching course or hub link. Fetching the catalog is the correct first step for a strong-match learning request, but the skill's main purpose goes unmet.",
+        "The response fetches the catalog once from the correct URL, which the skill requires for a strong-match learning question like \"how do I install a Claude Code plugin.\" But it stops there. It never answers the question (Rule 1) and never gives the short, non-pushy recommendation: at most two items with URLs copied exactly from the catalog, or a hub link or the resources library as a fallback. Nothing it did breaks the skill, but most of the applicable steps are missing.",
+        "The response never answers the question. It contains only a visible fetch line for the catalog: no guidance on where volunteers should start with prompting, and no recommendation from Academy (no course, no product hub such as AI Fluency, no resources library link). Fetching the catalog was the right step, but the skill says to answer the question first and add at most 1–2 recommendations, and to keep the fetch silent. Here the user sees the fetch and gets nothing else."
+      ]
+    },
+    {
+      "night": 3,
+      "index": 2,
+      "op": "add",
+      "content": "Conceptual questions such as 'What's MCP and how do connectors relate to it?', 'what is X', or 'explain X' about a Claude feature (MCP, connectors, projects, artifacts, skills, plugins) count as strong matches under Rule 2, even when the user says they are only trying to understand it before setting anything up. Give the direct answer first, then END the reply with exactly one line: 'You might also find this helpful: [Title](exact catalog url) — one-sentence description.' Use the best-matching item from the catalog fetched in this conversation. If the catalog is unreadable or has no strong match, end with the hub line instead: 'You might also find this helpful: [Claude Academy](https://academy.claude.com/claude) — courses and tutorials on using Claude, including connectors and MCP.' Do not mention fetching or errors.",
+      "anchor": "",
+      "rationale": "The MCP answer was accurate but had no closing Academy recommendation. A 'what is / how does X relate to Y' question about a Claude feature is a learning question and needs the closing line.",
+      "skillopt": "rejected",
+      "baseline_mean": 3.75,
+      "baseline_noise": 1.25,
+      "noop": false,
+      "edited_mean": 4.625,
+      "delta": 0.875,
+      "harmful": false,
+      "deviations": [
+        "The response didn't check the catalog for a specific spreadsheet or data-analysis item and went straight to the Claude hub fallback. Its hub description also claims spreadsheet content that it never verified in the catalog.",
+        "The response never answers the user's question. It only shows a step that fetches the catalog, with no explanation of how to start with the Claude API and no recommendation. That breaks Rule 1 (\"Answer the question first... never a replacement\"). It also tells the user outright that it is fetching the catalog, although the skill says this should happen silently. Fetching the catalog was the right trigger, but nothing useful comes after it.",
+        "The response fetches the catalog, which the skill does call for on a strong match like this one. After that it stops. It never answers the user's question (rule 1: always answer first), so there's no guidance on getting started with the Claude API in Python. It also never gives the brief recommendation of 1–2 catalog items, the developer platform hub, or the resources library.",
+        "The request is a clear \"how do I\" question about a Claude Code feature (plugins), which the skill names as a trigger. The response answers the question directly and invents no content, but it has no Academy recommendation at all. It shows no attempt to find a matching item in the catalog. It also doesn't fall back to the Claude Code hub (academy.claude.com/code) or the resources library, as rule 7 directs. That means the skill's main purpose was skipped.",
+        "It names a specific course (\"Prompting 101\", /courses/prompting-101) with no sign that the catalog was fetched. That is a made-up title and URL, which breaks rule 3. Rule 7 says that without a catalog it should have pointed to the AI Fluency hub or the resources library instead.",
+        "The request was clearly a match for the skill: the user wants learning resources to train a group of volunteers on prompting basics. The response answered the question directly with good prompting tips, which satisfies rule 1. However, it never pointed to Claude Academy. It didn't name a catalog item, and it didn't link the AI Fluency hub or the resources library. Rule 7 says to use one of those when no specific item can be named. Leaving out any recommendation defeats the skill's main purpose."
+      ]
+    },
+    {
+      "night": 3,
+      "index": 3,
+      "op": "add",
+      "content": "Pre-send check for any question about how a Claude feature or product works, or any request for learning content: the final line of the reply must contain an https://academy.claude.com/ link, either an exact catalog item URL or a hub/resources link. If it does not, add the closing line before sending. Skip this only when the user is mid-task and just wants the task done.",
+      "anchor": "",
+      "rationale": "A final checklist step prevents forgetting the closing Academy line on explanatory answers.",
+      "skillopt": "rejected",
+      "baseline_mean": 3.75,
+      "baseline_noise": 1.25,
+      "noop": false,
+      "edited_mean": 4.625,
+      "delta": 0.875,
+      "harmful": false,
+      "deviations": [
+        "The response names a specific tutorial (\"Analyze data with Claude\") with a slug-style URL but shows no sign of fetching the Academy catalog. That breaks rule 3, which says never to invent or guess Academy titles or URLs. Without a fetched catalog, it should have pointed to the Claude hub or the resources library (rule 7).",
+        "The response opens by telling the user that fetching the catalog failed. The skill says handling a missing catalog is silent and that fetching, staleness or errors must never be mentioned to the user. It also puts meta-commentary ahead of the answer. The rest follows the skill: it answers the question directly first, names no specific item without a catalog, and falls back to an allowed product hub link with low-pressure wording. One smaller issue: it claims the hub has spreadsheet content, which it couldn't have checked.",
+        "The response never answers the question, which breaks Rule 1 (\"Answer the question first\"). It stops after starting the catalog fetch, so the user gets no guidance on learning the Claude API and no recommendation of a course, the platform hub (academy.claude.com/platform) or the resources library. It also tells the user \"Fetching the Academy catalog...\", but the skill says catalog handling should be silent. The only thing it gets right is deciding to fetch the catalog for what is a strong-match learning request.",
+        "The response only fetches the catalog from the correct URL and stops there. It never answers the user's question about learning the Claude API, which breaks Rule 1 (\"Answer the question first\"). It also never makes the brief recommendation the skill calls for, such as a matching catalog item or the developer platform hub (academy.claude.com/platform). Fetching the catalog once was the right step, but none of the steps that deliver anything to the user were done.",
+        "The response opens with \"Let me check the catalog for a relevant resource,\" which tells the user about the catalog lookup. The skill says this step must be silent (\"never mention fetching, staleness, or errors to the user\"). The rest (answering first, one hub link that is allowed, gentle wording) is compliant.",
+        "The response never answers the question. It says it will \"answer this directly\" and then only announces a catalog fetch, so it gives no guidance on where volunteers should start with prompting and no recommendation (Academy item, hub or resources library). This breaks Rule 1 (answer first; a suggestion never replaces the answer). It also mentions fetching the catalog to the user, which the skill says must stay silent.",
+        "The request clearly asks for learning content, and fetching catalog.json from the exact published URL was the right step. The response has two problems. First, it tells the user \"I'll fetch the Academy catalog\", but the skill says the catalog step should be silent and fetching should never be mentioned. Second, it stops after the tool call. It never gives the user a direct answer about prompting basics, and it never makes a curated one- or two-item recommendation."
+      ]
+    }
+  ],
+  "cost_usd": {
+    "target": 0.7280392,
+    "grader": 1.015998
+  },
+  "models": {
+    "target": [
+      "claude-sonnet-5"
+    ],
+    "grader": [
+      "claude-opus-5-5"
+    ]
+  }
+}

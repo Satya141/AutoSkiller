@@ -1,0 +1,18 @@
+{
+  "purpose": "Provides Claude with a reliable toolkit and decision process for writing Playwright-based Python scripts to test and interact with local web applications, including managing dev servers, capturing screenshots/logs, and debugging UI behavior.",
+  "invariants": [
+    "Testing/automation logic must be written as native Python Playwright scripts, not some other framework or language.",
+    "The decision tree must distinguish static HTML (read file directly for selectors) from dynamic webapps (reconnaissance-then-action) and from not-yet-running servers (use with_server.py).",
+    "For dynamic pages, the page must wait for networkidle (or equivalent load-state wait) before inspecting the DOM or taking screenshots/selectors.",
+    "scripts/with_server.py must be run with --help first before use, and used as a black-box CLI helper rather than having its source read/ingested into context unless a customized solution is proven necessary.",
+    "Automation scripts passed to with_server.py must contain only Playwright logic; server lifecycle/startup must not be duplicated inside the automation script.",
+    "Playwright browser must be launched as chromium in headless mode, and the browser must always be closed at the end of the script.",
+    "Skill scope is limited to interacting with and testing local web applications (via Playwright) — not general-purpose web scraping of arbitrary remote sites or non-browser testing."
+  ],
+  "protected": [
+    "**Always run scripts with `--help` first** to see usage. DO NOT read the source until you try running the script first and find that a customized solution is abslutely necessary. These scripts can be very large and thus pollute your context window. They exist to be called directly as black-box scripts rather than ingested into your context window.",
+    "browser = p.chromium.launch(headless=True) # Always launch chromium in headless mode",
+    "page.wait_for_load_state('networkidle') # CRITICAL: Wait for JS to execute"
+  ],
+  "allow_overrides": false
+}

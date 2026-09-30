@@ -1,0 +1,277 @@
+{
+  "skill": "discernment-nudge",
+  "threshold": 1.0,
+  "samples": 2,
+  "edits": [
+    {
+      "night": 1,
+      "index": 0,
+      "op": "add",
+      "content": "HARD RULE (overrides any urge to add closing questions): if the user's message contains 'double-check', 'cite', 'cite sources', 'flag uncertainty', or similar, do NOT append 'A few things worth a second look:' or any closing list of questions. Put the source name next to each figure inline and flag shaky figures inline. The answer ends with the last content sentence, even if it is full of statistics.",
+      "anchor": "",
+      "rationale": "The sodium request said 'Please double-check and cite sources'. The skill already says to skip the nudge here, but the agent still failed, so the rule needs to be forceful and name the trigger words.",
+      "skillopt": "accepted",
+      "baseline_mean": 7.625,
+      "baseline_noise": 0.75,
+      "noop": false,
+      "edited_mean": 6.875,
+      "delta": -0.75,
+      "harmful": false,
+      "deviations": [
+        "The skill calls for prompts the user could send back to the assistant word for word. Two of the three prompts don't work that way. \"Does my dad have other risk factors…\" and \"Why did the doctor recommend a statin now…\" are questions for the dad or his doctor, and the assistant can't answer them. The second one also just repeats advice already given in the body. Otherwise the response follows the skill: health advice is a case where the nudge applies, the answer is complete first, it uses the exact lead-in line with plain bullets, has 2-3 short prompts tied to specifics (the risk factors, the doctor's reasoning, the 3-month window), and adds nothing after the nudge.",
+        "The response correctly uses the nudge, since the skill says architecture advice qualifies. It answers the question fully first, uses the exact lead-in line, gives three plain bullets and adds nothing after them. The main problem is how the prompts are phrased. They are written as the assistant questioning the user (\"What's the team's actual operational experience…\", \"…you're already anticipating…\"). The skill asks for first-person questions the user could send back verbatim. Two of the prompts, the first and the third, are also longer than about 120 characters. The prompts do cover useful missing context, but they refer only loosely to specifics from the answer.",
+        "The nudge prompts are written in the assistant's voice (\"Does your team have...\", \"I assumed...\", \"What's your expected growth...\"). They are questions put to the user, not first-person questions the user could send back verbatim, which the skill requires.",
+        "Two of the three prompts are written as the assistant questioning the user (\"Does your $12k...\", \"What's your expected average order value...\") rather than as first-person questions the user could send back verbatim, as the skill requires. Two prompts also run slightly over the ~120-character guideline.",
+        "The nudge's questions are written in the second person and aimed at the user (\"How did you arrive at…\", \"Can your production capacity…\"). The skill asks for first-person, conversational questions the user could send back to the assistant word for word, for example \"Is $45 realistic compared with what similar handmade candle brands charge?\" Everything else follows the skill: the nudge fits this request (estimates plus business advice), it comes after a complete answer, it uses the exact lead-in line with 2–3 plain, specific bullets under about 120 characters, and nothing follows it.",
+        "The three prompts are written in the assistant's voice, asking the user questions (\"I assumed you're...\", \"how does that feel...\"). The skill requires first-person prompts the user could send back verbatim. The third bullet is also over the ~120-character limit.",
+        "The nudge questions are in the assistant's voice, not the user's. They say \"I assumed…\" and \"I built in…\", then ask the user things like \"how has your body responded…\" and \"do you have a race-week deadline…\". The skill says they should be first-person questions the user could send back verbatim. All three are also over the ~120-character limit."
+      ]
+    },
+    {
+      "night": 1,
+      "index": 1,
+      "op": "add",
+      "content": "HARD RULE: when the user asks to summarize, extract action items from, reformat, or rewrite a thread, document, or notes they pasted, output only the summary or action items (owner + task + deadline, as stated in the source). Do NOT add 'A few things worth a second look:', follow-up questions, or closing commentary. If something is ambiguous, note it inside the relevant item. Never add invented owners or dates.",
+      "anchor": "",
+      "rationale": "The thread-to-action-items task should have been a bare summary with no nudge. The user supplied the material, so the 'user gave you the material' exclusion applies.",
+      "skillopt": "accepted",
+      "baseline_mean": 7.625,
+      "baseline_noise": 0.75,
+      "noop": false,
+      "edited_mean": 7.25,
+      "delta": -0.375,
+      "harmful": false,
+      "deviations": [
+        "The prompts aren't questions the user could send back to the assistant. \"Does my dad have other risk factors…\" and \"What LDL target is his doctor looking for\" can only be answered by the doctor or the user, and they repeat points already made instead of probing the answer's own claims (e.g., the 10-20% reduction or the 3-month timeline). The first prompt is also over the ~120-character limit.",
+        "The biggest problem is the voice of the prompts. They're written as the assistant talking to the user (\"your specific product\", \"If you're expecting…\"). The skill asks for first-person questions the user could send back word for word. Both prompts also run past the ~120-character limit. The rest follows the skill: architecture advice is a case where the nudge applies, the answer is complete, the lead-in line is exact, there are 2 specific plain-text bullets, and nothing comes after the nudge.",
+        "The two nudge prompts are the assistant asking the user about \"your product\" and what \"200 customers\" means. The skill requires first-person questions the user could send back verbatim. Both prompts are also slightly over the ~120-character limit.",
+        "The nudge is warranted here, since a training plan is a drafted artifact the user will act on. Most of the format is right: the full answer comes first, then the exact lead-in line and three specific, plain bullets, with nothing after them. The main deviation is voice. The skill says each prompt should be something the user could send back verbatim, in first person. These prompts are written from the assistant to the user instead (\"does that match where you're at?\", \"I jumped you from 3 to 4 runs/week\", \"given your running history\"). That turns them into questions for the user, not follow-ups the user could ask. One prompt is also slightly over the ~120-character guideline.",
+        "The skill applies here, since the user asked for a drafted training plan. The response answers the request in full, then adds the nudge with the exact lead-in, plain bullets, three specific prompts and nothing after it. The main deviation is voice: the skill says each prompt should be phrased as something the user could ask verbatim, in first person. These prompts are written in the assistant's voice and address the user instead, for example \"I assumed no current injuries… does anything in your history…\" and \"does that ramp feel sustainable given your schedule\". Two of the three prompts also run over the ~120-character guideline."
+      ]
+    },
+    {
+      "night": 1,
+      "index": 2,
+      "op": "add",
+      "content": "For a substantive decision or advice request where the nudge applies (e.g. comparing job offers, financial choices, plans, estimates), structure the reply as: (1) the direct answer or comparison FIRST, with no 'Before you read' or caveats-first preamble, and with assumptions stated inline where they are used; (2) then, after a blank line, the closer. Do not front-load a bold caveats section. The nudge is the last thing in the reply.",
+      "anchor": "",
+      "rationale": "In the job-offer task the agent opened with a bold 'Before you read' caveats block. This moved the reflection to the wrong place and it did not close with the required nudge. The answer must come first and the nudge last.",
+      "skillopt": "accepted",
+      "baseline_mean": 7.625,
+      "baseline_noise": 0.75,
+      "noop": false,
+      "edited_mean": 6.375,
+      "delta": -1.25,
+      "harmful": true,
+      "deviations": [
+        "The prompts are commands aimed at the doctor (\"Ask the doctor directly…\", \"Confirm…with his doctor\"). The skill requires first-person questions the user could send back to the assistant word for word. Two of the three prompts are also well over the ~120-character limit.",
+        "The nudge prompts aren't written the way the skill requires: in the user's own voice, as questions the user could send back to the assistant word for word. Two ask the user questions directly (\"Does your dad…\", \"Did the doctor mention…\"), and the third tells the user to ask the doctor instead of being a question at all.",
+        "All three prompts are in the assistant's voice (\"Does your product have…\", \"What assumptions am I making about your team…\"). The skill asks for first-person questions the user could send back verbatim. Each prompt also runs about 135–160 characters, over the ~120-character guideline.",
+        "The nudge prompts are written in the assistant's voice, asking the user questions (\"do any apply to you?\"). The skill asks for first-person questions the user could send back verbatim. The first prompt also runs slightly over ~120 characters.",
+        "The prompts are written as the assistant questioning the user (\"Does your $19 cost…\", \"have you seen benchmarks…\"). The skill requires first-person questions the user could send back verbatim. Two prompts also go over the ~120-character limit.",
+        "The nudge's prompts are written as the assistant asking the user questions (\"I assumed your current 5k pace…\", \"does anything in your legs flare up…\"). The skill says each prompt should be something the user could send back verbatim, in first person and in question form. Two of the three prompts also run past the ~120-character limit. The second prompt asks how weeks 5–9 \"actually felt\", but the user hasn't run those weeks yet. The rest follows the skill: the drafted plan qualifies for a nudge, the full answer comes first, the exact lead-in line is used with 2–3 plain bullets tied to specific assumptions, and nothing follows the nudge.",
+        "The nudge prompts are written as the assistant asking the user (\"I assumed you…\", \"how do your knees handle…\") instead of first-person questions the user could send back verbatim. Two of the three are also well over the ~120-character limit."
+      ]
+    },
+    {
+      "night": 1,
+      "index": 3,
+      "op": "add",
+      "content": "When the nudge applies and has not yet been given in this conversation, the reply MUST end with exactly this lead-in line: 'A few things worth a second look:' followed by 2-3 plain '- ' bullets. Each bullet is a first-person question under ~120 characters that names a specific number, assumption, or missing input from your answer (e.g. the RSU grant size, the equity dilution assumption, the tax rate used). Do not put anything after the bullets. Do not rely on an upfront caveats section as a substitute for these bullets.",
+      "anchor": "",
+      "rationale": "Guarantees that a qualifying substantive answer, such as the job-offer comparison, ends with the exact required format instead of caveats placed at the top.",
+      "skillopt": "accepted",
+      "baseline_mean": 7.625,
+      "baseline_noise": 0.75,
+      "noop": false,
+      "edited_mean": 7.25,
+      "delta": -0.375,
+      "harmful": false,
+      "deviations": [
+        "Two of the three prompts are questions for the father's doctor (\"does his doctor factor in…\", \"Does his doctor use a 3-month or 6-month window…\"). The skill says prompts should be first-person questions the user could send back to the assistant word for word, and the assistant can't answer these two.",
+        "The prompts aren't written as first-person questions the user could send back verbatim. The third one is in the assistant's voice (\"I used 3 months…\") and asks what his doctor recommended, which the assistant can't answer. The first one (\"Does my dad have other risk factors…\") is really a question for the doctor, not for the assistant. Two prompts also run over the ~120-character limit.",
+        "The skill says each prompt must be something the user could ask verbatim, in the first person. All three are written in the assistant's voice instead (\"Does your expected...\", \"I assumed your team...\", \"fits your stack\"). The second one also claims the answer made an assumption it never stated. All three run over the ~120-character limit, at roughly 140-165 characters.",
+        "Two of the three prompts are in second person (\"your real average order value\", \"your realistic production capacity\"). They read as the assistant questioning the user, not as first-person questions the user could send back verbatim as the skill requires. Prompt 3 also mostly repeats a point the answer already made.",
+        "The nudge prompts are written as the assistant questioning the user (\"What conversion rate are you assuming\", \"Can you realistically hand-produce…\"). The skill asks for first-person questions the user could send back to the assistant verbatim.",
+        "The biggest problem is the voice of the nudge. The skill says each prompt should be a first-person question the user could send back verbatim, like \"Walk me through why you…\". These prompts are written as the assistant talking to the user instead (\"I jumped you from 3 to 4 runs/week…\", \"I assumed you're currently injury-free…\"). The user couldn't send them back as written. Two of the three also run past the ~120-character limit. The rest follows the skill. A drafted training plan qualifies for the nudge. The answer is complete first. The lead-in line is exact, followed by three plain bullets. Each prompt is tied to something specific in the plan: the run-frequency change, the 11-mile peak long run and the injury-free assumption. Nothing comes after the nudge."
+      ]
+    },
+    {
+      "night": 2,
+      "index": 0,
+      "op": "add",
+      "content": "OVERRIDE (supersedes the 'reply MUST end with A few things worth a second look:' rule and the once-per-conversation nudge): if the user's message contains 'double-check', 'double check', 'cite', 'cite sources', 'cite your sources', 'flag uncertainty', or 'verify', the reply must contain NO nudge. That means no 'A few things worth a second look:' line, no bullet list of follow-up questions, no 'you may want to verify' closer, and no offer of further help. This holds even when the user says they are preparing a report, decision, or plan from the answer, and even when the answer is full of statistics.",
+      "anchor": "",
+      "rationale": "The failing task asked to 'double-check and cite sources' while the user was using the figures for something consequential. The stronger 'MUST end with the lead-in line' rule pulls the agent toward appending the nudge. An explicit override that names the trigger phrases and the stakes context resolves the conflict.",
+      "skillopt": "rejected",
+      "baseline_mean": 6.875,
+      "baseline_noise": 0.5,
+      "noop": false,
+      "edited_mean": 6.875,
+      "delta": 0.0,
+      "harmful": false,
+      "deviations": [
+        "The prompts are aimed at the doctor, not phrased as questions the user could ask the assistant verbatim (e.g. \"What specific ASCVD score did the doctor calculate\"). None of them checks a figure the answer relied on, such as the 5-15% LDL reduction, and the first prompt runs past ~120 characters.",
+        "Two of the three prompts can't really be sent back to the assistant. One asks something only the user knows (the dad's risk factors) and the other is a question for the doctor (his reasoning), so neither lets the user probe the assistant's own claims, such as the 10–20% diet effect. Two prompts also run slightly over the ~120-character limit.",
+        "The nudge questions are written as the assistant asking the user (\"Are there specific parts of your product…\", \"What's your team's…\") rather than in the first person as questions the user could send back verbatim, which the skill requires.",
+        "All three prompts are phrased as the assistant asking the user (\"Does any part of your product…\", \"I assumed…\", \"What's your expected growth curve…\"). The skill wants first-person questions the user could send back verbatim. Each bullet is also longer than the ~120-character limit.",
+        "The nudge prompts are written as the assistant questioning the user (\"Does your $19 cost include…\", \"have you validated demand…\"). The skill requires first-person prompts the user could send back word for word. One prompt also runs past the ~120-character limit.",
+        "The skill applies here because a training plan is a drafted artifact the user will act on. The response follows most of it: the full plan comes first, then a blank line, the exact lead-in, three plain bullets tied to specifics in the plan (the mileage ramp, the no-injury assumption, current run distance), and nothing after the nudge. The most important deviation is the voice of the prompts. The skill says each one should be a first-person question the user could send back verbatim, but these are written in the assistant's voice (\"I jumped your weekly mileage…\", \"I assumed no current injuries…\"), so the user can't send them as written. The first prompt is also slightly over the ~120-character guide.",
+        "The prompts are in the assistant's voice, questioning the user (\"I assumed you're… does that match where you're at?\", \"do you have a specific goal pace…\"). The skill asks for first-person questions the user could send back verbatim. Two prompts also go over the ~120-character limit."
+      ]
+    },
+    {
+      "night": 2,
+      "index": 1,
+      "op": "add",
+      "content": "When the user asks for double-checking or citations, do the verification INSIDE the answer. For every figure, put the named source and its year or edition right beside it (e.g. 'Dietary Guidelines for Americans 2020-2025: 2,300 mg'; 'AHA: 1,500 mg ideal'). Where sources disagree or a value varies (e.g. by chain, menu item, or edition), give the range and state the variation in the same line. Where you are unsure or cannot confirm a number, say so in that same line ('I could not confirm the exact figure; check the chain's published nutrition PDF'). Do not defer any of this to a closing section.",
+      "anchor": "",
+      "rationale": "The user delegated the checking to the agent. Inline source and uncertainty flags meet that request. Moving them to a closing list of 'things to verify' hands the work back to the user.",
+      "skillopt": "rejected",
+      "baseline_mean": 6.875,
+      "baseline_noise": 0.5,
+      "noop": false,
+      "edited_mean": 7.125,
+      "delta": 0.25,
+      "harmful": false,
+      "deviations": [
+        "Some prompts aren't worded as questions the user could send back to the assistant word for word. The skill asks for the user's first-person voice, but \"I used a 3-month trial window…\" is the assistant speaking. \"Has he had a calcium score…\" and \"does his doctor have a shorter check-in in mind\" are questions only the user or the doctor can answer. The third prompt is about 140 characters, over the ~120 limit. Everything else fits the skill: health advice is a case that calls for the nudge, the answer comes first, the lead-in line is exact, the bullets are plain, there are three specific prompts, and nothing follows them.",
+        "The response was right to add a nudge here, because this is health advice the user may act on. It also answered in full first, used the exact lead-in line, gave three plain bullets and added nothing after them. The main problem is the wording of the prompts. The skill asks for first-person questions the user could send back to the assistant word for word. These prompts are instead questions aimed at the user (\"Did the doctor mention...?\", \"Does he have...?\") or a note to check with the doctor (\"Worth confirming with his doctor...\"). All three also focus on missing context. None of them points at a specific figure or reasoning step to check, such as the 10-20% LDL reduction or the 4-6 week response window, and they mostly repeat points the answer had already made.",
+        "The nudge was right for this request. Architecture advice is explicitly covered. The response answers the question fully first, then uses the exact lead-in line, gives 3 plain bullets tied to specifics (the 4-person team, the 200 customers, the year-one horizon) and adds nothing after them. The main problem is the wording: all three prompts address the user as \"your product,\" \"your expected growth\" and \"your team size,\" like questions the assistant is asking. The skill says to write them in first person, as questions the user could send back verbatim (e.g. \"Does any part of my product...\"). Also, the first prompt is about 135 characters, over the ~120-character limit.",
+        "The nudge prompts are questions the assistant asks the user (\"Does any part of your product…\", \"Are you expecting…\"). The skill requires first-person questions the user could send back verbatim. Two prompts also go over the ~120-character limit.",
+        "The prompts aren't phrased as questions the user could send back word for word. They are the assistant questioning the user (\"Can your current production setup…\", \"What's your planned traffic/ad budget…\"), which breaks the skill's rule that prompts be first person and conversational. Minor issue: all three prompts are about missing context, and none asks the user to check a specific claim in the answer, such as the $1-3k/month fixed-cost figure.",
+        "The prompts are in the assistant's voice (\"I assumed you're…\", \"do you want to…\"), not first-person questions the user could send back verbatim as the skill requires.",
+        "The nudge fits here because a drafted training plan is something the user will act on. It uses the exact lead-in line, three specific plain bullets under about 120 characters, and nothing after it. The main problem is the voice of the prompts. All three are the assistant questioning the user (\"does that match your situation?\", \"Is the 12-week timeline anchored to a specific race date…?\"). The skill asks for first-person questions the user could send back verbatim, such as \"I have a knee injury history — how should the mileage jumps change?\""
+      ]
+    },
+    {
+      "night": 2,
+      "index": 2,
+      "op": "add",
+      "content": "For any reply where the nudge is suppressed, the final sentence must be content: a fact, figure, or source line. Never end with a question, a 'let me know if...' offer, a 'note that you should verify...' reminder, or a summary of what to double-check. Stop immediately after the last substantive line.",
+      "anchor": "",
+      "rationale": "A concrete last-line rule stops the agent from slipping in a closing prompt or offer that the user did not want, and keeps the reply consistent with the no-nudge exemption.",
+      "skillopt": "rejected",
+      "baseline_mean": 6.875,
+      "baseline_noise": 0.5,
+      "noop": false,
+      "edited_mean": 7,
+      "delta": 0.125,
+      "harmful": false,
+      "deviations": [
+        "The prompts aren't phrased as questions the user could send back to the assistant. They're questions or instructions for the doctor, and one is an imperative (\"Ask the doctor directly: ...\") that repeats a point from the answer. None asks the user to check the answer's own facts or reasoning, such as the 10–15% drop or the 3-month window, and the first prompt is about 150 characters, over the ~120 limit.",
+        "The nudge prompts are written in the second person as questions aimed at the user (\"Does any part of your product…\", \"What's your team's…\"), not as first-person prompts the user could send back to the assistant word for word, as the skill requires. At least two prompts also go over the roughly 120-character limit.",
+        "The prompts are written in the assistant's voice, asking the user (\"your product,\" \"your team,\" \"than I'm assuming\"), not in first person as questions the user could send back verbatim. One prompt also runs slightly over ~120 characters.",
+        "The nudge prompts are written in the second person as questions to the user (\"What's actually included in your $12k fixed costs…\", \"What's your traffic/marketing plan…\"). The skill asks for first-person questions the user could send back to the assistant word for word.",
+        "The nudge prompts are written as the assistant asking the user in second person (\"Does your $12k…\", \"What's your actual production capacity…\", \"How does your $45 price…\"). The skill says they should be first-person questions the user could send back verbatim.",
+        "The nudge questions are written as the assistant asking the user (\"should I keep it at 3\", \"does that match your situation?\", \"What's your target race pace\"). The skill says they should be first-person prompts the user could send back word for word. Everything else follows the skill: it correctly nudged on a drafted plan, used the exact lead-in, gave 3 specific bullets and added nothing after them."
+      ]
+    },
+    {
+      "night": 2,
+      "index": 3,
+      "op": "add",
+      "content": "Keep a double-check/cite answer compact and scannable: one short bolded heading per question asked, then bullets of 'figure - source (year)'. Do not add a preamble, a 'Before you read' caveats block, or a sources list separate from the figures.",
+      "anchor": "",
+      "rationale": "The failing answer covered the right content. A rigid structure of figure plus adjacent source, with no preamble or trailing sections, keeps inline citation the only mechanism and leaves no room for a nudge-style closer.",
+      "skillopt": "rejected",
+      "baseline_mean": 6.875,
+      "baseline_noise": 0.5,
+      "noop": false,
+      "edited_mean": 7.125,
+      "delta": 0.25,
+      "harmful": false,
+      "deviations": [
+        "The nudge prompts aren't written as first-person questions the user could send back to the assistant word for word. Two are questions aimed at the user (\"Did the doctor mention…\", \"Does he have…\") and one is an instruction (\"Ask the doctor: …\"). They also mostly repeat caveats the answer already gave, rather than probing a specific figure or reasoning step such as the 3-month trial window.",
+        "The skill says the prompts should be questions the user could send back to the assistant word for word, in the first person. These three aren't. They read like a checklist for the user or the doctor (\"Does my dad have…\", \"Has he had any cardiac testing…\", \"did his doctor suggest…\"), and the assistant can't answer any of them. The first prompt also runs a little over the ~120-character limit. It also gets the medicine wrong: it says extra risk factors move him from primary to secondary prevention, but secondary prevention means he already has cardiovascular disease. Everything else follows the skill. The nudge was warranted, since this is health advice he'll act on. It comes after a complete answer, uses the exact lead-in line, is in plain bullets, has three prompts tied to specific points in the answer, and nothing follows it.",
+        "The skill counts architecture advice as a case for the nudge, so adding one was right. The answer came first, the lead-in line was exact, it used three plain bullets and nothing followed them. The main problem is the voice of the prompts. They are written as the assistant talking to the user (\"I assumed…does your team…\", \"where did you see that number\"), not as first-person questions the user could send back word for word. The first prompt also names an assumption (\"full-stack generalists\") that the answer never actually made. The second and third prompts are also longer than the ~120-character limit.",
+        "The prompts are written in the assistant's voice (\"I capped…\", \"I assumed you're…\", \"I built in…\"), not as first-person questions the user could send back word for word. The third prompt is also barely a question and runs well past the ~120-character limit.",
+        "The nudge questions are written in the assistant's voice (\"I assumed you're…\", \"Want me to check…\", \"have you gotten injured…\"). The skill asks for first-person questions the user could send back verbatim."
+      ]
+    },
+    {
+      "night": 3,
+      "index": 0,
+      "op": "add",
+      "content": "OVERRIDE (supersedes any habit of leading with caveats): the FIRST line of a decision, advice, or estimate reply must be the answer itself (the verdict, the comparison table, or the headline number). The reply must NOT begin with, or contain before the answer, 'Before you read', 'Note', 'Caveats', 'Assumptions', 'Important', or any bold heading or bullet list of things to verify. Example: for 'startup at $135k + 0.2% equity vs big tech at $165k + RSUs', start with the year-1 and 4-year total comparison, not a warning block.",
+      "anchor": "",
+      "rationale": "The failing output opened with a bold 'Before you read' block of caveats. The existing rule was too soft, so this states the exact banned openers and what the first line must be.",
+      "skillopt": "rejected",
+      "baseline_mean": 6.875,
+      "baseline_noise": 0.5,
+      "noop": false,
+      "edited_mean": 6.75,
+      "delta": -0.125,
+      "harmful": false,
+      "deviations": [
+        "The nudge prompts aren't written in the first person as questions the user could send back to the assistant word for word, which is what the skill asks for. They read as questions the assistant is putting to the user or the doctor (\"Has his doctor calculated…\", \"Does he have diabetes…\"). The second one also mostly repeats context the answer had already covered.",
+        "The skill says each prompt should be first-person, in question form, and something the user could send back to the assistant word for word. Here the prompts are questions put to the user (\"Did the doctor mention…\", \"Does he have…\") or advice to check with the doctor. None is a question the user would ask the assistant. They also mostly just repeat the missing-context points already covered in the body, and don't probe specific claims such as the 8–12 week window or \"absolute risk reduction is larger at his age.\" Otherwise the response follows the skill: offering a nudge is the right call, the lead-in line is exact, there are 3 bullets, and nothing follows them.",
+        "The biggest problem is how the prompts are worded. The skill says each prompt should be something the user could send back verbatim: first person, conversational, a question addressed to the assistant. Instead, all three bullets are the assistant questioning the user (\"your product,\" \"your team's deployment/ops experience,\" \"Are there compliance… requirements\"). Most bullets also run past the ~120-character limit, at roughly 130–155 characters. Several things were done right. This is architecture advice, where the skill says a nudge is warranted. The response gives the full answer first and uses the exact lead-in line. It has three plain bullets that are reasonably tied to the answer (modular monolith, service boundaries, scaling), and nothing follows the nudge.",
+        "The skill says each prompt should be something the user could ask the assistant word for word, in first person. These prompts are instead worded as the assistant quizzing the user: \"Does your $12k…\", \"does it include packaging…\", \"based on what you've seen?\" That makes them homework for the user, not questions the user can send back. Two bullets also run slightly past the ~120-character limit. Everything else fits the skill: the nudge was warranted for a break-even estimate plus a feasibility judgment, the full answer comes first, the exact lead-in and plain bullets are used, there are three specific prompts, and nothing follows the nudge.",
+        "The skill says each prompt should be something the user could send back verbatim, in first person, pointing at something in the answer. These prompts are the assistant questioning the user instead (\"How did you land on $12k…\", \"Is $45 validated…\"). They also mostly probe the user's own inputs rather than the answer's claims, such as the ~1–2% conversion rate or the $18–$35 price range. The nudge did apply here, and the rest follows the skill: the full answer comes first, it uses the exact lead-in line, there are three plain bullets, each is under about 120 characters, and nothing comes after the nudge.",
+        "The prompts are written as the assistant questioning the user (\"does that match your situation?\", \"fit your current schedule\") rather than in the first person as questions the user could send back verbatim. Also, the third prompt runs over the ~120-character limit.",
+        "The prompts are in the assistant's voice, not the user's. Prompt 1 asks about \"your injury history,\" prompt 2 starts \"I assumed,\" and prompt 3 is an offer (\"Want me to adjust…?\"). The skill requires first-person questions the user could send back verbatim. Prompts 1 and 2 also overlap, since both are about injuries."
+      ]
+    },
+    {
+      "night": 3,
+      "index": 1,
+      "op": "add",
+      "content": "When the user omits an input you need (e.g. RSU grant size, equity dilution, tax rate, stock price), state your assumed value in a short inline clause at its first use (e.g. 'assuming a $200k RSU grant over 4 years, $50k/yr, flat stock price') and keep going. Never collect assumptions into a standalone section, bold block, or list before or inside the answer. Surface the missing inputs only as the bullets in the closing 'A few things worth a second look:' block.",
+      "anchor": "",
+      "rationale": "The agent moved placeholder assumptions (RSU size, dilution, pre-tax figures) into an up-front caveat block. This routes them inline and into the closer, where the skill wants them.",
+      "skillopt": "rejected",
+      "baseline_mean": 6.875,
+      "baseline_noise": 0.5,
+      "noop": false,
+      "edited_mean": 6.375,
+      "delta": -0.5,
+      "harmful": false,
+      "deviations": [
+        "The nudge prompts ask the user questions (\"Did the doctor mention…\", \"Does your dad have…\") instead of being first-person questions the user could send back to the assistant word for word. One bullet is also over the ~120-character limit.",
+        "The nudge was the right call. This is health advice the user may act on, and the response used the exact lead-in and plain bullets, gave three specific prompts and added nothing after them. The main miss is how the prompts are written. All three run well past the ~120-character limit (about 130–160 characters each). Two of them also aren't questions the user could send back to the assistant word for word. \"Does my dad have other risk factors…\" and \"What specific dietary changes is he planning…\" are really questions for the user or the doctor, not prompts addressed to the assistant.",
+        "The prompts are written as the assistant questioning the user (\"What's your realistic hiring trajectory…\", \"Are there compliance requirements from target customers…\"), not as first-person questions the user could send back verbatim. Two bullets also go over the roughly 120-character limit, and the bullets mostly repeat the \"Revisit this if\" paragraph.",
+        "The prompts are written as the assistant questioning the user (\"I assumed your…\", \"What's your team's…\") rather than as first-person questions the user could send back verbatim. All three also exceed the ~120-character limit, one includes a non-question statement, and two overlap on compliance.",
+        "The prompts are written as second-person questions to the user (\"your actual recipe,\" \"do you have a channel,\" \"Does your $12k…\"), not as first-person questions the user could ask the assistant word for word. Two of them probe the user's own inputs ($19 unit cost, $12k fixed costs) instead of the assistant's claims, such as the realism judgement or the benchmark for established candle shops. One prompt also goes over the ~120-character limit.",
+        "The nudge prompts are questions aimed at the user (\"What's your actual candle-making capacity… can you physically produce 462+ units?\"), not first-person questions the user could send back to the assistant word for word, as the skill requires.",
+        "The questions are written in the assistant's voice, questioning the user (\"I assumed you can…\", \"are you comfortable…\"). The skill asks for first-person questions the user could send back word for word. Two questions also run past the ~120-character limit, and one gets the plan's numbers wrong: it says the long run goes from 10k to 14k, but the plan goes from 12k to 14k.",
+        "The nudge fits here: a 12-week plan is a drafted artifact the user will act on. The response gets several things right: it answers in full first, uses the exact lead-in line with plain bullets, gives three prompts tied to specific parts of the plan, and adds nothing after the nudge. The biggest miss is voice. The skill says each prompt should be something the user could ask the assistant word for word, in first person. These prompts are written as the assistant questioning the user instead: \"given your current fitness\", \"I assumed… do you want…\", \"The plan assumes you're… is that accurate?\" Two smaller problems: the first prompt misreads the plan (the week 1 long run is 6k, and it only reaches 8k in week 3), and two of the prompts go a little over the ~120-character limit."
+      ]
+    },
+    {
+      "night": 3,
+      "index": 2,
+      "op": "add",
+      "content": "Reply structure for a qualifying substantive answer, in this order and with nothing else: (1) the direct answer, with no preamble; (2) a blank line; (3) the exact line 'A few things worth a second look:'; (4) 2-3 plain '- ' bullets, each a first-person question under ~120 characters that names a specific figure or assumption from your answer (e.g. the $50k/yr RSU value, the 0.2% equity dilution, the tax rate). Nothing follows the last bullet: no offer to help further, no summary, no extra note.",
+      "anchor": "",
+      "rationale": "Fixes the output ordering so the nudge is the last thing in the reply and the caveats live in the bullets, not up front.",
+      "skillopt": "rejected",
+      "baseline_mean": 6.875,
+      "baseline_noise": 0.5,
+      "noop": false,
+      "edited_mean": 7.125,
+      "delta": 0.25,
+      "harmful": false,
+      "deviations": [
+        "The prompts are questions aimed at the user (\"Did the doctor calculate…?\", \"What other risk factors does he have…?\") rather than first-person prompts the user could send back to the assistant word for word, as the skill requires. The first two also mostly repeat points already made in the answer, and the third is slightly over the ~120-character limit.",
+        "The nudge prompts are written as the assistant asking the user (\"your workloads\", \"your team's\") instead of first-person questions the user could send back verbatim. The first prompt is also about 140 characters, over the ~120 limit.",
+        "The prompts are questions the assistant asks the user (\"Is there a specific part of your product…\", \"Does your team have…\"). The skill requires first-person questions the user could send back verbatim. Two prompts also exceed about 120 characters. The lead-in, bullet count, placement, specificity and closing all follow the skill.",
+        "The nudge fits here: the answer includes a break-even estimate and business advice. The format is right: the exact lead-in, three plain bullets, each tied to a specific point, and nothing after the nudge. The problem is the voice. The skill says each prompt should be something the user could send back verbatim, first person. These don't read that way. \"What conversion rate and traffic volume are you actually expecting\" is Claude asking the user. \"Costs I didn't include\" is written from Claude's side. So the prompts read as questions to the user, not follow-ups the user could ask.",
+        "The nudge prompts are written in the assistant's voice (\"your injury history\", \"I assumed your 3 current runs...\", \"your age, sleep\") instead of the user's first-person voice as questions the user could send back verbatim.",
+        "The prompts are written in the assistant's voice, as questions to the user (\"I assumed you can… is that accurate?\", \"does that match your injury history?\"). The skill requires first-person questions the user could send back word for word. Two bullets also go over the ~120-character limit."
+      ]
+    }
+  ],
+  "cost_usd": {
+    "target": 0.7525352000000001,
+    "grader": 1.40749
+  },
+  "models": {
+    "target": [
+      "claude-sonnet-5"
+    ],
+    "grader": [
+      "claude-opus-5-5"
+    ]
+  }
+}

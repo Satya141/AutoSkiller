@@ -1,0 +1,22 @@
+{
+  "purpose": "This skill guides an AI agent acting as a design lead to produce distinctive, brief-specific visual designs (for web/UI work) rather than generic, templated-looking output, serving users who want bespoke frontend design direction grounded in their product's actual subject matter.",
+  "invariants": [
+    "Must require grounding all aesthetic decisions in the brief's specific subject matter, audience, and primary job, identifying/confirming these if the brief doesn't specify them, before making design choices.",
+    "Must require a two-pass workflow: first produce a compact design plan (color palette as named hex values, type roles, layout concept with wireframes, guiding principles), then explicitly review that plan against the brief for genericness and revise before writing code.",
+    "Must identify and warn against the recurring AI-generated design defaults (e.g. cream+serif+terracotta, near-black+single bright accent, broadsheet hairline/zero-radius layout, uniform rounded SaaS cards with soft shadows, ALL-CAPS eyebrows, middle-dot meta strings, em-dash labels, '→' on links) as things to avoid using as unexamined defaults.",
+    "Must state that explicit brief instructions override the generic-avoidance guidance — the brief's own words always win, even if they request one of the flagged default looks.",
+    "Must limit typography to one or two type families with clearly distinct roles and a defined, intentional type scale, rather than arbitrary default fonts.",
+    "Must restrict non-user-triggered motion to sparing, deliberate use (favoring a single orchestrated moment) rather than uniform animation on every section/card.",
+    "Must require a baseline quality floor for any build: responsive down to mobile, visible keyboard focus, respect for reduced-motion preference, and accessible/harmonious color choices.",
+    "Must treat written copy as an integral part of the design (not filler), requiring active voice, plain user-facing language, and content-specific writing rather than generic placeholder copy."
+  ],
+  "protected": [
+    "Where the brief pins down a visual direction, follow it exactly — the brief's own words always win, including when it asks for one of these looks.",
+    "Work in two passes.",
+    "Spend your boldness in one place.",
+    "Consider Chanel's advice: before leaving the house, take a look in the mirror and remove one accessory.",
+    "## Process: plan, review against the brief, build, critique",
+    "responsive down to mobile, visible keyboard focus, reduced motion respected, visually accessible, harmonious color palettes."
+  ],
+  "allow_overrides": false
+}

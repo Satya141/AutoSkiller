@@ -1,0 +1,19 @@
+{
+  "purpose": "Guides an agent through researching, designing, implementing, testing, and evaluating high-quality MCP (Model Context Protocol) servers—supporting both Python (FastMCP) and TypeScript/Node (MCP SDK)—so that LLMs can effectively use the resulting tools to interact with external services.",
+  "invariants": [
+    "The workflow must consist of four phases in order: Research and Planning, Implementation, Review and Test, and Create Evaluations.",
+    "The skill must support and provide guidance for both Python (FastMCP) and TypeScript/Node (MCP SDK) implementations, each via a dedicated language-specific reference guide.",
+    "The skill must direct the agent to consult official MCP protocol documentation (modelcontextprotocol.io) and the official SDK READMEs before/during implementation.",
+    "Tool implementation guidance must require input validation schemas (Zod for TypeScript, Pydantic for Python) and the four tool annotations: readOnlyHint, destructiveHint, idempotentHint, openWorldHint.",
+    "The evaluation phase must require producing exactly 10 evaluation questions, each independent, read-only, complex, realistic, verifiable, and stable, output in the specified XML qa_pair format.",
+    "The skill must point to the reference files (mcp_best_practices.md, python_mcp_server.md, node_mcp_server.md, evaluation.md) as the source of detailed implementation and evaluation guidance rather than duplicating that detail inline.",
+    "Testing guidance must include verifying builds/compilation (e.g., npm run build / python -m py_compile) and testing with the MCP Inspector."
+  ],
+  "protected": [
+    "### Phase 1: Deep Research and Planning",
+    "### Phase 2: Implementation",
+    "### Phase 3: Review and Test",
+    "### Phase 4: Create Evaluations"
+  ],
+  "allow_overrides": false
+}

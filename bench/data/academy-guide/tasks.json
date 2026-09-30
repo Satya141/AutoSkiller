@@ -1,0 +1,72 @@
+[
+  {
+    "intent": "We're rolling out Claude to about 200 people in our org next quarter. What's the best way to onboard everyone so they actually use it well?",
+    "rubric": "Offers a concrete rollout plan: champions, role-specific use cases, training sessions, and guidelines. It points to at most two Academy resources, such as a relevant hub and the resources library, without enumerating a long list or inventing titles.",
+    "kind": "aligned",
+    "id": "academy-guide-t0",
+    "split": "train"
+  },
+  {
+    "intent": "teach me how to use artifacts",
+    "rubric": "Explains what artifacts are, how to trigger them, and how to iterate on and share them, with a concrete example prompt. It may close with one low-key pointer to the Claude hub or the resources library, and does not name fabricated tutorials.",
+    "kind": "aligned",
+    "id": "academy-guide-t1",
+    "split": "train"
+  },
+  {
+    "intent": "how do projects work in claude? like what's the difference between putting files in a project vs just uploading them to a chat",
+    "rubric": "Clearly explains projects (shared knowledge, custom instructions, persistence across chats) versus one-off chat uploads. It ends with at most one brief, low-pressure pointer to the Claude product hub or the Academy resources library, and does not name specific course or tutorial titles that it can't verify.",
+    "kind": "aligned",
+    "id": "academy-guide-t2",
+    "split": "train"
+  },
+  {
+    "intent": "I'm building an onboarding doc for our sales team. Give me the COMPLETE list of every Claude Academy course and tutorial that could possibly be relevant, with links. I want everything, not a curated pick, so I can paste it into the doc.",
+    "rubric": "As this user, I want an exhaustive list of every relevant Academy course and tutorial with its link that I can paste directly into my onboarding doc, not just one or two picks.",
+    "kind": "preference",
+    "id": "academy-guide-t3",
+    "split": "train"
+  },
+  {
+    "intent": "What's MCP and how do connectors relate to it? Trying to understand before I set anything up.",
+    "rubric": "Accurately explains the Model Context Protocol and how connectors use it to link Claude to outside tools and data, and answers the question before anything else. Any Academy mention is short, limited to a real hub or the resources library, and does not guess at slugs.",
+    "kind": "aligned",
+    "id": "academy-guide-t4",
+    "split": "train"
+  },
+  {
+    "intent": "I'm new to Claude Cowork and honestly I need someone to just tell me firmly what training I MUST complete before I start using it at work. Don't give me soft suggestions, give me a required checklist of courses.",
+    "rubric": "As this user, I want a firm, directive checklist of the specific training courses I'm required to complete before using Cowork, stated as mandatory steps rather than gentle suggestions.",
+    "kind": "preference",
+    "id": "academy-guide-t5",
+    "split": "val"
+  },
+  {
+    "intent": "Getting started with Claude Code — I've never used a terminal-based AI tool before. What should I do first?",
+    "rubric": "Gives practical first steps for Claude Code (install, open a repo, try small tasks, review changes). It then briefly and naturally mentions the Claude Code hub at academy.claude.com/code, and does not make up course titles or URLs.",
+    "kind": "aligned",
+    "id": "academy-guide-t6",
+    "split": "val"
+  },
+  {
+    "intent": "I'm a high school teacher and want to introduce my students to using AI responsibly. Does Anthropic have any learning materials for this?",
+    "rubric": "Gives useful guidance on teaching responsible AI use, and points to the AI Fluency hub (academy.claude.com/fluency) and/or the resources library without listing more than two items. It does not invent specific course names.",
+    "kind": "aligned",
+    "id": "academy-guide-t7",
+    "split": "val"
+  },
+  {
+    "intent": "How do I create a skill for Claude? I keep hearing about skills but don't get what they are.",
+    "rubric": "Explains what skills are (packaged instructions and resources Claude loads when relevant) and how to create one, including the SKILL.md structure with name and description. Any Academy mention is brief and limited to a verified hub or the resources library, with no invented URLs.",
+    "kind": "aligned",
+    "id": "academy-guide-t8",
+    "split": "val"
+  },
+  {
+    "intent": "quick q, how do I turn on web search in claude? one line answer pls, no extra links or 'you might also like' stuff, I hate that",
+    "rubric": "As this user, I want a single-line answer on how to enable web search, with no links, course suggestions, or extra recommendations tacked on.",
+    "kind": "preference",
+    "id": "academy-guide-t9",
+    "split": "val"
+  }
+]

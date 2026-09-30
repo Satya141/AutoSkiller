@@ -1,0 +1,6 @@
+[
+  "Can you write a playwright test that checks a modal opens when I click 'Add item' on my app at localhost:8000? It's already running.",
+  "I have a Django app (python manage.py runserver, port 8000) that isn't started. How do I run a Playwright smoke test that just makes sure the home page renders and has no console errors?",
+  "how do I find all the links and input fields on a page with playwright so I can figure out what selectors to use? page is a local angular app",
+  "Take a full-page screenshot of my local Svelte app's /settings page after it's fully loaded. The server's at localhost:5000 and it's running."
+]

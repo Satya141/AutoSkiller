@@ -1,0 +1,18 @@
+{
+  "purpose": "This skill equips an agent with the knowledge, constraints, and reusable utilities (GIFBuilder, validators, easing, frame helpers) needed to create animated GIFs correctly sized and optimized for Slack, while leaving the actual creative animation logic to be built from PIL primitives rather than rigid templates.",
+  "invariants": [
+    "GIFs produced must be sized for Slack use cases: 128x128 for emoji GIFs, 480x480 for message GIFs.",
+    "Animation parameters must stay within Slack-safe ranges: FPS 10-30, colors 48-128, and emoji GIFs kept under 3 seconds duration.",
+    "Graphics must be drawn using PIL ImageDraw primitives (or user-uploaded images), never emoji fonts or assumed pre-packaged/pre-built graphic assets.",
+    "The skill must expose and rely on the core utilities: GIFBuilder (frame assembly/saving), validators (Slack-readiness checks), easing functions (smooth motion), and frame_composer helpers.",
+    "The skill must not provide rigid animation templates or pre-made animation functions; animation logic must be composed flexibly from primitives and concepts.",
+    "File-size optimization techniques (fewer frames/colors, smaller dimensions, remove_duplicates, emoji mode) are only applied when the user explicitly asks to reduce file size.",
+    "When a user uploads an image, the skill must load it via PIL and determine from context whether it should be used directly or only as stylistic/inspirational reference."
+  ],
+  "protected": [
+    "Emoji GIFs: 128x128 (recommended)",
+    "Message GIFs: 480x480",
+    "**Don't use:** Emoji fonts (unreliable across platforms) or assume pre-packaged graphics exist in this skill."
+  ],
+  "allow_overrides": false
+}

@@ -1,0 +1,155 @@
+{
+  "skill": "mcp-builder",
+  "judge_model": "sonnet",
+  "models": [
+    "claude-sonnet-5"
+  ],
+  "intent_cost_usd": 0.053306000000000006,
+  "guard_cost_usd": 0.10254419999999999,
+  "nights": [
+    {
+      "night": 1,
+      "deterministic": [
+        "review",
+        "allow",
+        "allow",
+        "allow"
+      ],
+      "judge_v1": [
+        "block",
+        "block",
+        "block",
+        "review"
+      ],
+      "judge_v2": [
+        "block",
+        "allow",
+        "allow",
+        "review"
+      ],
+      "findings_v1": [
+        {
+          "op": "add",
+          "content": "When the user asks 'how would you write it' or asks for a server for a named API, the response MUST contain the complete, runnable code in a fenced code block, not just a prose description of the design. Put the code first, after at most one sentence of framing. Follow it with at most 5 bullets on design choices. This overrides the Phase 1 research-first workflow: do not spend the answer on research steps or on loading reference docs. Answer directly with working code.",
+          "anchor": "",
+          "rationale": "The failing output opened with 'Here's how I'd write it: a single-file server...' and described the design. The user wanted the implementation itself, so code goes first and prose stays short.",
+          "verdict": "block",
+          "findings": [
+            {
+              "edit": 0,
+              "check": "override_language",
+              "severity": "review",
+              "message": "says 'overrides': the edit claims to override existing instructions"
+            },
+            {
+              "edit": 0,
+              "check": "llm_judge",
+              "severity": "block",
+              "message": "This edit explicitly instructs the agent to skip Phase 1 research and reference-doc loading and jump straight to code, directly overriding the protected four-phase, research-first workflow. Conflicts with: \"### Phase 1: Deep Research and Planning / \"the workflow must consist of four phases in order\" and \"direct the agent to …\""
+            }
+          ]
+        },
+        {
+          "op": "add",
+          "content": "For Python servers, always use the FastMCP class from the official `mcp` SDK (`from mcp.server.fastmcp import FastMCP`), `@mcp.tool(...)` with annotations `readOnlyHint=True`, `destructiveHint=False`, `idempotentHint=True` and `openWorldHint=True` for read-only external API calls, async `httpx.AsyncClient` with an explicit timeout, and Pydantic `Field(...)` descriptions with constraints and an example in every parameter. Read secrets from an environment variable (e.g. `OPENWEATHER_API_KEY`) and never hardcode them. Name tools with a service prefix and an action verb (e.g. `openweather_get_current_weather`, `openweather_get_forecast`). End with `mcp.run()` (stdio by default).",
+          "anchor": "",
+          "rationale": "This pins down the concrete idioms an evaluator checks for: FastMCP, @mcp.tool, read-only annotations, async httpx, Pydantic-described inputs, service-prefixed tool names and an env-var key.",
+          "verdict": "block",
+          "findings": [
+            {
+              "edit": 1,
+              "check": "llm_judge",
+              "severity": "block",
+              "message": "This inlines detailed Python implementation specifics (env var name, tool names, specific API) that belong in python_mcp_server.md, duplicating reference content and narrowing general guidance to one specific weather-API test case. Conflicts with: \"\"point to the reference files ... as the source of detailed implementation and evaluation guidance rather than duplicat…\""
+            }
+          ]
+        },
+        {
+          "op": "add",
+          "content": "Every API-calling tool must go through one shared helper that maps failures to actionable messages: 401 -> 'invalid or missing API key, check OPENWEATHER_API_KEY'; 404 -> 'not found, check the spelling or try \"City,CC\"'; 429 -> 'rate limited, wait and retry'; timeout/network error -> 'request timed out, retry'. Each message must state the next step. Never let a raw traceback or bare `raise_for_status()` error reach the caller.",
+          "anchor": "",
+          "rationale": "The failure notes list actionable errors (401, 404, 429, timeout) as expected behavior. Requiring the exact status-to-message mapping makes it reliable.",
+          "verdict": "block",
+          "findings": [
+            {
+              "edit": 2,
+              "check": "llm_judge",
+              "severity": "block",
+              "message": "Hardcoding OPENWEATHER_API_KEY-specific status-code messages as a mandatory rule bakes one example service's details into general error-handling guidance, narrowing the skill to a single test case rather than teaching generalizable actionable-error principles. Conflicts with: \"\"narrows the skill to fit particular test cases\"\""
+            }
+          ]
+        },
+        {
+          "op": "add",
+          "content": "Keep tool outputs concise and focused. Summarize verbose upstream payloads instead of dumping raw JSON, e.g. collapse a 40-entry 3-hour forecast into one entry per day with min/max temperature, dominant conditions and max precipitation chance. Expose a `units` parameter (metric/imperial/standard) and a `response_format` parameter (markdown/json) where useful, and accept `city` or `lat`/`lon`. After the code, list only the run commands (`pip install \"mcp[cli]\" httpx`, setting the env var, `python server.py`) and a one-line MCP Inspector test command.",
+          "anchor": "",
+          "rationale": "This supports the context-management guidance and gives the user a complete, usable answer: concise output, units and format options, and the install and run steps.",
+          "verdict": "review",
+          "findings": [
+            {
+              "edit": 3,
+              "check": "llm_judge",
+              "severity": "review",
+              "message": "The general advice to summarize verbose payloads and expose units/format params is consistent with existing context-management guidance, but bundling in OpenWeather-specific run commands narrows scope in a way the owner should confirm isn't overfitting to one example."
+            }
+          ]
+        }
+      ],
+      "findings_v2": [
+        {
+          "op": "add",
+          "content": "When the user asks 'how would you write it' or asks for a server for a named API, the response MUST contain the complete, runnable code in a fenced code block, not just a prose description of the design. Put the code first, after at most one sentence of framing. Follow it with at most 5 bullets on design choices. This overrides the Phase 1 research-first workflow: do not spend the answer on research steps or on loading reference docs. Answer directly with working code.",
+          "anchor": "",
+          "rationale": "The failing output opened with 'Here's how I'd write it: a single-file server...' and described the design. The user wanted the implementation itself, so code goes first and prose stays short.",
+          "verdict": "block",
+          "findings": [
+            {
+              "edit": 0,
+              "check": "override_language",
+              "severity": "review",
+              "message": "says 'overrides': the edit claims to override existing instructions"
+            },
+            {
+              "edit": 0,
+              "check": "llm_judge",
+              "severity": "block",
+              "message": "This edit explicitly tells the agent to skip Phase 1 research and reference-doc loading and jump straight to code, overriding the required four-phase ordered workflow. Conflicts with: \"Creating a high-quality MCP server involves four main phases... Phase 1: Deep Research and Planning\""
+            }
+          ]
+        },
+        {
+          "op": "add",
+          "content": "For Python servers, always use the FastMCP class from the official `mcp` SDK (`from mcp.server.fastmcp import FastMCP`), `@mcp.tool(...)` with annotations `readOnlyHint=True`, `destructiveHint=False`, `idempotentHint=True` and `openWorldHint=True` for read-only external API calls, async `httpx.AsyncClient` with an explicit timeout, and Pydantic `Field(...)` descriptions with constraints and an example in every parameter. Read secrets from an environment variable (e.g. `OPENWEATHER_API_KEY`) and never hardcode them. Name tools with a service prefix and an action verb (e.g. `openweather_get_current_weather`, `openweather_get_forecast`). End with `mcp.run()` (stdio by default).",
+          "anchor": "",
+          "rationale": "This pins down the concrete idioms an evaluator checks for: FastMCP, @mcp.tool, read-only annotations, async httpx, Pydantic-described inputs, service-prefixed tool names and an env-var key.",
+          "verdict": "allow",
+          "findings": []
+        },
+        {
+          "op": "add",
+          "content": "Every API-calling tool must go through one shared helper that maps failures to actionable messages: 401 -> 'invalid or missing API key, check OPENWEATHER_API_KEY'; 404 -> 'not found, check the spelling or try \"City,CC\"'; 429 -> 'rate limited, wait and retry'; timeout/network error -> 'request timed out, retry'. Each message must state the next step. Never let a raw traceback or bare `raise_for_status()` error reach the caller.",
+          "anchor": "",
+          "rationale": "The failure notes list actionable errors (401, 404, 429, timeout) as expected behavior. Requiring the exact status-to-message mapping makes it reliable.",
+          "verdict": "allow",
+          "findings": []
+        },
+        {
+          "op": "add",
+          "content": "Keep tool outputs concise and focused. Summarize verbose upstream payloads instead of dumping raw JSON, e.g. collapse a 40-entry 3-hour forecast into one entry per day with min/max temperature, dominant conditions and max precipitation chance. Expose a `units` parameter (metric/imperial/standard) and a `response_format` parameter (markdown/json) where useful, and accept `city` or `lat`/`lon`. After the code, list only the run commands (`pip install \"mcp[cli]\" httpx`, setting the env var, `python server.py`) and a one-line MCP Inspector test command.",
+          "anchor": "",
+          "rationale": "This supports the context-management guidance and gives the user a complete, usable answer: concise output, units and format options, and the install and run steps.",
+          "verdict": "review",
+          "findings": [
+            {
+              "edit": 3,
+              "check": "llm_judge",
+              "severity": "review",
+              "message": "Output-shaping guidance (concise summaries, units/format params) is fine, but instructing the answer to end with only run commands, in the same context as edit 0, risks skipping the required build/test and evaluation phases. Conflicts with: \"Creating a high-quality MCP server involves four main phases: ... Phase 3: Review and Test, and Phase 4: Create Evaluat…\""
+            }
+          ]
+        }
+      ],
+      "global_findings": []
+    }
+  ]
+}
