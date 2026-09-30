@@ -1,5 +1,7 @@
 # AutoSkiller
 
+[![tests](https://github.com/Satya141/AutoSkiller/actions/workflows/tests.yml/badge.svg)](https://github.com/Satya141/AutoSkiller/actions/workflows/tests.yml)
+
 Improve agent skills without letting them drift from what they are for.
 
 Tools like [SkillOpt](https://github.com/microsoft/SkillOpt) auto-improve a
@@ -63,6 +65,10 @@ It runs two layers:
 
 An LLM "allow" never overrules a deterministic block. Exit codes are 0 allow,
 1 review, 2 block, so you can gate a SkillOpt run or a CI job on it.
+
+The judge has two prompts. `--judge-prompt v2` (default) flags only edits that
+contradict or override the skill. `--judge-prompt v1` is stricter and flags
+most new rules; it is kept so the benchmark's v1 numbers can be reproduced.
 
 ### Locking a skill's intent
 
@@ -173,7 +179,8 @@ The CLI backend turns both off (`--strict-mcp-config --disable-slash-commands`).
 python -m unittest discover -s tests
 ```
 
-The tests run offline with a fake backend.
+The tests run offline with a fake backend, and on every push in GitHub Actions.
+Changes are listed in [CHANGELOG.md](CHANGELOG.md).
 
 ## Next
 
