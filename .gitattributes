@@ -1,0 +1,3 @@
+# Store text files with LF endings, whatever the editor or OS writes.
+* text=auto eol=lf
+*.pdf binary
