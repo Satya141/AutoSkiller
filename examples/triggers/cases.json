@@ -1,0 +1,16 @@
+[
+  {"prompt": "write a commit message for what I've staged", "expect": "commit-message"},
+  {"prompt": "commit msg pls, conventional style", "expect": "commit-message"},
+  {"prompt": "I'm about to open a PR for this branch, can you write up the description?", "expect": "pr-description"},
+  {"prompt": "draft the summary text for my pull request, reviewers need context on why I changed the cache", "expect": "pr-description"},
+  {"prompt": "fill in the PR template for these changes", "expect": "pr-description"},
+  {"prompt": "can you look over PR #42 and tell me if anything is broken?", "expect": "code-review"},
+  {"prompt": "check my diff for bugs before I merge", "expect": "code-review"},
+  {"prompt": "is there any SQL injection risk in the changes on this branch?", "expect": "code-review"},
+  {"prompt": "the reviewer left comments on my pull request, help me respond to them", "expect": null},
+  {"prompt": "merge the open pull request once CI is green", "expect": null},
+  {"prompt": "write release notes for v2.3", "expect": "changelog"},
+  {"prompt": "what changed since the last tag? I need it for the CHANGELOG", "expect": "changelog"},
+  {"prompt": "undo my last commit but keep the changes", "expect": null},
+  {"prompt": "rename the variable userId to accountId across the repo", "expect": null}
+]
