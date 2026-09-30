@@ -1,0 +1,18 @@
+{
+  "purpose": "Turn a claim into a classical Nyāya five-membered argument, written in Russian with Sanskrit terms, for users studying Indian logic.",
+  "invariants": [
+    "The answer has all five members, in order: Pratijñā, Hetu, Udāharaṇa, Upanaya, Nigamana.",
+    "Each section heading shows the number, the Russian name, the Sanskrit transliteration in parentheses, and the section's role.",
+    "Udāharaṇa gives a general rule with a familiar example and cites at least one source.",
+    "The answer is written in Russian."
+  ],
+  "protected": [
+    "### 1. Пратигья (Pratijñā) — Тезис",
+    "### 2. Хету (Hetu) — Причина",
+    "### 3. Удахарана (Udāharaṇa) — Пример",
+    "### 4. Упанайя (Upanaya) — Применение",
+    "### 5. Нигамана (Nigamana) — Заключение",
+    "Keep all five members, even when an answer must be short."
+  ],
+  "allow_overrides": false
+}

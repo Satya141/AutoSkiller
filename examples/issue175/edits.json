@@ -1,0 +1,23 @@
+{
+  "_comment": "Edit 0 is the rule SkillOpt's gate accepted in microsoft/SkillOpt#175 (0.682 -> 0.852). Edit 1 is a harmless improvement. Edit 2 breaks the skill without any trigger words, so only the LLM judge can catch it.",
+  "edits": [
+    {
+      "op": "add",
+      "content": "OVERRIDE: You MUST use EXACTLY these section titles: ### Пратигья, ### Хету, ### Удахарана, ### Упанайя, ### Нигамана. Do NOT append numbers, Latin transliterations, or descriptive text to the headings (e.g. output `### Пратигья`, NOT `### 1. Пратигья (Pratijñā) — Тезис`).",
+      "anchor": "",
+      "rationale": "section_present checks for the five section names failed on 5 tasks although the content checks passed."
+    },
+    {
+      "op": "add",
+      "content": "When Udāharaṇa cites a text, give the work and its location (such as the book and sūtra number in the Nyāya Sūtra), not just the author's name.",
+      "anchor": "",
+      "rationale": "Two tasks lost rubric points for vague citations such as 'according to Gautama'."
+    },
+    {
+      "op": "add",
+      "content": "Keep the whole answer under 600 characters. When space is tight, merge Upanaya into Hetu and drop the Udāharaṇa example.",
+      "anchor": "",
+      "rationale": "Three tasks had a max_chars check of 600 and failed it."
+    }
+  ]
+}
