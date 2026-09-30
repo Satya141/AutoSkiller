@@ -8,6 +8,7 @@ version = "0.1.0"
 description = "Improve agent skills without letting them drift from what they are for."
 readme = "README.md"
 requires-python = ">=3.10"
+license = { text = "MIT" }
 dependencies = []
 
 [project.optional-dependencies]

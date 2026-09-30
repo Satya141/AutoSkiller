@@ -181,3 +181,9 @@ The tests run offline with a fake backend.
   rewrite only if accuracy rises and the guard allows it.
 - Cross-skill checks: flag descriptions that overlap and skills whose rules conflict.
 - A SkillOpt hook that runs the guard inside the optimizer's accept step.
+
+## License
+
+MIT, see [LICENSE](LICENSE). The Anthropic skills in `bench/skills/` are
+included unmodified under their own Apache 2.0 licenses (`LICENSE.txt` in each
+folder).
