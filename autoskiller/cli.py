@@ -37,7 +37,8 @@ def _run_guard(skill: Skill, args) -> guard_mod.GuardReport:
         print(f"note: no {intent_mod.INTENT_FILENAME} for {skill.name}; judging against the skill text only. "
               f"Run `autoskiller intent init {skill.dir}` to lock its intent.", file=sys.stderr)
     backend = None if args.no_llm else _backend(args)
-    return guard_mod.guard(skill, edits, intent, backend, max_change_ratio=args.max_change)
+    return guard_mod.guard(skill, edits, intent, backend, max_change_ratio=args.max_change,
+                           judge_prompt=args.judge_prompt)
 
 
 def cmd_guard(args) -> int:
@@ -154,6 +155,8 @@ def build_parser() -> argparse.ArgumentParser:
         src.add_argument("--new", help="a proposed full SKILL.md (e.g. SkillOpt-Sleep's proposed_SKILL.md)")
         sp.add_argument("--no-llm", action="store_true", help="deterministic checks only")
         sp.add_argument("--max-change", type=float, default=0.35, help="change budget as a fraction of the skill")
+        sp.add_argument("--judge-prompt", default="v2", choices=sorted(guard_mod.JUDGE_PROMPTS),
+                        help="LLM judge prompt: v2 (default) or v1, the stricter one pre-registered for the benchmark")
 
     sp = sub.add_parser("guard", help="check proposed edits against the skill's intent")
     proposal_args(sp)

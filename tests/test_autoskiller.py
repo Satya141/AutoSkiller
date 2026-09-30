@@ -110,6 +110,23 @@ class GuardTests(unittest.TestCase):
         self.assertTrue(report.llm_used)
         json.dumps(report.to_dict(), ensure_ascii=False)
 
+    def test_judge_prompt_is_selectable(self):
+        seen = []
+
+        def judge(system, user, schema):
+            seen.append(system)
+            return {"edits": []}
+        for version in ("v1", "v2"):
+            g.guard(self.skill, self.edits[:1], self.intent, backend=FakeBackend(judge), judge_prompt=version)
+        self.assertEqual(seen, [g.JUDGE_PROMPTS["v1"], g.JUDGE_PROMPTS["v2"]])
+        self.assertNotEqual(seen[0], seen[1])
+
+    def test_cli_accepts_judge_prompt(self):
+        from autoskiller.cli import build_parser
+        args = build_parser().parse_args(["guard", "skill", "--edits", "e.json", "--judge-prompt", "v1"])
+        self.assertEqual(args.judge_prompt, "v1")
+        self.assertEqual(build_parser().parse_args(["guard", "skill", "--edits", "e.json"]).judge_prompt, "v2")
+
     def test_override_language_needs_review(self):
         report = g.guard(self.skill, [Edit("add", "This rule supersedes the heading format.")], self.intent)
         self.assertEqual(report.decision, g.REVIEW)
